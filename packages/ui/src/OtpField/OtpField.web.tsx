@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useId, useImperativeHandle, useRef, useState } from 'react';
 import { useShakeOnError } from '../motion/useShakeOnError';
 import { FieldShell } from '../TextField/FieldShell.web';
 import { useOtp, type OtpFieldProps } from './OtpField.shared';
@@ -19,12 +19,15 @@ export function OtpField({
   disabled,
   autoFocus,
   testID,
+  ref,
 }: OtpFieldProps) {
   const id = useId();
   const messageId = `${id}-message`;
   const message = error ?? helperText;
   const { code, change, cells, activeIndex } = useOtp({ length, value, defaultValue, onChangeText, onComplete });
   const [focused, setFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useImperativeHandle(ref, () => ({ focus: () => inputRef.current?.focus() }), []);
   const [shaking, shakeDone] = useShakeOnError(error);
 
   return (
@@ -51,6 +54,7 @@ export function OtpField({
           </div>
         ))}
         <input
+          ref={inputRef}
           id={id}
           className="ds-otp__input"
           value={code}

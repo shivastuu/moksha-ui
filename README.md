@@ -28,7 +28,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [Surface and glass](#surface-and-glass) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -197,6 +197,51 @@ The formatters and validators are exported too: `formatAmount`, `parseAmount`, `
 | `testID` | on the input; the input box gets `${testID}-control` | |
 
 </details>
+
+### AutoForm
+
+Pass a list of fields and get a complete form: the right input for each type, validation, error messages, focus handling and a submit button with a loading state. On web and React Native.
+
+<table>
+<tr>
+<td width="44%"><img src="docs/images/autoform.png" alt="Add payee form built by AutoForm: name, mobile number, masked account number, a confirm account number that does not match, an IFSC code and an amount above the limit, with their error messages" /></td>
+<td>
+
+```tsx
+import { AutoForm, defineFields } from '@shivastu/ui';
+
+const fields = defineFields([
+  { name: 'name', type: 'text', label: 'Payee name', required: true },
+  { name: 'mobile', type: 'phone', label: 'Mobile number', required: true },
+  { name: 'account', type: 'account', label: 'Account number', required: true },
+  { name: 'confirm', type: 'account', label: 'Confirm account number',
+    required: true, matches: 'account', allowPaste: false },
+  { name: 'amount', type: 'amount', label: 'Amount',
+    required: true, min: 1, max: 200000 },
+]);
+
+<AutoForm
+  fields={fields}
+  submitLabel="Add payee"
+  onSubmit={async (values) => {
+    // values.mobile, values.amount… typed from the names
+    const result = await api.addPayee(values);
+    if (!result.ok) return { account: result.message };
+  }}
+/>
+```
+
+</td>
+</tr>
+</table>
+
+- **Types:** `text`, `email`, `password`, `phone`, `amount`, `account`, `otp`. Every other prop of the matching component works too (`helperText`, `maskWhenBlurred`, `format`, `variant`…).
+- **Built-in checks:** required, Indian mobile numbers, amount `min` and `max`, account numbers (9 to 18 digits), OTP length and email. `matches` compares two fields, and `validate(value, values)` adds your own rule.
+- **Errors appear after a field loses focus or on submit**, never while someone is still typing, and they clear as soon as the value is fixed. Submitting with errors focuses the first one.
+- **Server errors:** return `{ fieldName: message }` from `onSubmit` to show them on those fields.
+- **Enter, or the keyboard's return key,** moves to the next field; on the last field it submits. A form cannot be submitted twice while `onSubmit` is running.
+- The field list is plain data, so it can come from your server as JSON. `validateForm(fields, values)` runs the same checks anywhere, including on the server.
+- Every field also takes a `ref` with `focus()`.
 
 ### Surface and glass
 
@@ -373,7 +418,7 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] TextField, PhoneField, AmountField, AccountNumberField, SearchField, OtpField
 - [x] Storybook docs, theme builder and Expo demo
 - [x] Motion: `Motion`, `Stagger` and built-in component animations
-- [ ] AutoForm: build a whole form from a list of fields, with validation
+- [x] AutoForm: build a whole form from a list of fields, with validation
 - [ ] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner
 - [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
 - [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar

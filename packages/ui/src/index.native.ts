@@ -8,6 +8,7 @@ export type { SurfaceProps, SurfaceVariant } from './Surface/Surface.shared';
 export { TextField } from './TextField/TextField.native';
 export type {
   AutoComplete,
+  FieldHandle,
   InputMode,
   TextFieldProps,
   TextFieldSize,
@@ -25,6 +26,9 @@ export type { OtpFieldProps } from './OtpField/OtpField.shared';
 export { Motion, Stagger } from './motion/Motion.native';
 export { useReducedMotion } from './motion/useReducedMotion.native';
 export type { MotionPreset, MotionProps, StaggerProps } from './motion/motion.shared';
+export { AutoForm } from './AutoForm/AutoForm.native';
+export { defineFields, validateForm } from './AutoForm/AutoForm.shared';
+export type { AutoFormField, AutoFormProps, FormErrors, FormValues } from './AutoForm/AutoForm.shared';
 export {
   digitsOnly,
   formatAccountNumber,

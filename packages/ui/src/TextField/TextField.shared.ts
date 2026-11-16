@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 export type TextFieldVariant = 'outline' | 'filled' | 'glass';
 
@@ -17,6 +17,11 @@ export type AutoComplete =
   | 'current-password'
   | 'new-password'
   | 'postal-code';
+
+/** What a field's `ref` gives you */
+export interface FieldHandle {
+  focus(): void;
+}
 
 export interface TextFieldProps {
   /** Visible label, also the accessible name of the input */
@@ -67,6 +72,8 @@ export interface TextFieldProps {
   autoFocus?: boolean;
   /** Id for tests, set on the input (`data-testid` on web, `testID` on native). The input box gets `${testID}-control` */
   testID?: string;
+  /** `ref.current.focus()` moves focus to the input */
+  ref?: Ref<FieldHandle>;
 }
 
 export const identity = (text: string) => text;

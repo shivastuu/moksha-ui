@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, type Ref } from 'react';
 import { digitsOnly } from '../inputs/format';
+import type { FieldHandle } from '../TextField/TextField.shared';
 import { useControllableState } from '../utils/useControllableState';
 
 export interface OtpFieldProps {
@@ -23,6 +24,8 @@ export interface OtpFieldProps {
   autoFocus?: boolean;
   /** Id for tests, set on the hidden input */
   testID?: string;
+  /** `ref.current.focus()` moves focus to the code input */
+  ref?: Ref<FieldHandle>;
 }
 
 /** Digits-only code of a fixed length, firing `onComplete` once per completed code */

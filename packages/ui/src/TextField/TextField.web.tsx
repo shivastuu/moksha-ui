@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useLayoutEffect, useRef, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useId, useImperativeHandle, useLayoutEffect, useRef, type ChangeEvent, type KeyboardEvent } from 'react';
 import { useShakeOnError } from '../motion/useShakeOnError';
 import { useControllableState } from '../utils/useControllableState';
 import { FieldShell } from './FieldShell.web';
@@ -58,17 +58,28 @@ export function TextField({
   onSubmitEditing,
   autoFocus,
   testID,
+  ref,
 }: TextFieldProps) {
   const [raw, setRaw] = useControllableState(value, defaultValue, onChangeText);
   const id = useId();
   const messageId = `${id}-message`;
   const inputRef = useRef<HTMLInputElement>(null);
   const pendingCaret = useRef<number | null>(null);
+  /** The text shown when focus arrived with all of it selected, as Tab does */
+  const selectedOnFocus = useRef<string | null>(null);
+  useImperativeHandle(ref, () => ({ focus: () => inputRef.current?.focus() }), []);
   const display = format(raw);
   const message = error ?? helperText;
   const [shaking, shakeDone] = useShakeOnError(error);
 
   useLayoutEffect(() => {
+    if (selectedOnFocus.current !== null && selectedOnFocus.current !== display) {
+      // The text changed on focus (a masked account number unmasking), which drops the selection.
+      // Select it again, so Tab-in-and-type replaces the value like in any other field
+      selectedOnFocus.current = null;
+      inputRef.current?.select();
+      return;
+    }
     if (pendingCaret.current === null || !inputRef.current) {
       return;
     }
@@ -78,6 +89,7 @@ export function TextField({
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    selectedOnFocus.current = null;
     const text = event.target.value;
     const next = clampRaw(text, parse, maxLength);
     const caret = event.target.selectionStart ?? text.length;
@@ -121,8 +133,15 @@ export function TextField({
           value={display}
           onChange={handleChange}
           onKeyDown={onSubmitEditing ? handleKeyDown : undefined}
-          onFocus={onFocus}
-          onBlur={onBlur}
+          onFocus={(event) => {
+            const { selectionStart, selectionEnd, value: shown } = event.currentTarget;
+            selectedOnFocus.current = shown && selectionStart === 0 && selectionEnd === shown.length ? shown : null;
+            onFocus?.();
+          }}
+          onBlur={() => {
+            selectedOnFocus.current = null;
+            onBlur?.();
+          }}
           onPaste={allowPaste ? undefined : (event) => event.preventDefault()}
           placeholder={placeholder}
           disabled={disabled}

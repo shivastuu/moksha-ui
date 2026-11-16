@@ -1,4 +1,4 @@
-import { useRef, useState, type ComponentRef } from 'react';
+import { useImperativeHandle, useRef, useState, type ComponentRef } from 'react';
 import { Animated, Platform, Pressable, TextInput } from 'react-native';
 import { usePop, useShake } from '../motion/nativeMotion.native';
 import { useShakeOnError } from '../motion/useShakeOnError';
@@ -65,11 +65,13 @@ export function OtpField({
   disabled,
   autoFocus,
   testID,
+  ref,
 }: OtpFieldProps) {
   const { otp } = useTheme().components;
   const { code, change, cells, activeIndex } = useOtp({ length, value, defaultValue, onChangeText, onComplete });
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<ComponentRef<typeof TextInput>>(null);
+  useImperativeHandle(ref, () => ({ focus: () => inputRef.current?.focus() }), []);
   const [shaking, shakeDone] = useShakeOnError(error);
   const shakeX = useShake(shaking, shakeDone);
 

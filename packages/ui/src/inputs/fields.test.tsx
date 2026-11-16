@@ -56,6 +56,21 @@ describe('AccountNumberField (web)', () => {
     expect(input.value).toBe('1234 5678 9012');
   });
 
+  it('keeps the number selected when tabbed into, so typing replaces it', () => {
+    render(<AccountNumberField label="Account number" defaultValue="123456789012" />);
+    const input = screen.getByLabelText('Account number') as HTMLInputElement;
+    // Tab selects all of the masked text before focus fires; a click leaves a caret
+    input.setSelectionRange(0, input.value.length);
+    fireEvent.focus(input);
+    expect(input.value).toBe('1234 5678 9012');
+    expect([input.selectionStart, input.selectionEnd]).toEqual([0, 14]);
+
+    fireEvent.blur(input);
+    input.setSelectionRange(3, 3);
+    fireEvent.focus(input);
+    expect(input.selectionStart).toBe(input.selectionEnd);
+  });
+
   it('can stay unmasked', () => {
     render(<AccountNumberField label="Account number" maskWhenBlurred={false} defaultValue="123456789012" />);
     expect((screen.getByLabelText('Account number') as HTMLInputElement).value).toBe('1234 5678 9012');

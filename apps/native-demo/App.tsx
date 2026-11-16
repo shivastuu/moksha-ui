@@ -8,6 +8,7 @@ import { BlurView } from 'expo-blur';
 import { useFonts } from 'expo-font';
 import {
   AccountNumberField,
+  AutoForm,
   AmountField,
   Button,
   OtpField,
@@ -17,6 +18,7 @@ import {
   Surface,
   TextField,
   ThemeProvider,
+  defineFields,
   foundations,
   palette,
   themes,
@@ -25,6 +27,13 @@ import {
 } from '@shivastu/ui';
 
 const { space, typography } = foundations;
+
+const addPayee = defineFields([
+  { name: 'name', type: 'text', label: 'Payee name', required: true },
+  { name: 'account', type: 'account', label: 'Account number', required: true },
+  { name: 'confirm', type: 'account', label: 'Confirm account number', required: true, matches: 'account' },
+  { name: 'amount', type: 'amount', label: 'Amount', required: true, max: 200000 },
+]);
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   const theme = useTheme();
@@ -101,6 +110,18 @@ export default function App() {
             <AccountNumberField label="Account number" />
             <OtpField label="Enter OTP" />
             <TextField label="Glass field" variant="glass" placeholder="Over the backdrop" />
+          </View>
+
+          <View style={styles.form}>
+            <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>AutoForm</Text>
+            <AutoForm
+              fields={addPayee}
+              submitLabel="Add payee"
+              onSubmit={async (values) => {
+                await new Promise((resolve) => setTimeout(resolve, 800));
+                console.log(values);
+              }}
+            />
           </View>
 
           <Section title="Try it">

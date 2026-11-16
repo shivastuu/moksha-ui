@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useImperativeHandle, useRef, useState, type ComponentRef, type ReactNode } from 'react';
 import { Animated, Platform, Pressable, Text, TextInput, View } from 'react-native';
 import { useShake } from '../motion/nativeMotion.native';
 import { useShakeOnError } from '../motion/useShakeOnError';
@@ -40,6 +40,7 @@ export function TextField({
   onSubmitEditing,
   autoFocus,
   testID,
+  ref,
 }: TextFieldProps) {
   const theme = useTheme();
   const { colors, components, glass, blurView: BlurView, scheme } = theme;
@@ -47,6 +48,8 @@ export function TextField({
   const metrics = field.sizes[size];
   const [raw, setRaw] = useControllableState(value, defaultValue, onChangeText);
   const [focused, setFocused] = useState(false);
+  const inputRef = useRef<ComponentRef<typeof TextInput>>(null);
+  useImperativeHandle(ref, () => ({ focus: () => inputRef.current?.focus() }), []);
   const editable = !disabled && !readOnly;
   const isGlass = variant === 'glass';
   const accent = error ? colors.danger : colors.primary;
@@ -86,6 +89,7 @@ export function TextField({
     <>
       {prefix !== undefined && affix(prefix)}
       <TextInput
+        ref={inputRef}
         value={format(raw)}
         onChangeText={(next) => setRaw(clampRaw(next, parse, maxLength))}
         placeholder={placeholder}
