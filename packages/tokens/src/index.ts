@@ -2,6 +2,7 @@ export * from './theme.ts';
 export {
   alpha,
   contrastRatio,
+  ensureContrast,
   generateScale,
   hexToOklch,
   mix,

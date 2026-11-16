@@ -36,6 +36,19 @@ export function alpha(hex: string, opacity: number) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
+/**
+ * Nudges a color's lightness, keeping its hue, until it reaches `ratio` against `background`
+ * (darker on light backgrounds, lighter on dark ones). WCAG AA body text needs 4.5
+ */
+export function ensureContrast(color: string, background: string, ratio = 4.5) {
+  let current = hexToOklch(color);
+  const step = hexToOklch(background).l > 0.5 ? -0.01 : 0.01;
+  for (let i = 0; i < 100 && contrastRatio(oklchToHex(current), background) < ratio; i += 1) {
+    current = { ...current, l: Math.min(1, Math.max(0, current.l + step)) };
+  }
+  return oklchToHex(current);
+}
+
 function toOklab(hex: string) {
   const { l, c, h } = hexToOklch(hex);
   const radians = (h * Math.PI) / 180;

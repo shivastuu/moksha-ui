@@ -186,6 +186,8 @@ export interface Components {
   };
   /** Offer and announcement cards */
   promo: { radius: number; padding: number; minHeight: number };
+  /** Count and dot badges */
+  badge: { size: number; dot: number };
   /** Round icon-only buttons */
   iconButton: { sizes: Record<'sm' | 'md' | 'lg', number> };
   /** The 3D payment card */
@@ -417,6 +419,7 @@ export const components: Components = {
   },
   promo: { radius: foundations.radius.xl, padding: foundations.space.xl, minHeight: 152 },
   iconButton: { sizes: { sm: 32, md: 40, lg: 52 } },
+  badge: { size: 20, dot: 10 },
   bankCard: { radius: 18, padding: foundations.space.xl, maxWidth: 360, tilt: 14 },
 };
 

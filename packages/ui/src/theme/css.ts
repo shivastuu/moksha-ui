@@ -6,6 +6,16 @@ import { buttonDepth } from '../Button/Button.shared';
 import { fieldColors } from '../TextField/TextField.shared';
 import { dialogColors } from '../Dialog/Dialog.shared';
 import { surfaceColors } from '../Surface/Surface.shared';
+import { textCss } from '../Text/Text.css';
+import { dividerCss } from '../Divider/Divider.css';
+import { spinnerCss } from '../Spinner/Spinner.css';
+import { skeletonCss } from '../Skeleton/Skeleton.css';
+import { skeletonColors } from '../Skeleton/Skeleton.shared';
+import { badgeCss } from '../Badge/Badge.css';
+import { tagCss } from '../Tag/Tag.css';
+import { chipCss } from '../Chip/Chip.css';
+import { chipColors } from '../Chip/Chip.shared';
+import { softTones, solidTones, textTones } from '../utils/tones';
 import { snackbarColors } from '../Snackbar/Snackbar.shared';
 import { iconButtonCss } from '../IconButton/IconButton.css';
 import { buttonCss } from '../Button/Button.css';
@@ -49,7 +59,7 @@ export function themeId(definition: ThemeDefinition) {
 export function themeCss(definition: ThemeDefinition, id: string) {
   const { foundations, components, themes } = definition;
   const { typography, space, radius, borderWidth, opacity, focusRing, motion, glass, zIndex } = foundations;
-  const { button, field, otp, modal, snackbar, banner, promo, bankCard, iconButton } = components;
+  const { button, field, otp, modal, snackbar, banner, promo, bankCard, iconButton, badge } = components;
   const card = bankCardColors(themes.light.colors);
   const label = typography.textStyles[field.labelStyle];
   const message = typography.textStyles[field.messageStyle];
@@ -88,6 +98,11 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `--ds-banner-radius:${banner.radius}px;--ds-banner-padding:${banner.padding}px;--ds-banner-gap:${banner.gap}px;--ds-banner-icon-size:${banner.iconSize}px;`,
     vars('promo', promo, px),
     vars('icon-button', iconButton.sizes, px),
+    vars('badge', badge, px),
+    ...Object.entries(typography.textStyles).map(
+      ([name, style]) =>
+        `--ds-text-${kebab(name)}-size:${style.fontSize}px;--ds-text-${kebab(name)}-line-height:${style.lineHeight}px;--ds-text-${kebab(name)}-weight:${typography.fontWeight[style.fontWeight]};`
+    ),
     `--ds-bank-card-radius:${bankCard.radius}px;--ds-bank-card-padding:${bankCard.padding}px;--ds-bank-card-max-width:${bankCard.maxWidth}px;--ds-bank-card-tilt:${bankCard.tilt}deg;`,
     // A card is a physical object: its colors come from the light scheme in both schemes
     ...bankCardFinishes.map((finish) => vars(`bank-card-${finish}`, card[finish])),
@@ -98,7 +113,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
-    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('text-tone', textTones(themes[name].colors))}${vars('skeleton', skeletonColors(themes[name].colors))}${Object.entries(solidTones(themes[name].colors)).map(([tone, colors]) => vars(`badge-${tone}`, colors)).join('')}${Object.entries(softTones(themes[name].colors)).map(([tone, colors]) => vars(`tag-${tone}`, colors)).join('')}${vars('chip', chipColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
       promoColors(themes[name].colors)
     )}}`;
@@ -108,4 +123,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss;

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { generateScale, hexToOklch, mix, oklchToHex } from './color.ts';
+import { contrastRatio, ensureContrast, generateScale, hexToOklch, mix, oklchToHex } from './color.ts';
 import { createTheme, defaultTheme, foundations, getTheme, palette, readableTextOn, themes } from './theme.ts';
 
 test('hex survives a round trip through OKLCH', () => {
@@ -96,4 +96,12 @@ test('mix() matches CSS color-mix in OKLab', () => {
   assert.equal(mix('#000000', '#FFFFFF', 0.5), '#636363');
   assert.equal(mix('#3355FF', '#FFFFFF', 0), '#FFFFFF');
   assert.equal(mix('#3355FF', '#FFFFFF', 1), '#3355FF');
+});
+
+test('ensureContrast() reaches the ratio and keeps colors that already pass', () => {
+  const pairs: [string, string][] = [['#B7791F', '#FFFFFF'], ['#1F9D57', '#FFFFFF'], ['#3355FF', '#0D0F14'], ['#6FD49C', '#14171F']];
+  for (const [color, background] of pairs) {
+    assert.ok(contrastRatio(ensureContrast(color, background), background) >= 4.5, `${color} on ${background}`);
+  }
+  assert.equal(ensureContrast('#14171F', '#FFFFFF'), '#14171F');
 });
