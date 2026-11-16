@@ -41,7 +41,7 @@ describe('display (native)', () => {
   });
 
   it('Link opens its address, or calls onPress instead', async () => {
-    const open = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+    const open = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined);
     const onPress = jest.fn();
     const { rerender } = await render(<Link href="https://www.npci.org.in">UPI help</Link>);
     await fireEvent.press(screen.getByRole('link', { name: 'UPI help' }));
