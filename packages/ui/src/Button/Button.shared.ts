@@ -1,4 +1,4 @@
-import { alpha, hexToOklch, mix, oklchToHex, type SemanticColors } from 'tandemui-tokens';
+import { alpha, hexToOklch, mix, oklchToHex, type SemanticColors } from '@moksha-ui/tokens';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 

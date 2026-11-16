@@ -1,5 +1,5 @@
 import type { ReactNode, Ref } from 'react';
-import { alpha, mix, type SemanticColors } from 'tandemui-tokens';
+import { alpha, mix, type SemanticColors } from '@moksha-ui/tokens';
 
 export type TextFieldVariant = 'outline' | 'filled' | 'glass';
 

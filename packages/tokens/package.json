@@ -1,5 +1,5 @@
 {
-  "name": "tandemui-tokens",
+  "name": "@moksha-ui/tokens",
   "version": "0.1.0",
   "description": "Design tokens (colors, typography, spacing, radius) for web and React Native",
   "license": "MIT",
@@ -11,12 +11,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shivastuu/tandem-ui.git",
+    "url": "git+https://github.com/shivastuu/moksha-ui.git",
     "directory": "packages/tokens"
   },
-  "homepage": "https://github.com/shivastuu/tandem-ui#readme",
+  "homepage": "https://github.com/shivastuu/moksha-ui#readme",
   "bugs": {
-    "url": "https://github.com/shivastuu/tandem-ui/issues"
+    "url": "https://github.com/shivastuu/moksha-ui/issues"
   },
   "type": "module",
   "sideEffects": false,

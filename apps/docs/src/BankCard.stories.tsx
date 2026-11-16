@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { BankCard, Button, type BankCardFinish } from 'tandemui';
+import { BankCard, Button, type BankCardFinish } from '@moksha-ui/core';
 
 const meta = {
   title: 'Blocks/Bank card',
   component: BankCard,
-  args: { last4: '4821', holder: 'Shivastu Shrivastava', expiry: '08/29', label: 'Tandem', finish: 'brand' },
+  args: { last4: '4821', holder: 'Shivastu Shrivastava', expiry: '08/29', label: 'Moksha', finish: 'brand' },
   argTypes: { finish: { control: 'inline-radio', options: ['brand', 'midnight', 'metal'] } },
 } satisfies Meta<typeof BankCard>;
 
@@ -40,7 +40,7 @@ export const Finishes: Story = {
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32 }}>
       {finishes.map((finish) => (
         <div key={finish} style={{ width: 320 }}>
-          <BankCard {...args} finish={finish} label={finish === 'metal' ? 'Tandem Metal' : 'Tandem'} />
+          <BankCard {...args} finish={finish} label={finish === 'metal' ? 'Moksha Metal' : 'Moksha'} />
         </div>
       ))}
     </div>

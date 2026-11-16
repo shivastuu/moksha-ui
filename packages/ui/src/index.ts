@@ -122,4 +122,4 @@ export {
   type TextStyleName,
   type ThemeDefinition,
   type ThemeOptions,
-} from 'tandemui-tokens';
+} from '@moksha-ui/tokens';

@@ -40,7 +40,7 @@ function rest(event: PointerEvent<HTMLDivElement>) {
 
 /** A payment card that tilts toward the pointer, catches the light, flips to its back and can be frozen */
 export function BankCard(props: BankCardProps) {
-  const { last4, holder, expiry, label = 'Tandem', finish = 'brand', flipped, cvv = '•••', frozen, network, interactive = true, testID } = props;
+  const { last4, holder, expiry, label = 'Moksha', finish = 'brand', flipped, cvv = '•••', frozen, network, interactive = true, testID } = props;
   const light = (
     <>
       <span className="ds-bank-card__holo" />

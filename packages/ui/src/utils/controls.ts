@@ -1,4 +1,4 @@
-import { ensureContrast, hexToOklch, mix, oklchToHex, palette, type SemanticColors } from 'tandemui-tokens';
+import { ensureContrast, hexToOklch, mix, oklchToHex, palette, type SemanticColors } from '@moksha-ui/tokens';
 
 /**
  * Colors for switches, checkboxes and radios. WCAG 1.4.11 asks for 3:1 on the parts that show a

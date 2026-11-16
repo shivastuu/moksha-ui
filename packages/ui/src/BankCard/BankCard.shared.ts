@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { alpha, mix, type SemanticColors } from 'tandemui-tokens';
+import { alpha, mix, type SemanticColors } from '@moksha-ui/tokens';
 
 export type BankCardFinish = 'brand' | 'midnight' | 'metal';
 
@@ -12,7 +12,7 @@ export interface BankCardProps {
   holder: string;
   /** Expiry as printed, like "08/29" */
   expiry: string;
-  /** Product or bank name in the top corner @default 'Tandem' */
+  /** Product or bank name in the top corner @default 'Moksha' */
   label?: string;
   /** @default 'brand' */
   finish?: BankCardFinish;
@@ -29,7 +29,7 @@ export interface BankCardProps {
   testID?: string;
 }
 
-export const cardLabel = ({ label = 'Tandem', last4, holder, expiry, frozen }: BankCardProps) =>
+export const cardLabel = ({ label = 'Moksha', last4, holder, expiry, frozen }: BankCardProps) =>
   `${label} card ending in ${last4}, ${holder}, expires ${expiry}${frozen ? ', frozen' : ''}`;
 
 /**

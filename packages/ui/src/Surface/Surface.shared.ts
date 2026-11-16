@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { alpha, hexToOklch, type BlurToken, type RadiusToken, type SemanticColors, type ShadowName, type SpaceToken } from 'tandemui-tokens';
+import { alpha, hexToOklch, type BlurToken, type RadiusToken, type SemanticColors, type ShadowName, type SpaceToken } from '@moksha-ui/tokens';
 
 export type SurfaceVariant = 'solid' | 'raised' | 'glass';
 

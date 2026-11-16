@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Animated } from 'react-native';
-import { foundations, themes } from 'tandemui-tokens';
+import { foundations, themes } from '@moksha-ui/tokens';
 import { BankCard } from '../index';
 import { bankCardColors, bankCardFinishes } from './BankCard.shared';
 
@@ -26,7 +26,7 @@ describe('BankCard (native)', () => {
 
   it('reads as one image and shows the front, back and frozen state', async () => {
     const { rerender } = await render(<BankCard {...card} />);
-    expect(screen.getByLabelText('Tandem card ending in 4821, Shivastu Shrivastava, expires 08/29')).toBeTruthy();
+    expect(screen.getByLabelText('Moksha card ending in 4821, Shivastu Shrivastava, expires 08/29')).toBeTruthy();
     expect(screen.getByText('•••• •••• •••• 4821')).toBeTruthy();
     expect(screen.queryByText('❄ Frozen')).toBeNull();
     await rerender(<BankCard {...card} frozen />);

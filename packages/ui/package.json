@@ -1,7 +1,7 @@
 {
-  "name": "tandemui",
+  "name": "@moksha-ui/core",
   "version": "0.1.0",
-  "description": "React and React Native components with one API, built on tandemui-tokens",
+  "description": "React and React Native components with one API, built on @moksha-ui/tokens",
   "license": "MIT",
   "author": "Shivastu Shrivastava <shivastuu@gmail.com>",
   "keywords": [
@@ -13,12 +13,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shivastuu/tandem-ui.git",
+    "url": "git+https://github.com/shivastuu/moksha-ui.git",
     "directory": "packages/ui"
   },
-  "homepage": "https://github.com/shivastuu/tandem-ui#readme",
+  "homepage": "https://github.com/shivastuu/moksha-ui#readme",
   "bugs": {
-    "url": "https://github.com/shivastuu/tandem-ui/issues"
+    "url": "https://github.com/shivastuu/moksha-ui/issues"
   },
   "sideEffects": false,
   "main": "./lib/module/index.js",
@@ -43,7 +43,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "tandemui-tokens": "^0.1.0"
+    "@moksha-ui/tokens": "^0.1.0"
   },
   "peerDependencies": {
     "react": ">=19",

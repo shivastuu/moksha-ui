@@ -34,7 +34,7 @@ const clamp = (value: number) => Math.max(-1, Math.min(1, value));
 
 /** A payment card that tilts toward the finger, catches the light, flips to its back and can be frozen */
 export function BankCard(props: BankCardProps) {
-  const { last4, holder, expiry, label = 'Tandem', finish = 'brand', flipped, cvv = '•••', frozen, network, interactive = true, testID } = props;
+  const { last4, holder, expiry, label = 'Moksha', finish = 'brand', flipped, cvv = '•••', frozen, network, interactive = true, testID } = props;
   const theme = useTheme();
   const { components, motion, radius } = theme;
   const { bankCard } = components;

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { SpaceToken } from 'tandemui-tokens';
+import type { SpaceToken } from '@moksha-ui/tokens';
 
 export interface StackProps {
   children?: ReactNode;

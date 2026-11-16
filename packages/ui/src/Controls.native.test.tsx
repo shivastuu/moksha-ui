@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Animated } from 'react-native';
-import { foundations } from 'tandemui-tokens';
+import { foundations } from '@moksha-ui/tokens';
 import { Checkbox, RadioGroup, SegmentedControl, Switch } from './index';
 
 const settle = () => act(async () => {});

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Banner, BottomSheet, Button, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from 'tandemui';
+import { Banner, BottomSheet, Button, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from '@moksha-ui/core';
 
 const meta = { title: 'Components/Overlays' } satisfies Meta;
 

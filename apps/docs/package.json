@@ -7,7 +7,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "tandemui": "*",
+    "@moksha-ui/core": "*",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

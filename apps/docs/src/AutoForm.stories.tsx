@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { AutoForm, Motion, Surface, defineFields, type AutoFormField } from 'tandemui';
+import { AutoForm, Motion, Surface, defineFields, type AutoFormField } from '@moksha-ui/core';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { contrastRatio, createTheme, defaultTheme, type ColorScheme } from 'tandemui-tokens';
+import { contrastRatio, createTheme, defaultTheme, type ColorScheme } from '@moksha-ui/tokens';
 import { Checkbox, RadioGroup, SegmentedControl, Switch } from './index';
 import { nextIndex } from './SegmentedControl/SegmentedControl.shared';
 import { controlColors } from './utils/controls';

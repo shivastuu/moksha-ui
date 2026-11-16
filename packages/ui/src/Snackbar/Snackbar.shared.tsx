@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ComponentType, type ReactNode } from 'react';
-import { alpha, type SemanticColors } from 'tandemui-tokens';
+import { alpha, type SemanticColors } from '@moksha-ui/tokens';
 import { useTheme } from '../theme/context';
 
 export interface SnackbarOptions {

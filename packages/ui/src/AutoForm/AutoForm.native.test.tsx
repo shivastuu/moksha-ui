@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
-import { themes } from 'tandemui-tokens';
+import { themes } from '@moksha-ui/tokens';
 import { AutoForm, defineFields } from '../index';
 
 const fields = defineFields([

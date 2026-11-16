@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, RollingAmount, Surface } from 'tandemui';
+import { Button, RollingAmount, Surface } from '@moksha-ui/core';
 
 const meta = {
   title: 'Blocks/Rolling amount',

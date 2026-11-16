@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Avatar, AvatarGroup, Badge, Button, Chip, Divider, IconButton, Link, ProgressBar, ProgressRing, Skeleton, Spinner, Stack, Surface, Tag, Text } from 'tandemui';
+import { Avatar, AvatarGroup, Badge, Button, Chip, Divider, IconButton, Link, ProgressBar, ProgressRing, Skeleton, Spinner, Stack, Surface, Tag, Text } from '@moksha-ui/core';
 
 const meta = { title: 'Components/Primitives' } satisfies Meta;
 

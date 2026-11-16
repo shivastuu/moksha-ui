@@ -1,6 +1,6 @@
 <div align="center">
 
-# Tandem UI
+# Moksha UI
 
 **One design system for React and React Native.**<br />
 The same component API and design tokens, with native rendering on each platform.
@@ -15,11 +15,11 @@ The same component API and design tokens, with native rendering on each platform
 
 <p align="center"><img src="docs/images/balance-card.png" width="520" alt="A glass balance card on a dark stage lit in the brand color: available balance ₹ 37,080.00 with small currency and decimals, a green '₹12,500 today' chip, and round Add money, Send and Scan & pay buttons" /></p>
 
-![Tandem UI components in light and dark mode: a glass balance card, phone, amount and OTP fields, and pill buttons](docs/images/hero.png)
+![Moksha UI components in light and dark mode: a glass balance card, phone, amount and OTP fields, and pill buttons](docs/images/hero.png)
 
-## Why Tandem UI
+## Why Moksha UI
 
-- **One API, two platforms.** `import { Button } from 'tandemui'` renders a real `<button>` with CSS on the web and `Pressable` with `StyleSheet` on iOS and Android. No `react-native-web`, no bundler config.
+- **One API, two platforms.** `import { Button } from '@moksha-ui/core'` renders a real `<button>` with CSS on the web and `Pressable` with `StyleSheet` on iOS and Android. No `react-native-web`, no bundler config.
 - **Every design value in one file.** Colors, type, spacing, radius, shadows, motion, glass and component sizes live in [`theme.ts`](packages/tokens/src/theme.ts). Change it and web and native update together.
 - **Your brand in one line.** `createTheme({ brandColor })` generates a full color scale and both light and dark tokens, kept at WCAG AA contrast. Tests check this for 12 very different brand colors.
 - **Premium by default.** Motion runs on real spring physics that feel the same on web and native, surfaces have depth, hairline edges and frosted glass, and showpieces like a 3D bank card and a rolling balance come built in.
@@ -41,7 +41,7 @@ The same component API and design tokens, with native rendering on each platform
 ## Quick start
 
 ```sh
-npm install tandemui
+npm install @moksha-ui/core
 ```
 
 > The packages are not on npm yet. Until the first release, clone this repo and run `npm install && npm run build`.
@@ -49,7 +49,7 @@ npm install tandemui
 **Web** (Vite, Next.js, any React 19 app). Load the Inter font, then wrap your app:
 
 ```tsx
-import { Button, ThemeProvider } from 'tandemui';
+import { Button, ThemeProvider } from '@moksha-ui/core';
 
 export function App() {
   return (
@@ -66,14 +66,14 @@ There are no CSS files to import: `ThemeProvider` adds the styles once, works wi
 
 ```tsx
 import { BlurView } from 'expo-blur';
-import { ThemeProvider, foundations } from 'tandemui';
+import { ThemeProvider, foundations } from '@moksha-ui/core';
 
 <ThemeProvider colorScheme={scheme} fonts={foundations.typography.fontFamily.native} blurView={BlurView}>
   <App />
 </ThemeProvider>;
 ```
 
-`blurView` is optional. It powers glass surfaces; without it they fall back to a solid surface, so Tandem UI never forces a native module on your app.
+`blurView` is optional. It powers glass surfaces; without it they fall back to a solid surface, so Moksha UI never forces a native module on your app.
 
 ## Theme builder
 
@@ -82,7 +82,7 @@ Give one brand color and `createTheme` builds the rest: a 10-step scale generate
 ![Theme builder: an emerald brand color generates a 10-step scale and light and dark previews with their contrast ratios](docs/images/theme-builder.png)
 
 ```tsx
-import { ThemeProvider, createTheme } from 'tandemui';
+import { ThemeProvider, createTheme } from '@moksha-ui/core';
 
 const theme = createTheme({
   brandColor: '#0E9F7A',
@@ -219,7 +219,7 @@ Pass a list of fields and get a complete form: the right input for each type, va
 <td>
 
 ```tsx
-import { AutoForm, defineFields } from 'tandemui';
+import { AutoForm, defineFields } from '@moksha-ui/core';
 
 const fields = defineFields([
   { name: 'name', type: 'text', label: 'Payee name', required: true },
@@ -346,7 +346,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - Tilts toward the pointer (web) or finger (React Native) with a spring, and catches the light: a glare follows the pointer and a holographic band shifts across the card.
 - Finishes: `brand` (follows your `createTheme` brand color), `midnight` and `metal`, with a gold chip, contactless mark and engraved pattern.
 - `flipped` turns it over with a spring; `frozen` frosts it. With reduced motion it stays flat and flips at once.
-- A card is a physical object, so it looks the same in light and dark mode. Screen readers hear one line: "Tandem card ending in 4821, Shivastu Shrivastava, expires 08/29".
+- A card is a physical object, so it looks the same in light and dark mode. Screen readers hear one line: "Moksha card ending in 4821, Shivastu Shrivastava, expires 08/29".
 - Bring your own network mark through `network`; real network logos are trademarks.
 
 ### Rolling amount
@@ -395,7 +395,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
 
 ```tsx
-import { Motion, Stagger } from 'tandemui';
+import { Motion, Stagger } from '@moksha-ui/core';
 
 <Motion preset="fadeUp">
   <BalanceCard />
@@ -483,7 +483,7 @@ On the web, every token is also a CSS variable inside `ThemeProvider`, so your o
 
 ```mermaid
 flowchart LR
-  T["tandemui-tokens<br/>theme.ts"] --> S["Shared<br/>props, logic, formatters"]
+  T["@moksha-ui/tokens<br/>theme.ts"] --> S["Shared<br/>props, logic, formatters"]
   S --> W["index.ts<br/>*.web.tsx<br/>DOM + CSS variables"]
   S --> N["index.native.ts<br/>*.native.tsx<br/>View, Pressable, StyleSheet"]
   W --> B1["Vite · Next.js · webpack · Node"]
@@ -528,8 +528,8 @@ npm run native       # Expo dev server; open it in Expo Go
 
 | Folder | What it is |
 | --- | --- |
-| [`packages/tokens`](packages/tokens) | `tandemui-tokens`: the theme file, color engine and contrast tests |
-| [`packages/ui`](packages/ui) | `tandemui`: components, `ThemeProvider` and `createTheme` |
+| [`packages/tokens`](packages/tokens) | `@moksha-ui/tokens`: the theme file, color engine and contrast tests |
+| [`packages/ui`](packages/ui) | `@moksha-ui/core`: components, `ThemeProvider` and `createTheme` |
 | [`apps/docs`](apps/docs) | Storybook for the web components, with a light/dark switch and the theme builder |
 | [`apps/native-demo`](apps/native-demo) | Expo app using the same components on iOS and Android |
 

@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
-import { ThemeProvider, type ColorScheme } from 'tandemui';
+import { ThemeProvider, type ColorScheme } from '@moksha-ui/core';
 
 const preview: Preview = {
   globalTypes: {

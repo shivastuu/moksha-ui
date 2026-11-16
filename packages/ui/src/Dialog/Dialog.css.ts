@@ -1,4 +1,4 @@
-import { foundations } from 'tandemui-tokens';
+import { foundations } from '@moksha-ui/tokens';
 
 /** Sheet layout, for `.ds-dialog--sheet` and for `.ds-dialog--auto` on small screens */
 const sheet = (selector: string) => `

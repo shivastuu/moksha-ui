@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { FontWeightName, TextStyleName } from 'tandemui-tokens';
+import type { FontWeightName, TextStyleName } from '@moksha-ui/tokens';
 
 export type TextTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';
 

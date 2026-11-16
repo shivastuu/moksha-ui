@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, View } from 'react-native';
-import { alpha } from 'tandemui-tokens';
+import { alpha } from '@moksha-ui/tokens';
 import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { useTheme } from '../theme/context';
 import { skeletonBlocks, skeletonColors, type SkeletonProps } from './Skeleton.shared';

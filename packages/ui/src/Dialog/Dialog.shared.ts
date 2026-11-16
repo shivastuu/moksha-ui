@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { alpha, type SemanticColors } from 'tandemui-tokens';
+import { alpha, type SemanticColors } from '@moksha-ui/tokens';
 
 export type DialogPresentation = 'auto' | 'dialog' | 'sheet';
 

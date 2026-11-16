@@ -1,4 +1,4 @@
-import { hexToOklch, mix, type SemanticColors } from 'tandemui-tokens';
+import { hexToOklch, mix, type SemanticColors } from '@moksha-ui/tokens';
 
 export interface SkeletonProps {
   /** `text` draws `lines` of text, `rect` a block, `circle` an avatar @default 'text' */

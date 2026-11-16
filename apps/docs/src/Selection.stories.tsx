@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Checkbox, Divider, RadioGroup, SegmentedControl, Stack, Surface, Switch, Text } from 'tandemui';
+import { Checkbox, Divider, RadioGroup, SegmentedControl, Stack, Surface, Switch, Text } from '@moksha-ui/core';
 
 const meta = { title: 'Components/Selection' } satisfies Meta;
 

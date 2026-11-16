@@ -1,5 +1,5 @@
 {
-  "name": "tandem-ui",
+  "name": "moksha-ui",
   "private": true,
   "workspaces": [
     "packages/tokens",
@@ -7,9 +7,9 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build -w tandemui-tokens -w tandemui",
-    "test": "npm test -w tandemui-tokens -w tandemui",
-    "typecheck": "npm run typecheck -w tandemui-tokens -w tandemui",
+    "build": "npm run build -w @moksha-ui/tokens -w @moksha-ui/core",
+    "test": "npm test -w @moksha-ui/tokens -w @moksha-ui/core",
+    "typecheck": "npm run typecheck -w @moksha-ui/tokens -w @moksha-ui/core",
     "storybook": "npm run storybook -w docs",
     "native": "npm start -w native-demo"
   },

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { components, themes } from 'tandemui-tokens';
+import { components, themes } from '@moksha-ui/tokens';
 import { fieldColors } from './TextField.shared';
 import {
   AccountNumberField,

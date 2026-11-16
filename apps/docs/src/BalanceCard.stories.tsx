@@ -6,7 +6,7 @@ import {
   Surface,
   ThemeProvider,
   palette,
-} from "tandemui";
+} from "@moksha-ui/core";
 
 const Icon = ({ children }: { children: ReactNode }) => (
   <svg

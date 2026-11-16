@@ -11,7 +11,7 @@ import {
   readableTextOn,
   type ColorScheme,
   type ThemeDefinition,
-} from 'tandemui';
+} from '@moksha-ui/core';
 
 const exampleBrandColors = [palette.brand[600], '#0E9F7A', '#18181B', '#FF6B2C', '#E11D48', '#FACC15'];
 

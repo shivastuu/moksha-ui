@@ -10,7 +10,7 @@ describe('BankCard (web)', () => {
   it('reads as one image with the details that matter', () => {
     render(<BankCard {...card} frozen />);
     expect(screen.getByRole('img').getAttribute('aria-label')).toBe(
-      'Tandem card ending in 4821, Shivastu Shrivastava, expires 08/29, frozen'
+      'Moksha card ending in 4821, Shivastu Shrivastava, expires 08/29, frozen'
     );
   });
 

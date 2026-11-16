@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { contrastRatio, themes } from 'tandemui-tokens';
+import { contrastRatio, themes } from '@moksha-ui/tokens';
 import { Avatar, AvatarGroup, Link, ProgressBar, ProgressRing } from './index';
 import { avatarColors, initials } from './Avatar/Avatar.shared';
 
