@@ -1,0 +1,10 @@
+node_modules/
+lib/
+dist/
+*.tsbuildinfo
+.DS_Store
+storybook-static/
+.expo/
+ios/
+android/
+coverage/

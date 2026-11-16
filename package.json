@@ -1,0 +1,27 @@
+{
+  "name": "design-system",
+  "private": true,
+  "workspaces": [
+    "packages/tokens",
+    "packages/ui",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @shivastu/tokens -w @shivastu/ui",
+    "test": "npm test -w @shivastu/tokens -w @shivastu/ui",
+    "typecheck": "npm run typecheck -w @shivastu/tokens -w @shivastu/ui",
+    "storybook": "npm run storybook -w docs",
+    "native": "npm start -w native-demo"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "~19.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
+    "typescript": "~6.0.3"
+  }
+}
