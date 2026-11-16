@@ -19,9 +19,9 @@ describe('TextField (web)', () => {
     const onChangeText = vi.fn();
     render(<TextField label="Full name" onChangeText={onChangeText} />);
     const input = screen.getByLabelText('Full name') as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'Asha' } });
-    expect(input.value).toBe('Asha');
-    expect(onChangeText).toHaveBeenLastCalledWith('Asha');
+    fireEvent.change(input, { target: { value: 'Shivastu' } });
+    expect(input.value).toBe('Shivastu');
+    expect(onChangeText).toHaveBeenLastCalledWith('Shivastu');
   });
 
   it('links helper text, and switches to the error state with the error message', () => {

@@ -10,3 +10,4 @@ export {
   type Oklch,
   type ScaleStep,
 } from './color.ts';
+export { springCurve, type Spring } from './spring.ts';

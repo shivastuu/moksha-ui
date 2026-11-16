@@ -16,7 +16,7 @@ const field = (name: string) => screen.getByRole('textbox', { name });
 const type = (name: string, value: string) => fireEvent.change(field(name), { target: { value } });
 
 function fillValid() {
-  type('Payee name', 'Asha Rao');
+  type('Payee name', 'Shivastu Shrivastava');
   type('Mobile number', '98765 43210');
   type('Account number', '123456789012');
   type('Confirm account number', '123456789012');
@@ -38,7 +38,7 @@ describe('validateForm', () => {
       { name: 'j', type: 'otp', label: 'OTP', length: 4 },
       { name: 'k', type: 'text', label: 'PAN', validate: (value) => (/^[A-Z]{5}\d{4}[A-Z]$/.test(value) ? undefined : 'Enter a valid PAN') },
     ]);
-    const values = { a: '', b: '', c: 'asha@', d: '12345', e: '501234', f: '99.5', g: '5000000.01', h: '12345678', i: '87654321', j: '123', k: 'abcde1234f' };
+    const values = { a: '', b: '', c: 'shivastu@', d: '12345', e: '501234', f: '99.5', g: '5000000.01', h: '12345678', i: '87654321', j: '123', k: 'abcde1234f' };
     expect(validateForm(fields, values)).toEqual({
       a: 'Name is required',
       c: 'Enter a valid email address',
@@ -51,7 +51,7 @@ describe('validateForm', () => {
       k: 'Enter a valid PAN',
     });
     expect(validateForm(fields, { ...values, h: '123456789', i: '123456780' }).i).toBe('Must match Account');
-    expect(validateForm(fields, { a: 'Asha', c: 'asha@example.com', d: '9876543210', f: '100', h: '123456789', i: '123456789', j: '1234', k: 'ABCDE1234F' })).toEqual({});
+    expect(validateForm(fields, { a: 'Shivastu', c: 'shivastu@example.com', d: '9876543210', f: '100', h: '123456789', i: '123456789', j: '1234', k: 'ABCDE1234F' })).toEqual({});
   });
 });
 
@@ -84,7 +84,7 @@ describe('AutoForm (web)', () => {
   it('on submit with errors, shows them all and focuses the first one without calling onSubmit', () => {
     const onSubmit = vi.fn();
     render(<AutoForm fields={payee} onSubmit={onSubmit} />);
-    type('Payee name', 'Asha Rao');
+    type('Payee name', 'Shivastu Shrivastava');
     type('Account number', '123456789012');
     type('Confirm account number', '123456789000');
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -108,7 +108,7 @@ describe('AutoForm (web)', () => {
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onSubmit).toHaveBeenCalledWith({
-      name: 'Asha Rao',
+      name: 'Shivastu Shrivastava',
       mobile: '9876543210',
       account: '123456789012',
       confirm: '123456789012',

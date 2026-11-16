@@ -15,9 +15,9 @@ describe('TextField (native)', () => {
     const onChangeText = jest.fn();
     await render(<TextField label="Full name" onChangeText={onChangeText} testID="name" />);
     const input = screen.getByLabelText('Full name');
-    await fireEvent.changeText(input, 'Asha');
-    expect(onChangeText).toHaveBeenLastCalledWith('Asha');
-    expect(screen.getByTestId('name').props.value).toBe('Asha');
+    await fireEvent.changeText(input, 'Shivastu');
+    expect(onChangeText).toHaveBeenLastCalledWith('Shivastu');
+    expect(screen.getByTestId('name').props.value).toBe('Shivastu');
     expect(screen.getByText('Full name')).toBeTruthy();
   });
 

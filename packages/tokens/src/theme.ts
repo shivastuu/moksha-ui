@@ -10,6 +10,7 @@
  */
 
 import { alpha, contrastRatio, generateScale, parseHex, toHex, type ColorScale, type ScaleStep } from './color.ts';
+import type { Spring } from './spring.ts';
 
 export type ColorScheme = 'light' | 'dark';
 
@@ -73,6 +74,8 @@ export interface Foundations {
     scale: { pressed: number; enter: number; pop: number };
     /** Delay between items of a staggered list, in ms */
     stagger: number;
+    /** Physical springs: `snappy` for taps and toggles, `smooth` for movement, `bouncy` for playful moments */
+    spring: { snappy: Spring; smooth: Spring; bouncy: Spring };
   };
   /** Frosted glass: backdrop blur radius in px, and color saturation behind the glass */
   glass: { blur: Record<BlurToken, number>; saturation: number };
@@ -181,6 +184,14 @@ export interface Components {
   };
   /** Offer and announcement cards */
   promo: { radius: number; padding: number; minHeight: number };
+  /** The 3D payment card */
+  bankCard: {
+    radius: number;
+    padding: number;
+    maxWidth: number;
+    /** Largest tilt toward the pointer or finger, in degrees */
+    tilt: number;
+  };
 }
 
 /** A complete theme: what `createTheme` returns and `ThemeProvider` accepts */
@@ -274,6 +285,11 @@ export const foundations: Foundations = {
     distance: { sm: 4, md: 8, lg: 24 },
     scale: { pressed: 0.97, enter: 0.96, pop: 1.15 },
     stagger: 50,
+    spring: {
+      snappy: { stiffness: 400, damping: 30, mass: 1 },
+      smooth: { stiffness: 170, damping: 26, mass: 1 },
+      bouncy: { stiffness: 300, damping: 16, mass: 1 },
+    },
   },
   glass: { blur: { sm: 12, md: 24, lg: 40 }, saturation: 1.8 },
   zIndex: { base: 0, dropdown: 1000, overlay: 1100, modal: 1200, toast: 1300 },
@@ -394,6 +410,7 @@ export const components: Components = {
     tint: { background: 0.1, border: 0.3 },
   },
   promo: { radius: foundations.radius.xl, padding: foundations.space.xl, minHeight: 152 },
+  bankCard: { radius: 18, padding: foundations.space.xl, maxWidth: 360, tilt: 14 },
 };
 
 export const defaultTheme: ThemeDefinition = { foundations, components, themes };

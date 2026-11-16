@@ -14,7 +14,7 @@ export const Banners: Story = {
       <Banner title="New card on the way" action={{ label: 'Track', onPress: () => {} }}>
         It reaches you in 3 to 5 working days.
       </Banner>
-      <Banner tone="success" title="₹ 2,500.00 sent to Asha Rao">
+      <Banner tone="success" title="₹ 2,500.00 sent to Shivastu Shrivastava">
         UPI ref 4183 2290 1174
       </Banner>
       <Banner tone="warning" title="KYC pending" action={{ label: 'Complete KYC', onPress: () => {} }} onDismiss={() => {}}>

@@ -50,7 +50,7 @@ export const States: Story = {
   render: () => (
     <Stack>
       <TextField label="Full name" placeholder="As on your PAN card" />
-      <TextField label="Email" defaultValue="asha@example.com" helperText="Statements are sent here" />
+      <TextField label="Email" defaultValue="shivastu@example.com" helperText="Statements are sent here" />
       <TextField label="PAN" defaultValue="ABCDE1234" error="Enter a valid 10-character PAN" required />
       <TextField label="Customer ID" defaultValue="NY-20431" disabled />
       <TextField label="City" defaultValue="Pune" clearable />

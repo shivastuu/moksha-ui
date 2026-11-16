@@ -28,7 +28,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -322,6 +322,22 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 
 ![Promo banner on the brand gradient: Travel card, Pay abroad with zero forex markup, and a Get the card button](docs/images/promo.png)
 
+### Bank card
+
+![Three bank cards in brand, midnight and metal finishes; the middle one tilts in 3D toward the pointer](docs/images/bank-card.png)
+
+```tsx
+<BankCard last4="4821" holder="Shivastu Shrivastava" expiry="08/29" finish="midnight" />
+<BankCard {...card} flipped />  {/* the back: signature strip and CVV */}
+<BankCard {...card} frozen />   {/* frosted, says "Frozen" */}
+```
+
+- Tilts toward the pointer (web) or finger (React Native) with a spring, and catches the light: a glare follows the pointer and a holographic band shifts across the card.
+- Finishes: `brand` (follows your `createTheme` brand color), `midnight` and `metal`, with a gold chip, contactless mark and engraved pattern.
+- `flipped` turns it over with a spring; `frozen` frosts it. With reduced motion it stays flat and flips at once.
+- A card is a physical object, so it looks the same in light and dark mode. Screen readers hear one line: "Tandem card ending in 4821, Shivastu Shrivastava, expires 08/29".
+- Bring your own network mark through `network`; real network logos are trademarks.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -341,6 +357,7 @@ import { Motion, Stagger } from '@shivastu/ui';
 ```
 
 - Presets: `fade`, `fadeUp`, `fadeDown`, `scaleIn`, `slideUp`. Durations, easings, distances and the stagger interval are theme tokens, so `createTheme` can change them.
+- **Springs** (`snappy`, `smooth`, `bouncy`) are real physics: on the web they become CSS `linear()` easings (`var(--ds-spring-smooth)`), and on React Native the same stiffness and damping go to `Animated.spring`, so both platforms move the same way.
 - **Web:** CSS keyframes, with no JavaScript animation loop. **React Native:** `Animated` on the native driver, using the same easing curves as the web.
 - With reduced motion turned on (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), movement becomes a plain fade or is skipped.
 
@@ -472,6 +489,9 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] Motion: `Motion`, `Stagger` and built-in component animations
 - [x] AutoForm: build a whole form from a list of fields, with validation
 - [x] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner, PromoBanner
+- [x] Spring motion tokens and the 3D BankCard
+- [ ] Blocks: balance odometer, slide to pay, payment success, phone + OTP login, transactions feed
+- [ ] Showcase site with a live gallery, and one-command install (shadcn registry, llms.txt)
 - [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
 - [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar
 - [ ] Hosted Storybook and automated npm releases

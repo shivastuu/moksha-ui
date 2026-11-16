@@ -11,6 +11,7 @@ import {
   AutoForm,
   AmountField,
   Banner,
+  BankCard,
   BottomSheet,
   Button,
   Dialog,
@@ -142,6 +143,7 @@ export default function App() {
           </Text>
 
           <Stagger>
+            <BankCard last4="4821" holder="Shivastu Shrivastava" expiry="08/29" finish="midnight" />
             <View style={styles.backdrop}>
               <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
               <View style={[styles.blob, { backgroundColor: palette.brand[500], top: 10, right: -30 }]} />
