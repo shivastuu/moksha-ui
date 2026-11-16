@@ -16,6 +16,7 @@ import {
   Button,
   Dialog,
   PromoBanner,
+  RollingAmount,
   OtpField,
   PhoneField,
   SearchField,
@@ -150,7 +151,7 @@ export default function App() {
               <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
               <Surface variant="glass" padding="xl" radius="xl">
                 <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
-                <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>
+                <RollingAmount value={24580} size="lg" />
               </Surface>
             </View>
 
@@ -226,9 +227,4 @@ const styles = StyleSheet.create({
   form: { gap: space.lg },
   backdrop: { padding: space.xl, borderRadius: foundations.radius.xl, overflow: 'hidden' },
   blob: { position: 'absolute', width: 160, height: 160, borderRadius: 80, opacity: 0.9 },
-  amount: {
-    fontFamily: typography.fontFamily.native.semibold,
-    fontSize: typography.textStyles.heading.fontSize,
-    marginTop: space.xs,
-  },
 });

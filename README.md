@@ -28,7 +28,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -338,6 +338,19 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - A card is a physical object, so it looks the same in light and dark mode. Screen readers hear one line: "Tandem card ending in 4821, Shivastu Shrivastava, expires 08/29".
 - Bring your own network mark through `network`; real network logos are trademarks.
 
+### Rolling amount
+
+<img src="docs/images/rolling-amount.png" width="420" alt="Available balance ₹ 24,580.00 with the hundreds digit caught mid-roll between 4 and 5" />
+
+```tsx
+<RollingAmount value={balance} size="xl" hidden={hideBalance} />
+```
+
+- Each digit is a reel that rolls to its new value with the `smooth` spring, lower places first, so a change ripples across the number like a mechanical counter. Digits roll up from 0 when the amount first appears.
+- A digit keeps its reel as the number grows or shrinks: the units reel stays the units reel from 9,999 to 10,000.
+- `hidden` blurs the amount on the web and shows bullets on React Native, for a "hide balance" toggle. Screen readers hear "Balance hidden" instead of the digits.
+- Screen readers hear the amount once ("₹24,580.00"), never digit by digit. Indian grouping by default; `currency` and `decimals` change the rest.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -490,7 +503,8 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] AutoForm: build a whole form from a list of fields, with validation
 - [x] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner, PromoBanner
 - [x] Spring motion tokens and the 3D BankCard
-- [ ] Blocks: balance odometer, slide to pay, payment success, phone + OTP login, transactions feed
+- [x] RollingAmount (balance with rolling digits)
+- [ ] Blocks: slide to pay, payment success, phone + OTP login, transactions feed
 - [ ] Showcase site with a live gallery, and one-command install (shadcn registry, llms.txt)
 - [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
 - [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar

@@ -1,5 +1,6 @@
 import { springCurve, type ColorScheme, type ThemeDefinition } from '@shivastu/tokens';
 import { bankCardCss } from '../BankCard/BankCard.css';
+import { rollingAmountCss } from '../RollingAmount/RollingAmount.css';
 import { bankCardColors, bankCardFinishes } from '../BankCard/BankCard.shared';
 import { buttonCss } from '../Button/Button.css';
 import { fieldCss } from '../TextField/TextField.css';
@@ -100,4 +101,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss;
