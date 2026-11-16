@@ -11,6 +11,15 @@
     "components",
     "ui"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivastuu/tandem-ui.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://github.com/shivastuu/tandem-ui#readme",
+  "bugs": {
+    "url": "https://github.com/shivastuu/tandem-ui/issues"
+  },
   "sideEffects": false,
   "main": "./lib/module/index.js",
   "react-native": "./lib/module/index.native.js",

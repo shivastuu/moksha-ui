@@ -1,5 +1,5 @@
 {
-  "name": "design-system",
+  "name": "tandem-ui",
   "private": true,
   "workspaces": [
     "packages/tokens",

@@ -1,6 +1,8 @@
-# @shivastu/ui
+# Tandem UI
 
-A design system for **React and React Native from one package**. Same component API, same design tokens, native rendering on each platform: a real `<button>` with CSS on the web, `Pressable` and `StyleSheet` on iOS and Android.
+One design system for **React and React Native**, working in tandem: the same component API and the same design tokens, with native rendering on each platform. A real `<button>` with CSS on the web, `Pressable` and `StyleSheet` on iOS and Android. Light and dark themes, glass UI, accessible by default, and one-line brand theming.
+
+Published as `@shivastu/ui` (components) and `@shivastu/tokens` (design tokens).
 
 ```tsx
 import { Button, ThemeProvider } from '@shivastu/ui';

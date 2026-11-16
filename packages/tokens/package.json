@@ -9,6 +9,15 @@
     "react-native",
     "design-system"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivastuu/tandem-ui.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://github.com/shivastuu/tandem-ui#readme",
+  "bugs": {
+    "url": "https://github.com/shivastuu/tandem-ui/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
