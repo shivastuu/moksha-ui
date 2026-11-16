@@ -30,6 +30,17 @@ describe('Motion (web)', () => {
     expect(card.style.animationDelay).toBe('120ms');
   });
 
+  it('moves with a spring when asked, instead of the duration and easing tokens', () => {
+    render(
+      <Motion preset="slideUp" spring="smooth" duration="slow" testID="sheet">
+        Hi
+      </Motion>
+    );
+    const sheet = screen.getByTestId('sheet');
+    expect(sheet.style.animationDuration).toBe('var(--ds-spring-smooth-duration)');
+    expect(sheet.style.animationTimingFunction).toBe('var(--ds-spring-smooth)');
+  });
+
   it('staggers children by the theme interval, or the one given', () => {
     const { rerender } = render(
       <Stagger delay={100}>

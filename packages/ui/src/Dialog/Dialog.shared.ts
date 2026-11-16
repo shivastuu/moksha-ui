@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { alpha, type SemanticColors } from '@shivastu/tokens';
 
 export type DialogPresentation = 'auto' | 'dialog' | 'sheet';
 
@@ -20,3 +21,6 @@ export interface DialogProps {
 }
 
 export type BottomSheetProps = Omit<DialogProps, 'presentation'>;
+
+/** A hairline around the panel, so it keeps a crisp edge on any backdrop */
+export const dialogColors = ({ text }: SemanticColors) => ({ edge: alpha(text, 0.08) });

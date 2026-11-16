@@ -16,6 +16,8 @@ export interface MotionProps {
   duration?: keyof Foundations['motion']['duration'];
   /** Easing token @default 'enter' */
   easing?: keyof Foundations['motion']['easing'];
+  /** Moves with a physical spring instead, ignoring `duration` and `easing`. Feels the same on web and native */
+  spring?: keyof Foundations['motion']['spring'];
   /** Id for tests: `data-testid` on web, `testID` on native */
   testID?: string;
 }

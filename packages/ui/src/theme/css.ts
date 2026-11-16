@@ -4,6 +4,8 @@ import { rollingAmountCss } from '../RollingAmount/RollingAmount.css';
 import { bankCardColors, bankCardFinishes } from '../BankCard/BankCard.shared';
 import { buttonDepth } from '../Button/Button.shared';
 import { fieldColors } from '../TextField/TextField.shared';
+import { dialogColors } from '../Dialog/Dialog.shared';
+import { snackbarColors } from '../Snackbar/Snackbar.shared';
 import { iconButtonCss } from '../IconButton/IconButton.css';
 import { buttonCss } from '../Button/Button.css';
 import { fieldCss } from '../TextField/TextField.css';
@@ -95,7 +97,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
-    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
       promoColors(themes[name].colors)
     )}}`;

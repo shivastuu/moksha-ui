@@ -3,7 +3,7 @@ import { AccessibilityInfo, Pressable, Text, View } from 'react-native';
 import { Motion } from '../motion/Motion.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
-import { createSnackbarProvider, type SnackbarViewProps } from './Snackbar.shared';
+import { createSnackbarProvider, snackbarColors, type SnackbarViewProps } from './Snackbar.shared';
 
 function SnackbarView({ snackbar, onAction }: SnackbarViewProps) {
   const theme = useTheme();
@@ -27,7 +27,7 @@ function SnackbarView({ snackbar, onAction }: SnackbarViewProps) {
       // ponytail: fixed room for the home indicator; read safe-area insets if a design needs exact spacing
       style={{ position: 'absolute', left: space.lg, right: space.lg, bottom: tokens.offset + space.lg, alignItems: 'center' }}
     >
-      <Motion key={snackbar.id} preset="slideUp" duration="fast">
+      <Motion key={snackbar.id} preset="slideUp" spring="snappy">
         <View
           style={{
             flexDirection: 'row',
@@ -38,7 +38,7 @@ function SnackbarView({ snackbar, onAction }: SnackbarViewProps) {
             paddingHorizontal: space.lg,
             borderRadius: tokens.radius,
             backgroundColor: colors.surfaceInverse,
-            boxShadow: shadows.lg,
+            boxShadow: `${shadows.lg}, 0px 0px 0px 1px ${snackbarColors(colors).edge}`,
           }}
         >
           <Text style={[text, { flexShrink: 1 }]}>{snackbar.message}</Text>

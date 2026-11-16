@@ -2,7 +2,7 @@ import { Modal, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'r
 import { Motion } from '../motion/Motion.native';
 import { useTheme } from '../theme/context';
 import { textStyleFor } from '../theme/textStyle';
-import type { BottomSheetProps, DialogProps } from './Dialog.shared';
+import { dialogColors, type BottomSheetProps, type DialogProps } from './Dialog.shared';
 
 /** A modal dialog. Android back and a tap outside close it, unless `dismissible` is false */
 export function Dialog({
@@ -35,7 +35,7 @@ export function Dialog({
           onPress={close}
           style={[StyleSheet.absoluteFill, { backgroundColor: colors.overlay }]}
         />
-        <Motion preset={sheet ? 'slideUp' : 'scaleIn'}>
+        <Motion preset={sheet ? 'slideUp' : 'scaleIn'} spring="smooth">
           <View
             testID={testID}
             accessibilityViewIsModal
@@ -51,7 +51,7 @@ export function Dialog({
               borderBottomLeftRadius: sheet ? 0 : modal.radius,
               borderBottomRightRadius: sheet ? 0 : modal.radius,
               backgroundColor: colors.surfaceRaised,
-              boxShadow: shadows.lg,
+              boxShadow: `${shadows.lg}, 0px 0px 0px 1px ${dialogColors(colors).edge}`,
             }}
           >
             {sheet ? (

@@ -8,7 +8,7 @@ const between = (progress: Animated.Value, from: number, to: number) =>
   progress.interpolate({ inputRange: [0, 1], outputRange: [from, to] });
 
 /** Animates its content in when it mounts. Reduce Motion shows it right away */
-export function Motion({ children, preset = 'fadeUp', delay = 0, duration = 'normal', easing = 'enter', testID }: MotionProps) {
+export function Motion({ children, preset = 'fadeUp', delay = 0, duration = 'normal', easing = 'enter', spring, testID }: MotionProps) {
   const { motion } = useTheme();
   const reduced = useReducedMotion();
   const progress = useRef(new Animated.Value(0)).current;
@@ -21,16 +21,18 @@ export function Motion({ children, preset = 'fadeUp', delay = 0, duration = 'nor
       progress.setValue(1);
       return;
     }
-    const animation = Animated.timing(progress, {
-      toValue: 1,
-      duration: motion.duration[duration],
-      delay,
-      easing: Easing.bezier(...parseCubicBezier(motion.easing[easing])),
-      useNativeDriver: true,
-    });
+    const animation = spring
+      ? Animated.spring(progress, { toValue: 1, ...motion.spring[spring], delay, useNativeDriver: true })
+      : Animated.timing(progress, {
+          toValue: 1,
+          duration: motion.duration[duration],
+          delay,
+          easing: Easing.bezier(...parseCubicBezier(motion.easing[easing])),
+          useNativeDriver: true,
+        });
     animation.start();
     return () => animation.stop();
-  }, [reduced, progress, motion, duration, delay, easing]);
+  }, [reduced, progress, motion, duration, delay, easing, spring]);
 
   const from = presetFrom(preset, motion);
 

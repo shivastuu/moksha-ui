@@ -8,7 +8,7 @@ function SnackbarView({ snackbar, onAction, onPause, onResume }: SnackbarViewPro
     // The live region stays in the page, so screen readers announce each new message
     <div className="ds-snackbar-region" role="status" aria-live="polite">
       {snackbar && (
-        <Motion key={snackbar.id} preset="slideUp" duration="fast">
+        <Motion key={snackbar.id} preset="slideUp" spring="snappy">
           <div
             className="ds-snackbar"
             onMouseEnter={onPause}

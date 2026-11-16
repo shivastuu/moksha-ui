@@ -402,7 +402,7 @@ export const components: Components = {
     handleHeight: 4,
   },
   snackbar: {
-    radius: foundations.radius.md,
+    radius: foundations.radius.xl,
     padding: foundations.space.md,
     maxWidth: 560,
     offset: foundations.space.lg,

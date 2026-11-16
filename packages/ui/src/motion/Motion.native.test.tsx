@@ -35,6 +35,19 @@ describe('Motion (native)', () => {
     ]);
   });
 
+  it('moves with the theme spring when asked', async () => {
+    reduceMotion(false);
+    const spring = jest.spyOn(Animated, 'spring');
+    await render(
+      <Motion preset="slideUp" spring="bouncy" delay={40}>
+        <Text>Hi</Text>
+      </Motion>
+    );
+    await settle();
+    expect(timing).not.toHaveBeenCalled();
+    expect(spring).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, delay: 40, ...motion.spring.bouncy }));
+  });
+
   it('shows content right away when Reduce Motion is on', async () => {
     reduceMotion(true);
     await render(

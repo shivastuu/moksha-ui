@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ComponentType, type ReactNode } from 'react';
+import { alpha, type SemanticColors } from '@shivastu/tokens';
 import { useTheme } from '../theme/context';
 
 export interface SnackbarOptions {
@@ -95,3 +96,9 @@ export function createSnackbarProvider(View: ComponentType<SnackbarViewProps>) {
     );
   };
 }
+
+/** A frosted dark pill with a light hairline, legible over anything */
+export const snackbarColors = ({ surfaceInverse, textInverse }: SemanticColors) => ({
+  fill: alpha(surfaceInverse, 0.88),
+  edge: alpha(textInverse, 0.12),
+});
