@@ -2,6 +2,7 @@ import { Animated, Pressable, Text, View } from 'react-native';
 import { usePop, usePressScale } from '../motion/nativeMotion.native';
 import { useTheme } from '../theme/context';
 import { fontFor } from '../theme/textStyle';
+import { controlColors } from '../utils/controls';
 import { chipColors, type ChipProps } from './Chip.shared';
 
 /** A check mark drawn as the corner of a rotated box, popping in */
@@ -51,7 +52,7 @@ export function Chip({ label, selected = false, onSelectedChange, icon, disabled
           borderRadius: radius.full,
           borderWidth: borderWidth.thin,
           borderColor: selected ? chipColors(colors).selectedBorder : colors.border,
-          backgroundColor: selected ? colors.primarySubtle : colors.background,
+          backgroundColor: selected ? controlColors(colors).selectedFill : colors.background,
           boxShadow: shadows.sm,
           opacity: disabled ? opacity.disabled : 1,
         }}

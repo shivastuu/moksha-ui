@@ -189,6 +189,10 @@ export interface Components {
   /** Count and dot badges */
   badge: { size: number; dot: number };
   avatar: { sizes: Record<'sm' | 'md' | 'lg' | 'xl', number> };
+  /** Switch track and thumb, iOS proportions */
+  switch: { width: number; height: number; thumb: number };
+  checkbox: { size: number; radius: number };
+  segmented: { height: number };
   /** Progress bar heights and the ring's default size and stroke */
   progress: { bar: Record<'sm' | 'md', number>; ring: { size: number; thickness: number } };
   /** Round icon-only buttons */
@@ -424,6 +428,9 @@ export const components: Components = {
   iconButton: { sizes: { sm: 32, md: 40, lg: 52 } },
   badge: { size: 20, dot: 10 },
   avatar: { sizes: { sm: 28, md: 36, lg: 44, xl: 56 } },
+  switch: { width: 51, height: 31, thumb: 27 },
+  checkbox: { size: 20, radius: 6 },
+  segmented: { height: 36 },
   progress: { bar: { sm: 4, md: 8 }, ring: { size: 64, thickness: 6 } },
   bankCard: { radius: 18, padding: foundations.space.xl, maxWidth: 360, tilt: 14 },
 };

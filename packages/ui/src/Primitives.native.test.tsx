@@ -4,6 +4,7 @@ import { components, foundations, themes } from 'tandemui-tokens';
 import { fireEvent } from '@testing-library/react-native';
 import { Badge, Chip, Divider, Skeleton, Spinner, Stack, Tag, Text } from './index';
 import { chipColors } from './Chip/Chip.shared';
+import { controlColors } from './utils/controls';
 import { softTones, solidTones, textTones } from './utils/tones';
 
 const settle = () => act(async () => {});
@@ -77,6 +78,6 @@ describe('primitives (native)', () => {
     expect(onSelectedChange).toHaveBeenCalledWith(true);
     await rerender(<Chip label="Travel" selected onSelectedChange={onSelectedChange} testID="chip" />);
     expect(screen.getByRole('button', { name: 'Travel' }).props.accessibilityState).toMatchObject({ selected: true });
-    expect(screen.getByTestId('chip')).toHaveStyle({ borderColor: chipColors(themes.light.colors).selectedBorder, backgroundColor: themes.light.colors.primarySubtle });
+    expect(screen.getByTestId('chip')).toHaveStyle({ borderColor: chipColors(themes.light.colors).selectedBorder, backgroundColor: controlColors(themes.light.colors).selectedFill });
   });
 });

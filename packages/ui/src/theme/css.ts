@@ -20,6 +20,11 @@ import { progressBarCss } from '../ProgressBar/ProgressBar.css';
 import { progressColors } from '../ProgressBar/ProgressBar.shared';
 import { progressRingCss } from '../ProgressRing/ProgressRing.css';
 import { linkCss } from '../Link/Link.css';
+import { switchCss } from '../Switch/Switch.css';
+import { checkboxCss } from '../Checkbox/Checkbox.css';
+import { radioGroupCss } from '../RadioGroup/RadioGroup.css';
+import { segmentedCss } from '../SegmentedControl/SegmentedControl.css';
+import { controlColors } from '../utils/controls';
 import { softTones, solidTones, textTones } from '../utils/tones';
 import { snackbarColors } from '../Snackbar/Snackbar.shared';
 import { iconButtonCss } from '../IconButton/IconButton.css';
@@ -64,7 +69,7 @@ export function themeId(definition: ThemeDefinition) {
 export function themeCss(definition: ThemeDefinition, id: string) {
   const { foundations, components, themes } = definition;
   const { typography, space, radius, borderWidth, opacity, focusRing, motion, glass, zIndex } = foundations;
-  const { button, field, otp, modal, snackbar, banner, promo, bankCard, iconButton, badge, avatar, progress } = components;
+  const { button, field, otp, modal, snackbar, banner, promo, bankCard, iconButton, badge, avatar, progress, checkbox, segmented } = components;
   const card = bankCardColors(themes.light.colors);
   const label = typography.textStyles[field.labelStyle];
   const message = typography.textStyles[field.messageStyle];
@@ -106,6 +111,9 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     vars('badge', badge, px),
     vars('avatar', avatar.sizes, px),
     vars('progress-bar', progress.bar, px),
+    vars('switch', components.switch, px),
+    vars('checkbox', checkbox, px),
+    vars('segmented', segmented, px),
     ...Object.entries(typography.textStyles).map(
       ([name, style]) =>
         `--ds-text-${kebab(name)}-size:${style.fontSize}px;--ds-text-${kebab(name)}-line-height:${style.lineHeight}px;--ds-text-${kebab(name)}-weight:${typography.fontWeight[style.fontWeight]};`
@@ -120,7 +128,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
-    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('text-tone', textTones(themes[name].colors))}${vars('skeleton', skeletonColors(themes[name].colors))}${Object.entries(solidTones(themes[name].colors)).map(([tone, colors]) => vars(`badge-${tone}`, colors)).join('')}${Object.entries(softTones(themes[name].colors)).map(([tone, colors]) => vars(`tag-${tone}`, colors)).join('')}${vars('chip', chipColors(themes[name].colors))}${vars('progress', progressColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('text-tone', textTones(themes[name].colors))}${vars('skeleton', skeletonColors(themes[name].colors))}${Object.entries(solidTones(themes[name].colors)).map(([tone, colors]) => vars(`badge-${tone}`, colors)).join('')}${Object.entries(softTones(themes[name].colors)).map(([tone, colors]) => vars(`tag-${tone}`, colors)).join('')}${vars('chip', chipColors(themes[name].colors))}${vars('progress', progressColors(themes[name].colors))}${vars('control', controlColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
       promoColors(themes[name].colors)
     )}}`;
@@ -130,4 +138,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss;

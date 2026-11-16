@@ -553,7 +553,7 @@ npm run native       # Expo dev server; open it in Expo Go
 Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
-- **Selection and input:** [ ] Switch · [ ] Checkbox · [ ] RadioGroup · [ ] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
+- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
 - **Navigation:** [ ] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
 - **Lists and display:** [ ] ListItem · [ ] ListGroup · [ ] Accordion · [ ] StatCard · [ ] DetailRow · [ ] Timeline · [ ] EmptyState · [ ] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
 - **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [ ] ResendTimer
