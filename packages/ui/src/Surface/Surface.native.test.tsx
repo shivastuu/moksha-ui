@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 import { render, screen } from '@testing-library/react-native';
 import { Button, Surface, ThemeProvider, createTheme, foundations, themes } from '../index';
+import { surfaceColors } from './Surface.shared';
 
 function FakeBlurView({
   intensity,
@@ -51,7 +52,8 @@ describe('Surface (native)', () => {
     expect(card).toHaveStyle({
       backgroundColor: themes.dark.colors.glassSurface,
       borderColor: themes.dark.colors.glassBorder,
-      boxShadow: themes.dark.shadows.md,
+      boxShadow: `${themes.dark.shadows.md}, inset 0px 1px 0px ${surfaceColors(themes.dark.colors).highlight}`,
+      backgroundImage: surfaceColors(themes.dark.colors).sheen,
     });
   });
 

@@ -16,7 +16,14 @@ export function Surface({
   const style = {
     padding: `var(--ds-space-${padding})`,
     borderRadius: `var(--ds-radius-${radius})`,
-    boxShadow: resolvedShadow === 'none' ? undefined : `var(--ds-shadow-${resolvedShadow})`,
+    boxShadow:
+      [
+        resolvedShadow === 'none' ? '' : `var(--ds-shadow-${resolvedShadow})`,
+        variant === 'raised' ? '0 0 0 1px var(--ds-surface-edge)' : '',
+        variant === 'glass' ? 'inset 0 1px 0 var(--ds-surface-highlight)' : '',
+      ]
+        .filter(Boolean)
+        .join(', ') || undefined,
     '--ds-surface-blur': `var(--ds-glass-blur-${blur})`,
   } as CSSProperties;
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { BlurToken, RadiusToken, ShadowName, SpaceToken } from '@shivastu/tokens';
+import { alpha, hexToOklch, type BlurToken, type RadiusToken, type SemanticColors, type ShadowName, type SpaceToken } from '@shivastu/tokens';
 
 export type SurfaceVariant = 'solid' | 'raised' | 'glass';
 
@@ -21,4 +21,14 @@ export interface SurfaceProps {
 
 export function resolveShadow(variant: SurfaceVariant, shadow?: ShadowName | 'none') {
   return shadow ?? (variant === 'solid' ? 'none' : 'md');
+}
+
+/** A hairline edge for raised surfaces, and the light catching the top of glass. Near-white in both schemes */
+export function surfaceColors({ text, background }: SemanticColors) {
+  const light = hexToOklch(text).l > hexToOklch(background).l ? text : background;
+  return {
+    edge: alpha(text, 0.08),
+    highlight: alpha(light, 0.5),
+    sheen: `linear-gradient(180deg, ${alpha(light, 0.1)}, ${alpha(light, 0)} 45%)`,
+  };
 }

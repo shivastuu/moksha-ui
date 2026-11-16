@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useTheme } from '../theme/context';
-import { resolveShadow, type SurfaceProps } from './Surface.shared';
+import { resolveShadow, surfaceColors, type SurfaceProps } from './Surface.shared';
 
 export function Surface({
   children,
@@ -13,11 +13,16 @@ export function Surface({
 }: SurfaceProps) {
   const { colors, space, radius: radii, borderWidth, shadows, glass, blurView: BlurView, scheme } = useTheme();
   const resolvedShadow = resolveShadow(variant, shadow);
-  const base = {
-    padding: space[padding],
-    borderRadius: radii[radius],
-    boxShadow: resolvedShadow === 'none' ? undefined : shadows[resolvedShadow],
-  };
+  const edges = surfaceColors(colors);
+  const boxShadow =
+    [
+      resolvedShadow === 'none' ? '' : shadows[resolvedShadow],
+      variant === 'raised' ? `0px 0px 0px 1px ${edges.edge}` : '',
+      variant === 'glass' ? `inset 0px 1px 0px ${edges.highlight}` : '',
+    ]
+      .filter(Boolean)
+      .join(', ') || undefined;
+  const base = { padding: space[padding], borderRadius: radii[radius], boxShadow };
 
   if (variant === 'glass') {
     const glassStyle = {
@@ -25,6 +30,7 @@ export function Surface({
       borderWidth: borderWidth.thin,
       borderColor: colors.glassBorder,
       overflow: 'hidden' as const,
+      backgroundImage: edges.sheen,
     };
     return BlurView ? (
       <BlurView

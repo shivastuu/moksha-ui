@@ -23,7 +23,7 @@ describe('Surface (web)', () => {
     const card = screen.getByTestId('card');
     expect(card.className).toBe('ds-surface ds-surface--glass');
     expect(card.style.getPropertyValue('--ds-surface-blur')).toBe('var(--ds-glass-blur-lg)');
-    expect(card.style.boxShadow).toBe('var(--ds-shadow-md)');
+    expect(card.style.boxShadow).toBe('var(--ds-shadow-md), inset 0 1px 0 var(--ds-surface-highlight)');
   });
 
   it('ships glass styles with blur, saturation and a solid fallback', () => {
@@ -49,7 +49,8 @@ describe('Surface (web)', () => {
         </Surface>
       </>
     );
-    expect(screen.getByTestId('flat').style.boxShadow).toBe('');
+    // A raised surface keeps its hairline edge without a shadow
+    expect(screen.getByTestId('flat').style.boxShadow).toBe('0 0 0 1px var(--ds-surface-edge)');
     expect(screen.getByTestId('lifted').style.boxShadow).toBe('var(--ds-shadow-lg)');
   });
 });
