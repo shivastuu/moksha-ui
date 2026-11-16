@@ -184,6 +184,8 @@ export interface Components {
   };
   /** Offer and announcement cards */
   promo: { radius: number; padding: number; minHeight: number };
+  /** Round icon-only buttons */
+  iconButton: { sizes: Record<'sm' | 'md' | 'lg', number> };
   /** The 3D payment card */
   bankCard: {
     radius: number;
@@ -363,7 +365,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
 
 export const components: Components = {
   button: {
-    radius: foundations.radius.md,
+    // Pills: the shape people read as a tappable, premium button
+    radius: foundations.radius.full,
     borderWidth: foundations.borderWidth.thin,
     gap: foundations.space.sm,
     fontWeight: 'semibold',
@@ -410,6 +413,7 @@ export const components: Components = {
     tint: { background: 0.1, border: 0.3 },
   },
   promo: { radius: foundations.radius.xl, padding: foundations.space.xl, minHeight: 152 },
+  iconButton: { sizes: { sm: 32, md: 40, lg: 52 } },
   bankCard: { radius: 18, padding: foundations.space.xl, maxWidth: 360, tilt: 14 },
 };
 

@@ -2,6 +2,8 @@ import { springCurve, type ColorScheme, type ThemeDefinition } from '@shivastu/t
 import { bankCardCss } from '../BankCard/BankCard.css';
 import { rollingAmountCss } from '../RollingAmount/RollingAmount.css';
 import { bankCardColors, bankCardFinishes } from '../BankCard/BankCard.shared';
+import { buttonDepth } from '../Button/Button.shared';
+import { iconButtonCss } from '../IconButton/IconButton.css';
 import { buttonCss } from '../Button/Button.css';
 import { fieldCss } from '../TextField/TextField.css';
 import { otpCss } from '../OtpField/OtpField.css';
@@ -43,7 +45,7 @@ export function themeId(definition: ThemeDefinition) {
 export function themeCss(definition: ThemeDefinition, id: string) {
   const { foundations, components, themes } = definition;
   const { typography, space, radius, borderWidth, opacity, focusRing, motion, glass, zIndex } = foundations;
-  const { button, field, otp, modal, snackbar, banner, promo, bankCard } = components;
+  const { button, field, otp, modal, snackbar, banner, promo, bankCard, iconButton } = components;
   const card = bankCardColors(themes.light.colors);
   const label = typography.textStyles[field.labelStyle];
   const message = typography.textStyles[field.messageStyle];
@@ -81,6 +83,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `--ds-snackbar-radius:${snackbar.radius}px;--ds-snackbar-padding:${snackbar.padding}px;--ds-snackbar-max-width:${snackbar.maxWidth}px;--ds-snackbar-offset:${snackbar.offset}px;`,
     `--ds-banner-radius:${banner.radius}px;--ds-banner-padding:${banner.padding}px;--ds-banner-gap:${banner.gap}px;--ds-banner-icon-size:${banner.iconSize}px;`,
     vars('promo', promo, px),
+    vars('icon-button', iconButton.sizes, px),
     `--ds-bank-card-radius:${bankCard.radius}px;--ds-bank-card-padding:${bankCard.padding}px;--ds-bank-card-max-width:${bankCard.maxWidth}px;--ds-bank-card-tilt:${bankCard.tilt}deg;`,
     // A card is a physical object: its colors come from the light scheme in both schemes
     ...bankCardFinishes.map((finish) => vars(`bank-card-${finish}`, card[finish])),
@@ -91,7 +94,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
-    )}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+    )}${vars('button', buttonDepth(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
       promoColors(themes[name].colors)
     )}}`;
@@ -101,4 +104,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss;

@@ -23,7 +23,7 @@ describe('RollingAmount (native)', () => {
     expect(spring.mock.calls[0]?.[1]).toMatchObject(foundations.motion.spring.smooth);
   });
 
-  it('shows the digits at once with Reduce Motion, and bullets when hidden', async () => {
+  it('shows the digits at once with Reduce Motion, and rolls them to dots when hidden', async () => {
     jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(true);
     const spring = jest.spyOn(Animated, 'spring');
     const { rerender } = await render(<RollingAmount value={4821} decimals={0} />);
@@ -31,6 +31,11 @@ describe('RollingAmount (native)', () => {
     expect(spring).not.toHaveBeenCalled();
     await rerender(<RollingAmount value={4821} decimals={0} hidden />);
     expect(screen.getByLabelText('Balance hidden')).toBeTruthy();
-    expect(screen.getAllByText('•')).toHaveLength(4);
+    jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(false);
+    await rerender(<RollingAmount value={4821} decimals={0} key="moving" />);
+    await settle();
+    spring.mockClear();
+    await rerender(<RollingAmount value={4821} decimals={0} key="moving" hidden />);
+    expect(spring.mock.calls.map(([, config]) => config.toValue)).toEqual([10, 10, 10, 10]);
   });
 });

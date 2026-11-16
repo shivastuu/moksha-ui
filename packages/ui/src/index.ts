@@ -33,6 +33,8 @@ export { Banner } from './Banner/Banner.web';
 export type { BannerProps, BannerTone } from './Banner/Banner.shared';
 export { PromoBanner } from './PromoBanner/PromoBanner.web';
 export { BankCard } from './BankCard/BankCard.web';
+export { IconButton } from './IconButton/IconButton.web';
+export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './IconButton/IconButton.shared';
 export { RollingAmount } from './RollingAmount/RollingAmount.web';
 export type { RollingAmountProps, RollingAmountSize } from './RollingAmount/RollingAmount.shared';
 export type { BankCardFinish, BankCardProps } from './BankCard/BankCard.shared';

@@ -5,7 +5,7 @@ import { RollingAmount } from '../index';
 afterEach(cleanup);
 
 const digits = (container: HTMLElement) =>
-  [...container.querySelectorAll<HTMLElement>('.ds-amount__reel')].map((reel) => reel.style.getPropertyValue('--ds-digit'));
+  [...container.querySelectorAll<HTMLElement>('.ds-amount__reel')].map((reel) => reel.style.getPropertyValue('--ds-row'));
 
 describe('RollingAmount (web)', () => {
   it('says the whole amount once, with Indian grouping, and hides it on request', () => {

@@ -2,16 +2,19 @@ import { ActivityIndicator, Animated, Pressable, StyleSheet, Text } from 'react-
 import type { SemanticColors } from '@shivastu/tokens';
 import { usePressScale } from '../motion/nativeMotion.native';
 import { useTheme } from '../theme/context';
-import type { ButtonProps, ButtonVariant } from './Button.shared';
+import { buttonDepth, type ButtonProps, type ButtonVariant } from './Button.shared';
 
 function variantStyle(variant: ButtonVariant, colors: SemanticColors, pressed: boolean) {
+  const depth = buttonDepth(colors);
   if (variant === 'primary') {
-    return { backgroundColor: pressed ? colors.primaryPressed : colors.primary };
+    return pressed
+      ? { backgroundColor: colors.primaryPressed, boxShadow: depth.primaryShadow }
+      : { backgroundColor: colors.primary, backgroundImage: depth.primaryFill, boxShadow: depth.primaryShadow };
   }
-  return {
-    backgroundColor: pressed ? colors.primarySubtle : 'transparent',
-    borderColor: variant === 'secondary' ? colors.primary : 'transparent',
-  };
+  if (variant === 'secondary') {
+    return { backgroundColor: pressed ? depth.secondaryHover : colors.primarySubtle };
+  }
+  return { backgroundColor: pressed ? colors.primarySubtle : 'transparent' };
 }
 
 export function Button({

@@ -1,9 +1,9 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import { amountText, reelDigits, reels, spokenAmount, type RollingAmountProps } from './RollingAmount.shared';
+import { amountText, hiddenRow, reelDigits, reels, spokenAmount, type RollingAmountProps } from './RollingAmount.shared';
 
-/** An amount whose digits roll into place like a mechanical counter, with a blur for hiding the balance */
+/** An amount whose digits roll into place like a mechanical counter, and roll away into dots to hide the balance */
 export function RollingAmount(props: RollingAmountProps) {
   const { value, currency = '₹', decimals = 2, hidden, size = 'lg', rollOnMount = true, testID } = props;
   const { sign, grouped } = amountText(value, decimals);
@@ -22,14 +22,17 @@ export function RollingAmount(props: RollingAmountProps) {
           {currency}
         </span>
         <span className="ds-amount__digits">
-          {reels(grouped).map(({ char, place, digit }) =>
+          {reels(grouped).map(({ char, place, digit, fraction }) =>
             digit === null ? (
-              <span key={place} className="ds-amount__mark">
+              <span key={place} className={fraction ? 'ds-amount__mark ds-amount__fraction' : 'ds-amount__mark'}>
                 {char}
               </span>
             ) : (
-              <span key={place} className="ds-amount__digit">
-                <span className="ds-amount__reel" style={{ '--ds-digit': digit, '--ds-place': place } as CSSProperties}>
+              <span key={place} className={fraction ? 'ds-amount__digit ds-amount__fraction' : 'ds-amount__digit'}>
+                <span
+                  className="ds-amount__reel"
+                  style={{ '--ds-row': hidden ? hiddenRow : digit, '--ds-place': place } as CSSProperties}
+                >
                   {reelDigits.map((reelDigit) => (
                     <span key={reelDigit}>{reelDigit}</span>
                   ))}

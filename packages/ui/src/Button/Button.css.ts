@@ -13,10 +13,11 @@ export const buttonCss = `
 .ds-button:disabled:not([aria-busy=true]){opacity:var(--ds-opacity-disabled)}
 .ds-button[aria-busy=true]{cursor:progress}
 .ds-button--full{display:flex;width:100%}
-.ds-button--primary{background:var(--ds-color-primary);color:var(--ds-color-text-on-primary)}
+.ds-button--primary{background:var(--ds-button-primary-fill);box-shadow:var(--ds-button-primary-shadow);color:var(--ds-color-text-on-primary)}
+.ds-button--primary:disabled{box-shadow:none}
 .ds-button--primary:not(:disabled):hover,.ds-button--primary:not(:disabled):active{background:var(--ds-color-primary-pressed)}
-.ds-button--secondary{background:transparent;color:var(--ds-color-primary);border-color:var(--ds-color-primary)}
-.ds-button--secondary:not(:disabled):hover,.ds-button--secondary:not(:disabled):active{background:var(--ds-color-primary-subtle)}
+.ds-button--secondary{background:var(--ds-color-primary-subtle);color:var(--ds-color-primary)}
+.ds-button--secondary:not(:disabled):hover,.ds-button--secondary:not(:disabled):active{background:var(--ds-button-secondary-hover)}
 .ds-button--ghost{background:transparent;color:var(--ds-color-primary)}
 .ds-button--ghost:not(:disabled):hover,.ds-button--ghost:not(:disabled):active{background:var(--ds-color-primary-subtle)}
 ${sizes}
