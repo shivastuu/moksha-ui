@@ -24,6 +24,9 @@ import { switchCss } from '../Switch/Switch.css';
 import { checkboxCss } from '../Checkbox/Checkbox.css';
 import { radioGroupCss } from '../RadioGroup/RadioGroup.css';
 import { segmentedCss } from '../SegmentedControl/SegmentedControl.css';
+import { tabsCss } from '../Tabs/Tabs.css';
+import { listCss } from '../ListItem/ListItem.css';
+import { accordionCss } from '../Accordion/Accordion.css';
 import { controlColors } from '../utils/controls';
 import { softTones, solidTones, textTones } from '../utils/tones';
 import { snackbarColors } from '../Snackbar/Snackbar.shared';
@@ -114,6 +117,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     vars('switch', components.switch, px),
     vars('checkbox', checkbox, px),
     vars('segmented', segmented, px),
+    vars('tabs', components.tabs, px),
     ...Object.entries(typography.textStyles).map(
       ([name, style]) =>
         `--ds-text-${kebab(name)}-size:${style.fontSize}px;--ds-text-${kebab(name)}-line-height:${style.lineHeight}px;--ds-text-${kebab(name)}-weight:${typography.fontWeight[style.fontWeight]};`
@@ -138,4 +142,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss;

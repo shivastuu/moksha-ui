@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -390,6 +390,40 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **ProgressBar** springs its gradient fill to the value, or sweeps when the amount of work is unknown. **ProgressRing** is a circular gauge, drawn without SVG on React Native.
 - **Spinner** and **Skeleton** cover loading; the skeleton shimmer stops with reduced motion. **Link** fades its underline in on hover and marks external links for screen readers.
 
+### Lists and tabs
+
+<table>
+<tr>
+<td><img src="docs/images/list-settings.png" alt="Settings built from list groups: a profile row with an avatar, Preferences rows with values and chevrons, and Security rows with a switch, under a footer note" /></td>
+<td><img src="docs/images/tabs.png" alt="Dark mode tabs with a short underline under All, above a card of transactions with avatars, amounts and chevrons" /></td>
+</tr>
+<tr>
+<td colspan="2"><img src="docs/images/accordion.png" width="504" alt="A frequently asked questions accordion with the first answer open and a soft hover wash on the next question" /></td>
+</tr>
+</table>
+
+```tsx
+<ListGroup title="Security" footer="App lock asks for your device PIN each time you open the app.">
+  <ListItem title="App lock" trailing={<Switch accessibilityLabel="App lock" defaultChecked />} />
+  <ListItem title="Language" trailing="English" onPress={openLanguage} />
+</ListGroup>
+
+<Tabs
+  accessibilityLabel="Account activity"
+  items={[
+    { value: 'all', label: 'All', content: <Feed /> },
+    { value: 'upi', label: 'UPI', content: <Feed via="upi" /> },
+  ]}
+/>
+
+<Accordion items={faq} defaultValue={['limit']} />
+```
+
+- **ListItem** is a title with optional description, something before it (an avatar or logo) and a value or control after it. Give it `onPress` and the whole row becomes one button with a chevron that nudges on hover, named by its title and value ("Language, English").
+- **ListGroup** puts rows on one raised card. Each divider sits under the title, not the full width, whatever the row starts with, and the group is a real list for screen readers.
+- **Tabs** have an underline that slides and resizes to the selected tab on the same spring on web and native. Arrow keys, Home and End move between tabs, and the underline is kept at 3:1 contrast for every brand color.
+- **Accordion** opens to the content's real height on a spring (no fixed max-height), one section at a time or several with `multiple`. Closed sections are out of the tab order and hidden from screen readers.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -554,8 +588,8 @@ Every one ships for web and React Native, uses only theme tokens, and is tested 
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
 - **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
-- **Navigation:** [ ] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
-- **Lists and display:** [ ] ListItem · [ ] ListGroup · [ ] Accordion · [ ] StatCard · [ ] DetailRow · [ ] Timeline · [ ] EmptyState · [ ] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
+- **Navigation:** [x] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
+- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [ ] StatCard · [ ] DetailRow · [ ] Timeline · [ ] EmptyState · [ ] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
 - **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [ ] ResendTimer
 
 ## License

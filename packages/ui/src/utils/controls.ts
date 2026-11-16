@@ -19,5 +19,7 @@ export function controlColors(colors: SemanticColors) {
     switchOff: ensureContrast(mix(colors.text, colors.background, 0.2), colors.background, 3),
     boxBorder: ensureContrast(colors.border, colors.background, 3),
     segmentTrack: mix(colors.text, colors.background, 0.07),
+    // The active tab's underline: the brand color, adjusted to 3:1 on the page (WCAG 1.4.11)
+    indicator: ensureContrast(colors.primary, colors.background, 3),
   };
 }

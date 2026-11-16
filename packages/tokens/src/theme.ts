@@ -193,6 +193,8 @@ export interface Components {
   switch: { width: number; height: number; thumb: number };
   checkbox: { size: number; radius: number };
   segmented: { height: number };
+  /** Tab strip height (a 44px touch target) and the active underline's thickness */
+  tabs: { height: number; indicator: number };
   /** Progress bar heights and the ring's default size and stroke */
   progress: { bar: Record<'sm' | 'md', number>; ring: { size: number; thickness: number } };
   /** Round icon-only buttons */
@@ -431,6 +433,7 @@ export const components: Components = {
   switch: { width: 51, height: 31, thumb: 27 },
   checkbox: { size: 20, radius: 6 },
   segmented: { height: 36 },
+  tabs: { height: 44, indicator: 3 },
   progress: { bar: { sm: 4, md: 8 }, ring: { size: 64, thickness: 6 } },
   bankCard: { radius: 18, padding: foundations.space.xl, maxWidth: 360, tilt: 14 },
 };

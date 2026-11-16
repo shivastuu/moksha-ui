@@ -7,7 +7,9 @@ import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { BlurView } from 'expo-blur';
 import { useFonts } from 'expo-font';
 import {
+  Accordion,
   AccountNumberField,
+  Avatar,
   AutoForm,
   AmountField,
   Banner,
@@ -15,6 +17,8 @@ import {
   BottomSheet,
   Button,
   Dialog,
+  ListGroup,
+  ListItem,
   PromoBanner,
   RollingAmount,
   OtpField,
@@ -23,6 +27,8 @@ import {
   SnackbarProvider,
   Stagger,
   Surface,
+  Switch,
+  Tabs,
   TextField,
   ThemeProvider,
   defineFields,
@@ -52,6 +58,48 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
       </Text>
       <View style={styles.row}>{children}</View>
     </View>
+  );
+}
+
+const tap = () => {};
+
+function Lists() {
+  return (
+    <Section title="Lists">
+      <View style={[styles.form, { flex: 1 }]}>
+        <Tabs
+          accessibilityLabel="Account activity"
+          items={[
+            {
+              value: 'activity',
+              label: 'Activity',
+              content: (
+                <ListGroup>
+                  <ListItem title="Swiggy" description="UPI · Today, 1:24 pm" trailing="− ₹ 486.00" leading={<Avatar name="Swiggy" />} onPress={tap} />
+                  <ListItem title="Moksha Labs" description="Salary · 1 Nov" trailing="+ ₹ 1,02,400.00" leading={<Avatar name="Moksha Labs" />} onPress={tap} />
+                </ListGroup>
+              ),
+            },
+            {
+              value: 'settings',
+              label: 'Settings',
+              content: (
+                <ListGroup title="Security" footer="App lock asks for your device PIN each time you open the app.">
+                  <ListItem title="App lock" trailing={<Switch accessibilityLabel="App lock" defaultChecked />} />
+                  <ListItem title="Language" trailing="English" onPress={tap} />
+                </ListGroup>
+              ),
+            },
+          ]}
+        />
+        <Accordion
+          items={[
+            { value: 'limit', title: 'What is my daily UPI limit?', content: 'You can send up to ₹ 1,00,000 a day over UPI.' },
+            { value: 'fees', title: 'Are there any fees?', content: 'No. UPI payments from your account are free.' },
+          ]}
+        />
+      </View>
+    </Section>
   );
 }
 
@@ -196,6 +244,8 @@ export default function App() {
             </View>
 
             <Overlays />
+
+            <Lists />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>

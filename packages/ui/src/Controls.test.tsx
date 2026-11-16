@@ -1,14 +1,14 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { contrastRatio, createTheme, defaultTheme, type ColorScheme } from '@moksha-ui/tokens';
-import { Checkbox, RadioGroup, SegmentedControl, Switch } from './index';
+import { Checkbox, RadioGroup, SegmentedControl, Switch, Tabs } from './index';
 import { nextIndex } from './SegmentedControl/SegmentedControl.shared';
 import { controlColors } from './utils/controls';
 
 afterEach(cleanup);
 
 describe('control colors', () => {
-  it('meet WCAG 1.4.11 (3:1) for tracks, thumb and box borders in every theme', () => {
+  it('meet WCAG 1.4.11 (3:1) for tracks, thumb, box borders and the tab indicator in every theme', () => {
     const themes = [defaultTheme, ...['#E11D48', '#F97316', '#FACC15', '#84CC16', '#06B6D4', '#7C3AED', '#111111', '#F5F5F5'].map((brandColor) => createTheme({ brandColor }))];
     for (const theme of themes) {
       for (const scheme of ['light', 'dark'] as ColorScheme[]) {
@@ -17,6 +17,7 @@ describe('control colors', () => {
         expect(contrastRatio(look.thumb, look.switchOn), `thumb on, ${scheme}`).toBeGreaterThanOrEqual(3);
         expect(contrastRatio(look.switchOff, colors.background), `off track, ${scheme}`).toBeGreaterThanOrEqual(3);
         expect(contrastRatio(look.boxBorder, colors.background), `box border, ${scheme}`).toBeGreaterThanOrEqual(3);
+        expect(contrastRatio(look.indicator, colors.background), `tab indicator, ${scheme}`).toBeGreaterThanOrEqual(3);
       }
     }
   });
@@ -102,5 +103,51 @@ describe('SegmentedControl (web)', () => {
     fireEvent.keyDown(year, { key: 'ArrowRight' });
     expect(screen.getByRole('radio', { name: 'Week' }).getAttribute('aria-checked')).toBe('true');
     expect(container.querySelector<HTMLElement>('.ds-segmented__indicator')!.style.transform).toBe('translateX(0%)');
+  });
+});
+
+describe('Tabs (web)', () => {
+  const activity = [
+    { value: 'all', label: 'All', content: <p>Every transaction</p> },
+    { value: 'upi', label: 'UPI', content: <p>UPI only</p> },
+    { value: 'cards', label: 'Cards', content: <p>Card spends</p> },
+  ];
+
+  // jsdom has no layout: each tab sits 100px after the last and is 10px per letter wide
+  beforeEach(() => {
+    vi.stubGlobal('ResizeObserver', class { observe() {} disconnect() {} });
+    vi.spyOn(HTMLElement.prototype, 'offsetLeft', 'get').mockImplementation(function (this: HTMLElement) {
+      return [...this.parentElement!.children].indexOf(this) * 100;
+    });
+    vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockImplementation(function (this: HTMLElement) {
+      return this.textContent!.length * 10;
+    });
+  });
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it('follows the WAI-ARIA tabs pattern: one tabbable tab, arrow keys, a labelled panel', () => {
+    render(<Tabs items={activity} accessibilityLabel="Account activity" />);
+    expect(screen.getByRole('tablist', { name: 'Account activity' })).toBeTruthy();
+    const all = screen.getByRole('tab', { name: 'All' });
+    expect([all.getAttribute('aria-selected'), all.tabIndex, screen.getByRole('tab', { name: 'UPI' }).tabIndex]).toEqual(['true', 0, -1]);
+    expect(screen.getByRole('tabpanel', { name: 'All' }).textContent).toBe('Every transaction');
+    fireEvent.keyDown(all, { key: 'End' });
+    const cards = screen.getByRole('tab', { name: 'Cards' });
+    expect([cards.getAttribute('aria-selected'), document.activeElement]).toEqual(['true', cards]);
+    expect(screen.getByRole('tabpanel', { name: 'Cards' }).textContent).toBe('Card spends');
+    expect(cards.getAttribute('aria-controls')).toBe(screen.getByRole('tabpanel').id);
+  });
+
+  it('slides the underline to the measured position and width of the chosen tab', () => {
+    const onValueChange = vi.fn();
+    const { container } = render(<Tabs items={activity} accessibilityLabel="Account activity" onValueChange={onValueChange} />);
+    const bar = () => container.querySelector<HTMLElement>('.ds-tabs__indicator')!.style;
+    expect([bar().transform, bar().width]).toEqual(['translateX(0px)', '30px']);
+    fireEvent.click(screen.getByRole('tab', { name: 'Cards' }));
+    expect(onValueChange).toHaveBeenCalledWith('cards');
+    expect([bar().transform, bar().width]).toEqual(['translateX(200px)', '50px']);
   });
 });
