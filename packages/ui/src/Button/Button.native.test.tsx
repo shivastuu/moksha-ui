@@ -1,6 +1,6 @@
 import { Text } from 'react-native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { foundations, themes } from '@shivastu/tokens';
+import { foundations, themes } from 'tandemui-tokens';
 import { Button, ThemeProvider, useTheme } from '../index';
 
 function ThemeProbe() {

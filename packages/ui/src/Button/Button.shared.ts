@@ -1,4 +1,4 @@
-import { alpha, hexToOklch, mix, oklchToHex, type SemanticColors } from '@shivastu/tokens';
+import { alpha, hexToOklch, mix, oklchToHex, type SemanticColors } from 'tandemui-tokens';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 

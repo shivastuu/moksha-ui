@@ -1,4 +1,4 @@
-import { springCurve, type ColorScheme, type ThemeDefinition } from '@shivastu/tokens';
+import { springCurve, type ColorScheme, type ThemeDefinition } from 'tandemui-tokens';
 import { bankCardCss } from '../BankCard/BankCard.css';
 import { rollingAmountCss } from '../RollingAmount/RollingAmount.css';
 import { bankCardColors, bankCardFinishes } from '../BankCard/BankCard.shared';

@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, Motion, OtpField, Stagger, Surface, TextField, type MotionPreset } from '@shivastu/ui';
+import { Button, Motion, OtpField, Stagger, Surface, TextField, type MotionPreset } from 'tandemui';
 
 const presets: MotionPreset[] = ['fade', 'fadeUp', 'fadeDown', 'scaleIn', 'slideUp'];
 

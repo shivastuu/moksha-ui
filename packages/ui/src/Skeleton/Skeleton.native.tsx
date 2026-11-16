@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, View } from 'react-native';
-import { alpha } from '@shivastu/tokens';
+import { alpha } from 'tandemui-tokens';
 import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { useTheme } from '../theme/context';
 import { skeletonBlocks, skeletonColors, type SkeletonProps } from './Skeleton.shared';

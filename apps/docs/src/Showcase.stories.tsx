@@ -12,7 +12,7 @@ import {
   ThemeProvider,
   palette,
   type ColorScheme,
-} from '@shivastu/ui';
+} from 'tandemui';
 
 const backdrop = [
   `radial-gradient(circle at 12% 18%, ${palette.red[300]} 0, transparent 38%)`,

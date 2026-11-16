@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, RollingAmount, Surface } from '@shivastu/ui';
+import { Button, RollingAmount, Surface } from 'tandemui';
 
 const meta = {
   title: 'Blocks/Rolling amount',

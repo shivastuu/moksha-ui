@@ -6,7 +6,7 @@ import {
   type NativeFonts,
   type ResolvedTheme,
   type ThemeDefinition,
-} from '@shivastu/tokens';
+} from 'tandemui-tokens';
 
 /**
  * A blur view such as `BlurView` from expo-blur. Glass surfaces render it with

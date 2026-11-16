@@ -11,7 +11,7 @@ import {
   readableTextOn,
   type ColorScheme,
   type ThemeDefinition,
-} from '@shivastu/ui';
+} from 'tandemui';
 
 const exampleBrandColors = [palette.brand[600], '#0E9F7A', '#18181B', '#FF6B2C', '#E11D48', '#FACC15'];
 

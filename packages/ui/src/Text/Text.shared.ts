@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { FontWeightName, TextStyleName } from '@shivastu/tokens';
+import type { FontWeightName, TextStyleName } from 'tandemui-tokens';
 
 export type TextTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';
 

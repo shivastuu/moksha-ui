@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { BankCard, Button, type BankCardFinish } from '@shivastu/ui';
+import { BankCard, Button, type BankCardFinish } from 'tandemui';
 
 const meta = {
   title: 'Blocks/Bank card',

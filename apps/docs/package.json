@@ -7,7 +7,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@shivastu/ui": "*",
+    "tandemui": "*",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { AutoForm, Motion, Surface, defineFields, type AutoFormField } from '@shivastu/ui';
+import { AutoForm, Motion, Surface, defineFields, type AutoFormField } from 'tandemui';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

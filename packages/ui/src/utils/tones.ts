@@ -1,4 +1,4 @@
-import { alpha, ensureContrast, hexToOklch, mix, type SemanticColors } from '@shivastu/tokens';
+import { alpha, ensureContrast, hexToOklch, mix, type SemanticColors } from 'tandemui-tokens';
 
 export type Tone = 'primary' | 'success' | 'warning' | 'danger';
 

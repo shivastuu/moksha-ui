@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { mix, type SemanticColors } from '@shivastu/tokens';
+import { mix, type SemanticColors } from 'tandemui-tokens';
 
 export interface ChipProps {
   label: string;

@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { contrastRatio, createTheme, defaultTheme, type ColorScheme } from '@shivastu/tokens';
+import { contrastRatio, createTheme, defaultTheme, type ColorScheme } from 'tandemui-tokens';
 import { fireEvent } from '@testing-library/react';
 import { Badge, Chip, Divider, Skeleton, Spinner, Stack, Tag, Text } from './index';
 import { softTones, solidTones, textTones, tones } from './utils/tones';

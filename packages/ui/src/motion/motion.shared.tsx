@@ -1,7 +1,7 @@
 'use client';
 
 import { Children, isValidElement, type ComponentType, type ReactNode } from 'react';
-import type { Foundations } from '@shivastu/tokens';
+import type { Foundations } from 'tandemui-tokens';
 import { useTheme } from '../theme/context';
 
 export type MotionPreset = 'fade' | 'fadeUp' | 'fadeDown' | 'scaleIn' | 'slideUp';

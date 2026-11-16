@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Banner, BottomSheet, Button, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from '@shivastu/ui';
+import { Banner, BottomSheet, Button, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from 'tandemui';
 
 const meta = { title: 'Components/Overlays' } satisfies Meta;
 

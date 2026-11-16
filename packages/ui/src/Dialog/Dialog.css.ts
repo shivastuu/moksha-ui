@@ -1,4 +1,4 @@
-import { foundations } from '@shivastu/tokens';
+import { foundations } from 'tandemui-tokens';
 
 /** Sheet layout, for `.ds-dialog--sheet` and for `.ds-dialog--auto` on small screens */
 const sheet = (selector: string) => `

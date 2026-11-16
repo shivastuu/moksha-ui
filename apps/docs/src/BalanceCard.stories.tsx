@@ -6,7 +6,7 @@ import {
   Surface,
   ThemeProvider,
   palette,
-} from "@shivastu/ui";
+} from "tandemui";
 
 const Icon = ({ children }: { children: ReactNode }) => (
   <svg

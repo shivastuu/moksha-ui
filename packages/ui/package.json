@@ -1,7 +1,7 @@
 {
-  "name": "@shivastu/ui",
+  "name": "tandemui",
   "version": "0.1.0",
-  "description": "React and React Native components with one API, built on @shivastu/tokens",
+  "description": "React and React Native components with one API, built on tandemui-tokens",
   "license": "MIT",
   "author": "Shivastu Shrivastava <shivastuu@gmail.com>",
   "keywords": [
@@ -43,7 +43,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@shivastu/tokens": "^0.1.0"
+    "tandemui-tokens": "^0.1.0"
   },
   "peerDependencies": {
     "react": ">=19",

@@ -1,4 +1,4 @@
-import { mix, type SemanticColors } from '@shivastu/tokens';
+import { mix, type SemanticColors } from 'tandemui-tokens';
 import type { Tone } from '../utils/tones';
 
 export interface ProgressBarProps {

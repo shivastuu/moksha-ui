@@ -1,4 +1,4 @@
-import { alpha, ensureContrast, mix, oklchToHex, palette, type SemanticColors } from '@shivastu/tokens';
+import { alpha, ensureContrast, mix, oklchToHex, palette, type SemanticColors } from 'tandemui-tokens';
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 

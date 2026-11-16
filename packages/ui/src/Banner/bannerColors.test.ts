@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { components, contrastRatio, createTheme, defaultTheme, type ColorScheme } from '@shivastu/tokens';
+import { components, contrastRatio, createTheme, defaultTheme, type ColorScheme } from 'tandemui-tokens';
 import { bannerColors, bannerTones } from './Banner.shared';
 import { promoColors } from '../PromoBanner/PromoBanner.shared';
 

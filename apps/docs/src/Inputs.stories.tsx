@@ -12,7 +12,7 @@ import {
   TextField,
   isValidIndianMobile,
   palette,
-} from '@shivastu/ui';
+} from 'tandemui';
 
 function Stack({ children, width = 360 }: { children: ReactNode; width?: number }) {
   return <div style={{ display: 'grid', gap: 20, maxWidth: width }}>{children}</div>;

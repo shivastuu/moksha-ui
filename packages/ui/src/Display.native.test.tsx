@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Animated, Linking } from 'react-native';
-import { foundations } from '@shivastu/tokens';
+import { foundations } from 'tandemui-tokens';
 import { Avatar, AvatarGroup, Link, ProgressBar, ProgressRing } from './index';
 
 const settle = () => act(async () => {});

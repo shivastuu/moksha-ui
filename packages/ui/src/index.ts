@@ -114,4 +114,4 @@ export {
   type TextStyleName,
   type ThemeDefinition,
   type ThemeOptions,
-} from '@shivastu/tokens';
+} from 'tandemui-tokens';

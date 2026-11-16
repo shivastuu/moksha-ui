@@ -1,4 +1,4 @@
-import type { FontWeightName, TextStyleName } from '@shivastu/tokens';
+import type { FontWeightName, TextStyleName } from 'tandemui-tokens';
 import type { Theme } from './theme';
 
 /** React Native font props for a weight: the app's font family when given, otherwise the system font weight */

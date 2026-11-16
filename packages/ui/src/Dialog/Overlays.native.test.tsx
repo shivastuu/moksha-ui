@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Pressable, Text } from 'react-native';
-import { components, themes } from '@shivastu/tokens';
+import { components, themes } from 'tandemui-tokens';
 import { bannerColors } from '../Banner/Banner.shared';
 import { Banner, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from '../index';
 import { promoColors } from '../PromoBanner/PromoBanner.shared';

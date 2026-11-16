@@ -1,5 +1,5 @@
 import { ActivityIndicator, Animated, Pressable, StyleSheet, Text } from 'react-native';
-import type { SemanticColors } from '@shivastu/tokens';
+import type { SemanticColors } from 'tandemui-tokens';
 import { usePressScale } from '../motion/nativeMotion.native';
 import { useTheme } from '../theme/context';
 import { buttonDepth, type ButtonProps, type ButtonVariant } from './Button.shared';

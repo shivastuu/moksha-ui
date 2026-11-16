@@ -1,5 +1,5 @@
 import type { ReactNode, Ref } from 'react';
-import { alpha, mix, type SemanticColors } from '@shivastu/tokens';
+import { alpha, mix, type SemanticColors } from 'tandemui-tokens';
 
 export type TextFieldVariant = 'outline' | 'filled' | 'glass';
 

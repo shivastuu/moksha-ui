@@ -32,7 +32,7 @@ import {
   useSnackbar,
   useTheme,
   type ColorScheme,
-} from '@shivastu/ui';
+} from 'tandemui';
 
 const { space, typography } = foundations;
 
@@ -138,7 +138,7 @@ export default function App() {
           style={{ backgroundColor: themes[scheme].colors.background }}
           contentContainerStyle={styles.content}
         >
-          <Text style={[styles.title, { color: themes[scheme].colors.text }]}>@shivastu/ui</Text>
+          <Text style={[styles.title, { color: themes[scheme].colors.text }]}>Tandem UI</Text>
           <Text style={[styles.subtitle, { color: themes[scheme].colors.textMuted }]}>
             Same components and tokens as the web, rendered with React Native.
           </Text>

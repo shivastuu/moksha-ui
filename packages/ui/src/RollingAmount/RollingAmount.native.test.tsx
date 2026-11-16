@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Animated } from 'react-native';
-import { foundations } from '@shivastu/tokens';
+import { foundations } from 'tandemui-tokens';
 import { RollingAmount } from '../index';
 
 const settle = () => act(async () => {});

@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Animated, Text } from 'react-native';
-import { foundations } from '@shivastu/tokens';
+import { foundations } from 'tandemui-tokens';
 import { Button, Motion, TextField } from '../index';
 
 const { motion } = foundations;

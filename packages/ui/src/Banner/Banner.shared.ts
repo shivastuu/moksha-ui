@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { mix, readableTextOn, type Components, type SemanticColors } from '@shivastu/tokens';
+import { mix, readableTextOn, type Components, type SemanticColors } from 'tandemui-tokens';
 
 export type BannerTone = 'info' | 'success' | 'warning' | 'danger';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@shivastu/tokens",
+  "name": "tandemui-tokens",
   "version": "0.1.0",
   "description": "Design tokens (colors, typography, spacing, radius) for web and React Native",
   "license": "MIT",

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useTheme, type TextStyleName } from '@shivastu/ui';
+import { useTheme, type TextStyleName } from 'tandemui';
 
 function Heading({ children }: { children: ReactNode }) {
   return <h2 style={{ margin: '0 0 16px', fontSize: 20 }}>{children}</h2>;

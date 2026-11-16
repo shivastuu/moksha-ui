@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, View } from 'react-native';
-import { components, foundations, themes } from '@shivastu/tokens';
+import { components, foundations, themes } from 'tandemui-tokens';
 import { fireEvent } from '@testing-library/react-native';
 import { Badge, Chip, Divider, Skeleton, Spinner, Stack, Tag, Text } from './index';
 import { chipColors } from './Chip/Chip.shared';

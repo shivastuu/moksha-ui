@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Animated } from 'react-native';
-import { foundations, themes } from '@shivastu/tokens';
+import { foundations, themes } from 'tandemui-tokens';
 import { BankCard } from '../index';
 import { bankCardColors, bankCardFinishes } from './BankCard.shared';
 

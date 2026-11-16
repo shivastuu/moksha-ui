@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, Surface, palette } from '@shivastu/ui';
+import { Button, Surface, palette } from 'tandemui';
 
 function Backdrop({ children }: { children: ReactNode }) {
   return (

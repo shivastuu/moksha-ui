@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { alpha, mix, type SemanticColors } from '@shivastu/tokens';
+import { alpha, mix, type SemanticColors } from 'tandemui-tokens';
 
 export interface PromoBannerProps {
   /** Small label above the title, like "Travel card" */
