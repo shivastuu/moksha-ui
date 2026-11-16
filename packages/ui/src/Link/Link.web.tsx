@@ -13,7 +13,7 @@ export function Link({ children, href, onPress, external, tone = 'primary', unde
       rel={external ? 'noopener noreferrer' : undefined}
       data-testid={testID}
     >
-      {children}
+      <span className="ds-link__text">{children}</span>
       {external && (
         <>
           {/* A separate space, since a leading space inside the hidden text is dropped from the accessible name */}
