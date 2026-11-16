@@ -10,10 +10,14 @@ import {
   AccountNumberField,
   AutoForm,
   AmountField,
+  Banner,
+  BottomSheet,
   Button,
+  Dialog,
   OtpField,
   PhoneField,
   SearchField,
+  SnackbarProvider,
   Stagger,
   Surface,
   TextField,
@@ -22,6 +26,7 @@ import {
   foundations,
   palette,
   themes,
+  useSnackbar,
   useTheme,
   type ColorScheme,
 } from '@shivastu/ui';
@@ -47,6 +52,62 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+function Overlays() {
+  const snackbar = useSnackbar();
+  const [dialog, setDialog] = useState(false);
+  const [sheet, setSheet] = useState(false);
+  return (
+    <Section title="Overlays">
+      <View style={{ width: '100%' }}>
+        <Banner tone="warning" title="KYC pending" action={{ label: 'Complete KYC', onPress: () => {} }}>
+          Finish it to keep using your card.
+        </Banner>
+      </View>
+      <Button variant="secondary" onPress={() => setDialog(true)}>
+        Block card
+      </Button>
+      <Button variant="secondary" onPress={() => setSheet(true)}>
+        Pay from
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() => snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: () => {} } })}
+      >
+        Delete payee
+      </Button>
+      <Dialog
+        open={dialog}
+        onClose={() => setDialog(false)}
+        title="Block your card?"
+        actions={
+          <>
+            <Button variant="ghost" onPress={() => setDialog(false)}>
+              Cancel
+            </Button>
+            <Button
+              onPress={() => {
+                setDialog(false);
+                snackbar.show('Card blocked');
+              }}
+            >
+              Block card
+            </Button>
+          </>
+        }
+      >
+        Payments and withdrawals stop right away.
+      </Dialog>
+      <BottomSheet open={sheet} onClose={() => setSheet(false)} title="Pay from">
+        {['Savings •• 4821', 'Salary •• 1034'].map((name) => (
+          <Button key={name} fullWidth variant="secondary" onPress={() => setSheet(false)}>
+            {name}
+          </Button>
+        ))}
+      </BottomSheet>
+    </Section>
+  );
+}
+
 export default function App() {
   const system = useColorScheme();
   const [scheme, setScheme] = useState<ColorScheme>(system === 'dark' ? 'dark' : 'light');
@@ -64,80 +125,84 @@ export default function App() {
 
   return (
     <ThemeProvider colorScheme={scheme} fonts={typography.fontFamily.native} blurView={BlurView}>
-      <ScrollView
-        style={{ backgroundColor: themes[scheme].colors.background }}
-        contentContainerStyle={styles.content}
-      >
-        <Text style={[styles.title, { color: themes[scheme].colors.text }]}>@shivastu/ui</Text>
-        <Text style={[styles.subtitle, { color: themes[scheme].colors.textMuted }]}>
-          Same components and tokens as the web, rendered with React Native.
-        </Text>
+      <SnackbarProvider>
+        <ScrollView
+          style={{ backgroundColor: themes[scheme].colors.background }}
+          contentContainerStyle={styles.content}
+        >
+          <Text style={[styles.title, { color: themes[scheme].colors.text }]}>@shivastu/ui</Text>
+          <Text style={[styles.subtitle, { color: themes[scheme].colors.textMuted }]}>
+            Same components and tokens as the web, rendered with React Native.
+          </Text>
 
-        <Stagger>
-          <View style={styles.backdrop}>
-            <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
-            <View style={[styles.blob, { backgroundColor: palette.brand[500], top: 10, right: -30 }]} />
-            <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
-            <Surface variant="glass" padding="xl" radius="xl">
-              <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
-              <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>
-            </Surface>
-          </View>
+          <Stagger>
+            <View style={styles.backdrop}>
+              <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
+              <View style={[styles.blob, { backgroundColor: palette.brand[500], top: 10, right: -30 }]} />
+              <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
+              <Surface variant="glass" padding="xl" radius="xl">
+                <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
+                <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>
+              </Surface>
+            </View>
 
-          <Section title="Variants">
-            <Button variant="primary">Primary</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="ghost">Ghost</Button>
-          </Section>
+            <Section title="Variants">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="ghost">Ghost</Button>
+            </Section>
 
-          <Section title="Sizes">
-            <Button size="sm">Small</Button>
-            <Button size="md">Medium</Button>
-            <Button size="lg">Large</Button>
-          </Section>
+            <Section title="Sizes">
+              <Button size="sm">Small</Button>
+              <Button size="md">Medium</Button>
+              <Button size="lg">Large</Button>
+            </Section>
 
-          <Section title="States">
-            <Button loading>Paying</Button>
-            <Button disabled>Disabled</Button>
-          </Section>
+            <Section title="States">
+              <Button loading>Paying</Button>
+              <Button disabled>Disabled</Button>
+            </Section>
 
-          <View style={styles.form}>
-            <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Inputs</Text>
-            <SearchField label="Search transactions" placeholder="Search merchants or UPI IDs" />
-            <TextField label="Full name" placeholder="As on your PAN card" helperText="We use this on your card" />
-            <PhoneField label="Mobile number" />
-            <AmountField label="Amount" helperText="Max ₹ 50,00,000 per day" />
-            <AccountNumberField label="Account number" />
-            <OtpField label="Enter OTP" />
-            <TextField label="Glass field" variant="glass" placeholder="Over the backdrop" />
-          </View>
+            <View style={styles.form}>
+              <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Inputs</Text>
+              <SearchField label="Search transactions" placeholder="Search merchants or UPI IDs" />
+              <TextField label="Full name" placeholder="As on your PAN card" helperText="We use this on your card" />
+              <PhoneField label="Mobile number" />
+              <AmountField label="Amount" helperText="Max ₹ 50,00,000 per day" />
+              <AccountNumberField label="Account number" />
+              <OtpField label="Enter OTP" />
+              <TextField label="Glass field" variant="glass" placeholder="Over the backdrop" />
+            </View>
 
-          <View style={styles.form}>
-            <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>AutoForm</Text>
-            <AutoForm
-              fields={addPayee}
-              submitLabel="Add payee"
-              onSubmit={async (values) => {
-                await new Promise((resolve) => setTimeout(resolve, 800));
-                console.log(values);
-              }}
-            />
-          </View>
+            <View style={styles.form}>
+              <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>AutoForm</Text>
+              <AutoForm
+                fields={addPayee}
+                submitLabel="Add payee"
+                onSubmit={async (values) => {
+                  await new Promise((resolve) => setTimeout(resolve, 800));
+                  console.log(values);
+                }}
+              />
+            </View>
 
-          <Section title="Try it">
-            <Button fullWidth loading={paying} onPress={pay}>
-              {paying ? 'Paying' : 'Pay now'}
-            </Button>
-            <Button
-              fullWidth
-              variant="secondary"
-              onPress={() => setScheme(scheme === 'light' ? 'dark' : 'light')}
-            >
-              {`Switch to ${scheme === 'light' ? 'dark' : 'light'} mode`}
-            </Button>
-          </Section>
-        </Stagger>
-      </ScrollView>
+            <Overlays />
+
+            <Section title="Try it">
+              <Button fullWidth loading={paying} onPress={pay}>
+                {paying ? 'Paying' : 'Pay now'}
+              </Button>
+              <Button
+                fullWidth
+                variant="secondary"
+                onPress={() => setScheme(scheme === 'light' ? 'dark' : 'light')}
+              >
+                {`Switch to ${scheme === 'light' ? 'dark' : 'light'} mode`}
+              </Button>
+            </Section>
+          </Stagger>
+        </ScrollView>
+      </SnackbarProvider>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
     </ThemeProvider>
   );

@@ -28,7 +28,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -270,6 +270,48 @@ const fields = defineFields([
 
 </details>
 
+### Overlays
+
+<table>
+<tr>
+<td width="36%"><img src="docs/images/sheet.png" alt="On a phone, the Block your card dialog opens as a bottom sheet with a handle, a message, and Cancel and Block card buttons" /></td>
+<td><img src="docs/images/banners.png" alt="Info, success, warning and danger banners, with a title, a text action and a dismiss button" /></td>
+</tr>
+</table>
+
+```tsx
+<Dialog
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Block your card?"
+  actions={
+    <>
+      <Button variant="ghost" onPress={() => setOpen(false)}>Cancel</Button>
+      <Button onPress={blockCard}>Block card</Button>
+    </>
+  }
+>
+  Payments and withdrawals stop right away.
+</Dialog>
+
+<BottomSheet open={open} onClose={close} title="Pay from">…</BottomSheet>
+
+<Banner tone="warning" title="KYC pending" action={{ label: 'Complete KYC', onPress: openKyc }}>
+  Finish it by 30 November to keep using your card.
+</Banner>
+
+// Once, near the root:
+<SnackbarProvider><App /></SnackbarProvider>
+// Anywhere below:
+const snackbar = useSnackbar();
+snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: restore } });
+```
+
+- **Dialog** is centered on larger screens and becomes a bottom sheet on phones (`presentation="auto"`). On the web it uses the native `<dialog>` element, so focus stays inside, Escape closes it, the page behind can't be reached, and focus goes back to the button that opened it. On React Native it uses `Modal`, and Android back closes it. `dismissible={false}` keeps it open until an action is chosen.
+- **BottomSheet** always slides up from the bottom, with a handle.
+- **Snackbar** shows one message at a time and queues the rest. It hides after the theme's `snackbar.duration`, and on the web stays while the pointer is over it or it has keyboard focus. Screen readers announce every message.
+- **Banner** has four tones on the status colors. Only `danger` interrupts a screen reader; the others wait their turn.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -419,7 +461,7 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] Storybook docs, theme builder and Expo demo
 - [x] Motion: `Motion`, `Stagger` and built-in component animations
 - [x] AutoForm: build a whole form from a list of fields, with validation
-- [ ] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner
+- [x] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner
 - [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
 - [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar
 - [ ] Hosted Storybook and automated npm releases

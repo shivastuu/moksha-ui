@@ -4,6 +4,9 @@ import { fieldCss } from '../TextField/TextField.css';
 import { otpCss } from '../OtpField/OtpField.css';
 import { surfaceCss } from '../Surface/Surface.css';
 import { motionCss } from '../motion/motion.css';
+import { bannerCss } from '../Banner/Banner.css';
+import { dialogCss } from '../Dialog/Dialog.css';
+import { snackbarCss } from '../Snackbar/Snackbar.css';
 
 const kebab = (name: string) => name.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
 
@@ -34,7 +37,7 @@ export function themeId(definition: ThemeDefinition) {
 export function themeCss(definition: ThemeDefinition, id: string) {
   const { foundations, components, themes } = definition;
   const { typography, space, radius, borderWidth, opacity, focusRing, motion, glass, zIndex } = foundations;
-  const { button, field, otp } = components;
+  const { button, field, otp, modal, snackbar, banner } = components;
   const label = typography.textStyles[field.labelStyle];
   const message = typography.textStyles[field.messageStyle];
 
@@ -63,6 +66,9 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `--ds-field-message-font-size:${message.fontSize}px;--ds-field-message-line-height:${message.lineHeight}px;`,
     ...Object.entries(field.sizes).map(([size, m]) => vars(`field-${size}`, m, px)),
     vars('otp', otp, px),
+    vars('modal', modal, px),
+    `--ds-snackbar-radius:${snackbar.radius}px;--ds-snackbar-padding:${snackbar.padding}px;--ds-snackbar-max-width:${snackbar.maxWidth}px;--ds-snackbar-offset:${snackbar.offset}px;`,
+    vars('banner', banner, px),
   ].join('');
 
   const scheme = (name: ColorScheme) =>
@@ -75,4 +81,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 }
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
-export const componentCss = motionCss + buttonCss + surfaceCss + fieldCss + otpCss;
+export const componentCss = motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + dialogCss + snackbarCss;
