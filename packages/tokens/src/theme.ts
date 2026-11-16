@@ -188,6 +188,9 @@ export interface Components {
   promo: { radius: number; padding: number; minHeight: number };
   /** Count and dot badges */
   badge: { size: number; dot: number };
+  avatar: { sizes: Record<'sm' | 'md' | 'lg' | 'xl', number> };
+  /** Progress bar heights and the ring's default size and stroke */
+  progress: { bar: Record<'sm' | 'md', number>; ring: { size: number; thickness: number } };
   /** Round icon-only buttons */
   iconButton: { sizes: Record<'sm' | 'md' | 'lg', number> };
   /** The 3D payment card */
@@ -420,6 +423,8 @@ export const components: Components = {
   promo: { radius: foundations.radius.xl, padding: foundations.space.xl, minHeight: 152 },
   iconButton: { sizes: { sm: 32, md: 40, lg: 52 } },
   badge: { size: 20, dot: 10 },
+  avatar: { sizes: { sm: 28, md: 36, lg: 44, xl: 56 } },
+  progress: { bar: { sm: 4, md: 8 }, ring: { size: 64, thickness: 6 } },
   bankCard: { radius: 18, padding: foundations.space.xl, maxWidth: 360, tilt: 14 },
 };
 

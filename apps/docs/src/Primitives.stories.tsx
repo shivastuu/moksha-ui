@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Badge, Button, Chip, Divider, IconButton, Skeleton, Spinner, Stack, Surface, Tag, Text } from '@shivastu/ui';
+import { Avatar, AvatarGroup, Badge, Button, Chip, Divider, IconButton, Link, ProgressBar, ProgressRing, Skeleton, Spinner, Stack, Surface, Tag, Text } from '@shivastu/ui';
 
 const meta = { title: 'Components/Primitives' } satisfies Meta;
 
@@ -120,6 +120,51 @@ export const TagsAndChips: Story = {
           {filters.map((name) => (
             <Chip key={name} label={name} selected={chosen.includes(name)} onSelectedChange={() => toggle(name)} />
           ))}
+        </Stack>
+      </Stack>
+    );
+  },
+};
+
+const team = ['Shivastu Shrivastava', 'Asha Rao', 'Ravi Kumar', 'Meera Nair', 'Zoya Ali', 'Arjun Mehta', 'Kabir Singh'];
+
+export const PeopleAndProgress: Story = {
+  render: function PeopleStory() {
+    const [spent, setSpent] = useState(42);
+    return (
+      <Stack gap="xl" align="start">
+        <Stack direction="row" gap="lg" align="center">
+          <Avatar name="Shivastu Shrivastava" size="xl" status="online" />
+          <Avatar name="Asha Rao" size="lg" />
+          <Avatar name="Ravi Kumar" />
+          <Avatar name="Meera Nair" size="sm" status="busy" />
+          <AvatarGroup people={team.map((name) => ({ name }))} />
+        </Stack>
+        <div style={{ width: 360 }}>
+          <Surface variant="raised" padding="lg" radius="xl">
+            <Stack gap="md">
+              <Stack direction="row" justify="between" align="center">
+                <Text variant="label">Monthly budget</Text>
+                <Text variant="label" tone={spent > 80 ? 'danger' : 'muted'}>
+                  ₹{(spent * 500).toLocaleString('en-IN')} of ₹50,000
+                </Text>
+              </Stack>
+              <ProgressBar value={spent} label="Monthly budget used" tone={spent > 80 ? 'danger' : 'primary'} />
+              <ProgressBar label="Syncing transactions" size="sm" />
+            </Stack>
+          </Surface>
+        </div>
+        <Stack direction="row" gap="xl" align="center">
+          <ProgressRing value={spent} label="Budget used">
+            <Text variant="label">{spent}%</Text>
+          </ProgressRing>
+          <ProgressRing value={100} tone="success" label="KYC complete" size={48} thickness={5} />
+          <Button size="sm" variant="secondary" onPress={() => setSpent(Math.min(100, spent + 15))}>
+            Spend more
+          </Button>
+          <Link href="https://www.rbi.org.in" external>
+            RBI guidelines
+          </Link>
         </Stack>
       </Stack>
     );
