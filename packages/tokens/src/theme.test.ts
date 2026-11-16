@@ -68,3 +68,26 @@ test('every theme color and shadow is built from the palette, with no raw colors
     }
   }
 });
+
+test('createTheme uses the exact brand color when it is accessible, and a nearby shade when not', () => {
+  const ink = createTheme({ brandColor: '#18181B' });
+  assert.equal(ink.themes.light.colors.primary, '#18181B');
+  assert.notEqual(ink.themes.light.colors.primaryPressed, '#18181B');
+
+  const cobalt = createTheme({ brandColor: '#3355FF' });
+  assert.equal(cobalt.themes.light.colors.primary, '#3355FF');
+
+  const tangerine = createTheme({ brandColor: '#FF6B2C' });
+  assert.notEqual(tangerine.themes.light.colors.primary, '#FF6B2C');
+});
+
+test('createTheme handles brand colors at both ends of the scale', () => {
+  for (const brandColor of ['#FFFFFF', '#FAFAFA', '#000000', '#0A0A0A']) {
+    const theme = createTheme({ brandColor });
+    for (const scheme of ['light', 'dark'] as const) {
+      const { primary, primaryPressed } = theme.themes[scheme].colors;
+      assert.match(primary, /^#[0-9A-F]{6}$/);
+      assert.match(primaryPressed, /^#[0-9A-F]{6}$/);
+    }
+  }
+});

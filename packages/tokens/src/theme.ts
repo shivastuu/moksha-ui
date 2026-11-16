@@ -9,7 +9,7 @@
  * - `getTheme(scheme)` / `resolveTheme(theme, scheme)`: everything resolved for one color scheme.
  */
 
-import { alpha, contrastRatio, generateScale, type ColorScale, type ScaleStep } from './color.ts';
+import { alpha, contrastRatio, generateScale, parseHex, toHex, type ColorScale, type ScaleStep } from './color.ts';
 
 export type ColorScheme = 'light' | 'dark';
 
@@ -375,10 +375,15 @@ export function readableTextOn(background: string) {
     : palette.slate[950];
 }
 
-function primaryTokens(scale: ColorScale, scheme: ColorScheme, background: string) {
-  const candidates: ScaleStep[] = scheme === 'light' ? [600, 700, 800, 900] : [300, 200, 400, 100];
-  const pressedOf = (step: ScaleStep): ScaleStep =>
-    scheme === 'light' ? (Math.min(900, step + 100) as ScaleStep) : (Math.max(100, step - 100) as ScaleStep);
+function primaryTokens(scale: ColorScale, scheme: ColorScheme, background: string, brandStep?: ScaleStep) {
+  const fallbacks: ScaleStep[] = scheme === 'light' ? [600, 700, 800, 900] : [300, 200, 400, 100];
+  const candidates = brandStep ? [brandStep, ...fallbacks.filter((step) => step !== brandStep)] : fallbacks;
+  const steps: ScaleStep[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+  const pressedOf = (step: ScaleStep): ScaleStep => {
+    const index = steps.indexOf(step);
+    const next = scheme === 'light' ? index + 1 : index - 1;
+    return steps[next] ?? steps[scheme === 'light' ? index - 1 : index + 1]!;
+  };
   const subtle = scheme === 'light' ? scale[50] : scale[900];
 
   const pick =
@@ -414,10 +419,14 @@ function primaryTokens(scale: ColorScale, scheme: ColorScheme, background: strin
  */
 export function createTheme(options: ThemeOptions = {}): ThemeDefinition {
   const scale = options.brandColor ? generateScale(options.brandColor) : undefined;
+  const brandHex = options.brandColor ? toHex(parseHex(options.brandColor)) : undefined;
+  const brandStep = scale
+    ? (Object.keys(scale).map(Number) as ScaleStep[]).find((step) => scale[step] === brandHex)
+    : undefined;
 
   const schemeTokens = (scheme: ColorScheme): SchemeTokens => {
     const base = themes[scheme];
-    const brand = scale ? primaryTokens(scale, scheme, base.colors.background) : {};
+    const brand = scale ? primaryTokens(scale, scheme, base.colors.background, brandStep) : {};
     const overrides = options.colors?.[scheme] ?? {};
     const colors = { ...base.colors, ...brand, ...overrides };
     if (overrides.primary && !overrides.textOnPrimary) {
