@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, Surface } from '@shivastu/ui';
+import { Button, Surface, palette } from '@shivastu/ui';
 
 function Backdrop({ children }: { children: ReactNode }) {
   return (
@@ -10,8 +10,12 @@ function Backdrop({ children }: { children: ReactNode }) {
         padding: 32,
         borderRadius: 24,
         overflow: 'hidden',
-        background:
-          'radial-gradient(circle at 15% 25%, #ff7a59 0, transparent 35%), radial-gradient(circle at 80% 20%, #7158ee 0, transparent 40%), radial-gradient(circle at 55% 85%, #06b6d4 0, transparent 40%), var(--ds-color-background)',
+        background: [
+          `radial-gradient(circle at 15% 25%, ${palette.red[300]} 0, transparent 35%)`,
+          `radial-gradient(circle at 80% 20%, ${palette.violet[500]} 0, transparent 40%)`,
+          `radial-gradient(circle at 55% 85%, ${palette.green[300]} 0, transparent 40%)`,
+          'var(--ds-color-background)',
+        ].join(', '),
       }}
     >
       {children}

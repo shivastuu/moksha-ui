@@ -9,7 +9,7 @@
  * - `getTheme(scheme)` / `resolveTheme(theme, scheme)`: everything resolved for one color scheme.
  */
 
-import { contrastRatio, generateScale, type ColorScale, type ScaleStep } from './color.ts';
+import { alpha, contrastRatio, generateScale, type ColorScale, type ScaleStep } from './color.ts';
 
 export type ColorScheme = 'light' | 'dark';
 
@@ -236,8 +236,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       surface: palette.slate[50],
       surfaceRaised: palette.slate[0],
       surfaceInverse: palette.slate[900],
-      glassSurface: 'rgba(255, 255, 255, 0.6)',
-      glassBorder: 'rgba(255, 255, 255, 0.7)',
+      glassSurface: alpha(palette.slate[0], 0.6),
+      glassBorder: alpha(palette.slate[0], 0.7),
       text: palette.slate[900],
       textMuted: palette.slate[600],
       textOnPrimary: palette.slate[0],
@@ -250,12 +250,12 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       warning: palette.amber[500],
       danger: palette.red[500],
       focusRing: palette.violet[400],
-      overlay: 'rgba(13, 15, 20, 0.5)',
+      overlay: alpha(palette.slate[950], 0.5),
     },
     shadows: {
-      sm: '0px 1px 2px rgba(20, 23, 31, 0.08)',
-      md: '0px 4px 12px rgba(20, 23, 31, 0.12)',
-      lg: '0px 12px 32px rgba(20, 23, 31, 0.16)',
+      sm: `0px 1px 2px ${alpha(palette.slate[900], 0.08)}`,
+      md: `0px 4px 12px ${alpha(palette.slate[900], 0.12)}`,
+      lg: `0px 12px 32px ${alpha(palette.slate[900], 0.16)}`,
     },
   },
   dark: {
@@ -265,8 +265,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       surface: palette.slate[900],
       surfaceRaised: palette.slate[800],
       surfaceInverse: palette.slate[50],
-      glassSurface: 'rgba(35, 40, 51, 0.55)',
-      glassBorder: 'rgba(255, 255, 255, 0.12)',
+      glassSurface: alpha(palette.slate[800], 0.55),
+      glassBorder: alpha(palette.slate[0], 0.12),
       text: palette.slate[50],
       textMuted: palette.slate[400],
       textOnPrimary: palette.slate[950],
@@ -279,12 +279,12 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       warning: palette.amber[300],
       danger: palette.red[300],
       focusRing: palette.violet[300],
-      overlay: 'rgba(0, 0, 0, 0.6)',
+      overlay: alpha(palette.slate[950], 0.7),
     },
     shadows: {
-      sm: '0px 1px 2px rgba(0, 0, 0, 0.4)',
-      md: '0px 4px 12px rgba(0, 0, 0, 0.5)',
-      lg: '0px 12px 32px rgba(0, 0, 0, 0.6)',
+      sm: `0px 1px 2px ${alpha(palette.slate[950], 0.4)}`,
+      md: `0px 4px 12px ${alpha(palette.slate[950], 0.5)}`,
+      lg: `0px 12px 32px ${alpha(palette.slate[950], 0.6)}`,
     },
   },
 };

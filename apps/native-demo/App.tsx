@@ -11,6 +11,7 @@ import {
   Surface,
   ThemeProvider,
   foundations,
+  palette,
   themes,
   useTheme,
   type ColorScheme,
@@ -57,9 +58,9 @@ export default function App() {
         </Text>
 
         <View style={styles.backdrop}>
-          <View style={[styles.blob, { backgroundColor: '#FF7A59', top: -30, left: -20 }]} />
-          <View style={[styles.blob, { backgroundColor: '#7158EE', top: 10, right: -30 }]} />
-          <View style={[styles.blob, { backgroundColor: '#06B6D4', bottom: -40, left: 90 }]} />
+          <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
+          <View style={[styles.blob, { backgroundColor: palette.violet[500], top: 10, right: -30 }]} />
+          <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
           <Surface variant="glass" padding="xl" radius="xl">
             <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
             <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>

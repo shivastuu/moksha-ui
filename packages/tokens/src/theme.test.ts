@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { generateScale, hexToOklch, oklchToHex } from './color.ts';
-import { createTheme, defaultTheme, foundations, getTheme, readableTextOn, themes } from './theme.ts';
+import { createTheme, defaultTheme, foundations, getTheme, palette, readableTextOn, themes } from './theme.ts';
 
 test('hex survives a round trip through OKLCH', () => {
   for (const hex of ['#5B40DB', '#0E7C66', '#FACC15', '#000000', '#FFFFFF']) {
@@ -47,4 +47,24 @@ test('getTheme resolves foundations, components and scheme tokens together', () 
   assert.equal(dark.space.lg, 16);
   assert.equal(dark.components.button.sizes.md.height, 44);
   assert.equal(dark.glass.blur.md, 24);
+});
+
+test('every theme color and shadow is built from the palette, with no raw colors', () => {
+  const paletteHexes = new Set<string>(Object.values(palette).flatMap((scale) => Object.values(scale)));
+  const rgbaToHex = (r: string, g: string, b: string) =>
+    `#${[r, g, b].map((v) => Number(v).toString(16).padStart(2, '0')).join('').toUpperCase()}`;
+
+  for (const scheme of ['light', 'dark'] as const) {
+    const values = [...Object.values(themes[scheme].colors), ...Object.values(themes[scheme].shadows)];
+    for (const value of values) {
+      const used = [
+        ...(value.match(/#[0-9A-F]{6}/gi) ?? []).map((hex: string) => hex.toUpperCase()),
+        ...[...value.matchAll(/rgba\((\d+), (\d+), (\d+), [\d.]+\)/g)].map(([, r, g, b]) => rgbaToHex(r!, g!, b!)),
+      ];
+      assert.ok(used.length > 0, `${scheme}: "${value}" has no recognisable color`);
+      for (const color of used) {
+        assert.ok(paletteHexes.has(color), `${scheme}: ${color} in "${value}" is not a palette token`);
+      }
+    }
+  }
 });

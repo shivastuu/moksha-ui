@@ -30,6 +30,12 @@ export function toHex(rgb: Rgb) {
     .toUpperCase()}`;
 }
 
+/** A palette color with transparency, as `rgba(r, g, b, opacity)` */
+export function alpha(hex: string, opacity: number) {
+  const [r, g, b] = parseHex(hex).map((channel) => Math.round(channel * 255));
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
 const toLinear = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
 
 const toGamma = (c: number) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);

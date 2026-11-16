@@ -1,5 +1,6 @@
 export * from './theme.ts';
 export {
+  alpha,
   contrastRatio,
   generateScale,
   hexToOklch,

@@ -7,11 +7,13 @@ import {
   contrastRatio,
   createTheme,
   generateScale,
+  palette,
+  readableTextOn,
   type ColorScheme,
   type ThemeDefinition,
 } from '@shivastu/ui';
 
-const presets = ['#5B40DB', '#0E7C66', '#2563EB', '#E11D48', '#F97316', '#FACC15'];
+const exampleBrandColors = [palette.violet[600], '#0E7C66', '#2563EB', '#E11D48', '#F97316', '#FACC15'];
 
 function Preview({ theme, scheme }: { theme: ThemeDefinition; scheme: ColorScheme }) {
   const { colors } = theme.themes[scheme];
@@ -67,7 +69,7 @@ function ThemeBuilder() {
         <input
           type="color"
           aria-label="Brand color"
-          value={valid ? brandColor : '#000000'}
+          value={valid ? brandColor : palette.slate[950]}
           onChange={(event) => setBrandColor(event.target.value.toUpperCase())}
           style={{ width: 44, height: 36, border: 'none', background: 'none', padding: 0 }}
         />
@@ -77,7 +79,7 @@ function ThemeBuilder() {
           onChange={(event) => setBrandColor(event.target.value)}
           style={{ width: 110, padding: '8px 10px', borderRadius: 8, border: '1px solid var(--ds-color-border)', font: 'inherit' }}
         />
-        {presets.map((preset) => (
+        {exampleBrandColors.map((preset) => (
           <button
             key={preset}
             type="button"
@@ -91,7 +93,7 @@ function ThemeBuilder() {
       {scale && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', borderRadius: 12, overflow: 'hidden' }}>
           {Object.entries(scale).map(([step, hex]) => (
-            <div key={step} style={{ background: hex, padding: '28px 6px 8px', fontSize: 11, color: contrastRatio('#FFFFFF', hex) > 3 ? '#fff' : '#000' }}>
+            <div key={step} style={{ background: hex, padding: '28px 6px 8px', fontSize: 11, color: readableTextOn(hex) }}>
               <div style={{ fontWeight: 600 }}>{step}</div>
               <div>{hex}</div>
             </div>
