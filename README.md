@@ -506,9 +506,17 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] RollingAmount (balance with rolling digits)
 - [ ] Blocks: slide to pay, payment success, phone + OTP login, transactions feed
 - [ ] Showcase site with a live gallery, and one-command install (shadcn registry, llms.txt)
-- [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
-- [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar
 - [ ] Hosted Storybook and automated npm releases
+
+### Next 50 components
+
+Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
+
+- **Primitives:** [ ] Text · [ ] Stack · [ ] Divider · [ ] Spinner · [ ] Skeleton · [ ] Badge · [ ] Tag · [ ] Chip · [ ] Avatar · [ ] AvatarGroup · [ ] ProgressBar · [ ] ProgressRing · [ ] Link
+- **Selection and input:** [ ] Switch · [ ] Checkbox · [ ] RadioGroup · [ ] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
+- **Navigation:** [ ] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
+- **Lists and display:** [ ] ListItem · [ ] ListGroup · [ ] Accordion · [ ] StatCard · [ ] DetailRow · [ ] Timeline · [ ] EmptyState · [ ] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
+- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [ ] ResendTimer
 
 ## License
 
