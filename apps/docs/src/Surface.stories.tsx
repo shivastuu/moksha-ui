@@ -12,7 +12,7 @@ function Backdrop({ children }: { children: ReactNode }) {
         overflow: 'hidden',
         background: [
           `radial-gradient(circle at 15% 25%, ${palette.red[300]} 0, transparent 35%)`,
-          `radial-gradient(circle at 80% 20%, ${palette.violet[500]} 0, transparent 40%)`,
+          `radial-gradient(circle at 80% 20%, ${palette.brand[500]} 0, transparent 40%)`,
           `radial-gradient(circle at 55% 85%, ${palette.green[300]} 0, transparent 40%)`,
           'var(--ds-color-background)',
         ].join(', '),

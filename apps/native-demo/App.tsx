@@ -65,7 +65,7 @@ export default function App() {
 
         <View style={styles.backdrop}>
           <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
-          <View style={[styles.blob, { backgroundColor: palette.violet[500], top: 10, right: -30 }]} />
+          <View style={[styles.blob, { backgroundColor: palette.brand[500], top: 10, right: -30 }]} />
           <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
           <Surface variant="glass" padding="xl" radius="xl">
             <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>

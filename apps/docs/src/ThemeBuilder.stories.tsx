@@ -13,7 +13,7 @@ import {
   type ThemeDefinition,
 } from '@shivastu/ui';
 
-const exampleBrandColors = [palette.violet[600], '#0E7C66', '#2563EB', '#E11D48', '#F97316', '#FACC15'];
+const exampleBrandColors = [palette.brand[600], '#0E9F7A', '#18181B', '#FF6B2C', '#E11D48', '#FACC15'];
 
 function Preview({ theme, scheme }: { theme: ThemeDefinition; scheme: ColorScheme }) {
   const { colors } = theme.themes[scheme];

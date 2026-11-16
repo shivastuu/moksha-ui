@@ -14,7 +14,7 @@ export function parseHex(hex: string): Rgb {
   const value = hex.replace('#', '');
   const full = value.length === 3 ? [...value].map((char) => char + char).join('') : value;
   if (!/^[0-9a-f]{6}$/i.test(full)) {
-    throw new Error(`Expected a hex color like #5B40DB, received "${hex}"`);
+    throw new Error(`Expected a hex color like #3355FF, received "${hex}"`);
   }
   return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16) / 255) as Rgb;
 }

@@ -81,7 +81,7 @@ describe('ThemeProvider (web)', () => {
     const id = screen.getByText('One').closest('[data-ds-theme]')?.getAttribute('data-ds-theme');
     const css = document.querySelector(`style[data-href="shivastu-ui-theme-${id}"]`)?.textContent ?? '';
     expect(css).toContain(`[data-ds-theme="${id}"][data-ds-scheme=light]{color-scheme:light;`);
-    expect(css).toContain('--ds-color-primary:#5B40DB');
+    expect(css).toContain('--ds-color-primary:#3355FF');
     expect(css).toContain('--ds-space-lg:16px');
     expect(css).toContain('--ds-button-md-height:44px');
     expect(css).toContain('--ds-glass-blur-md:24px');

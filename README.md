@@ -47,7 +47,7 @@ Every design value lives in one file: [`packages/tokens/src/theme.ts`](packages/
 
 | Export | What it holds |
 | --- | --- |
-| `palette` | Raw color scales (violet, slate, green, amber, red). Components never use these directly. |
+| `palette` | Raw color scales: `brand` (Cobalt `#3355FF`), `slate`, `green`, `amber`, `red`. Components never use these directly. |
 | `themes.light` / `themes.dark` | Semantic `colors` and `shadows` for each color scheme |
 | `foundations` | `typography` (families, weights, sizes, line heights, letter spacing, `textStyles`), `space`, `radius`, `borderWidth`, `opacity`, `focusRing`, `motion`, `glass`, `zIndex`, `breakpoints` |
 | `components` | Component decisions built from the above (button sizes, radius, gap) |

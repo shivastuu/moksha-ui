@@ -66,7 +66,7 @@ export const Variants: Story = {
         borderRadius: 24,
         background: [
           `radial-gradient(circle at 15% 20%, ${palette.red[300]} 0, transparent 40%)`,
-          `radial-gradient(circle at 85% 70%, ${palette.violet[500]} 0, transparent 45%)`,
+          `radial-gradient(circle at 85% 70%, ${palette.brand[500]} 0, transparent 45%)`,
           'var(--ds-color-background)',
         ].join(', '),
       }}
