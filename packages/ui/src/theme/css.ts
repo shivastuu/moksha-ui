@@ -3,6 +3,7 @@ import { bankCardCss } from '../BankCard/BankCard.css';
 import { rollingAmountCss } from '../RollingAmount/RollingAmount.css';
 import { bankCardColors, bankCardFinishes } from '../BankCard/BankCard.shared';
 import { buttonDepth } from '../Button/Button.shared';
+import { fieldColors } from '../TextField/TextField.shared';
 import { iconButtonCss } from '../IconButton/IconButton.css';
 import { buttonCss } from '../Button/Button.css';
 import { fieldCss } from '../TextField/TextField.css';
@@ -74,7 +75,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     vars('z-index', zIndex),
     `--ds-button-radius:${button.radius}px;--ds-button-border-width:${button.borderWidth}px;--ds-button-gap:${button.gap}px;--ds-button-font-weight:${typography.fontWeight[button.fontWeight]};`,
     ...Object.entries(button.sizes).map(([size, m]) => vars(`button-${size}`, m, px)),
-    `--ds-field-radius:${field.radius}px;--ds-field-border-width:${field.borderWidth}px;--ds-field-gap:${field.gap}px;--ds-field-label-gap:${field.labelGap}px;--ds-field-message-gap:${field.messageGap}px;`,
+    `--ds-field-radius:${field.radius}px;--ds-field-halo-width:${field.halo}px;--ds-field-border-width:${field.borderWidth}px;--ds-field-gap:${field.gap}px;--ds-field-label-gap:${field.labelGap}px;--ds-field-message-gap:${field.messageGap}px;`,
     `--ds-field-label-font-size:${label.fontSize}px;--ds-field-label-line-height:${label.lineHeight}px;--ds-field-label-font-weight:${typography.fontWeight[label.fontWeight]};`,
     `--ds-field-message-font-size:${message.fontSize}px;--ds-field-message-line-height:${message.lineHeight}px;`,
     ...Object.entries(field.sizes).map(([size, m]) => vars(`field-${size}`, m, px)),
@@ -94,7 +95,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
-    )}${vars('button', buttonDepth(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
       promoColors(themes[name].colors)
     )}}`;

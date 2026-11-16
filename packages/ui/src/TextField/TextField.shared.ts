@@ -1,4 +1,5 @@
 import type { ReactNode, Ref } from 'react';
+import { alpha, mix, type SemanticColors } from '@shivastu/tokens';
 
 export type TextFieldVariant = 'outline' | 'filled' | 'glass';
 
@@ -81,4 +82,9 @@ export const identity = (text: string) => text;
 export function clampRaw(text: string, parse: (text: string) => string, maxLength?: number) {
   const raw = parse(text);
   return maxLength === undefined ? raw : raw.slice(0, maxLength);
+}
+
+/** Field colors beyond the semantic set: a soft focus halo (brand or error) and a hover border */
+export function fieldColors({ primary, danger, text, border }: SemanticColors) {
+  return { halo: alpha(primary, 0.18), haloDanger: alpha(danger, 0.18), borderHover: mix(text, border, 0.22) };
 }

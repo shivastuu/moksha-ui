@@ -1,9 +1,23 @@
-import { useState, type ReactNode } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { IconButton, RollingAmount, Surface, ThemeProvider, palette } from '@shivastu/ui';
+import { useState, type ReactNode } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import {
+  IconButton,
+  RollingAmount,
+  Surface,
+  ThemeProvider,
+  palette,
+} from "@shivastu/ui";
 
 const Icon = ({ children }: { children: ReactNode }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.9"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     {children}
   </svg>
 );
@@ -38,30 +52,51 @@ const icons = {
 };
 
 const stage = {
-  display: 'grid',
-  placeItems: 'center',
+  display: "grid",
+  placeItems: "center",
   minHeight: 560,
   margin: -32,
   padding: 32,
-  boxSizing: 'border-box' as const,
-  fontFamily: 'var(--ds-font-sans)',
+  boxSizing: "border-box" as const,
+  fontFamily: "var(--ds-font-sans)",
   background: [
     `radial-gradient(55% 45% at 22% 8%, ${palette.brand[600]}66 0%, transparent 70%)`,
     `radial-gradient(40% 35% at 85% 92%, ${palette.green[500]}33 0%, transparent 70%)`,
     palette.slate[950],
-  ].join(', '),
+  ].join(", "),
 };
 
-function Action({ icon, label, variant, onPress }: { icon: ReactNode; label: string; variant: 'solid' | 'glass'; onPress: () => void }) {
+function Action({
+  icon,
+  label,
+  variant,
+  onPress,
+}: {
+  icon: ReactNode;
+  label: string;
+  variant: "solid" | "glass";
+  onPress: () => void;
+}) {
   return (
-    <div style={{ display: 'grid', justifyItems: 'center', gap: 8 }}>
-      <IconButton icon={icon} accessibilityLabel={label} variant={variant} size="lg" onPress={onPress} />
-      <span style={{ fontSize: 12, color: 'var(--ds-color-text-muted)' }}>{label}</span>
+    <div style={{ display: "grid", justifyItems: "center", gap: 8 }}>
+      <IconButton
+        icon={icon}
+        accessibilityLabel={label}
+        variant={variant}
+        size="lg"
+        onPress={onPress}
+      />
+      <span style={{ fontSize: 12, color: "var(--ds-color-text-muted)" }}>
+        {label}
+      </span>
     </div>
   );
 }
 
-const meta = { title: 'Blocks/Balance card', parameters: { layout: 'fullscreen' } } satisfies Meta;
+const meta = {
+  title: "Blocks/Balance card",
+  parameters: { layout: "fullscreen" },
+} satisfies Meta;
 
 export default meta;
 
@@ -77,11 +112,30 @@ export const BalanceCard: StoryObj<typeof meta> = {
     return (
       <ThemeProvider colorScheme="dark">
         <div style={stage}>
-          <div style={{ width: '100%', maxWidth: 380 }}>
+          <div style={{ width: "100%", maxWidth: 380 }}>
             <Surface variant="glass" padding="xl" radius="xl" shadow="lg">
-              <div style={{ display: 'grid', gap: 20, color: 'var(--ds-color-text)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 14, color: 'var(--ds-color-text-muted)' }}>Available balance</span>
+              <div
+                style={{
+                  display: "grid",
+                  gap: 20,
+                  color: "var(--ds-color-text)",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 14,
+                      color: "var(--ds-color-text-muted)",
+                    }}
+                  >
+                    Available balance
+                  </span>
                   <IconButton
                     icon={hidden ? icons.eyeOff : icons.eye}
                     accessibilityLabel="Hide balance"
@@ -91,26 +145,50 @@ export const BalanceCard: StoryObj<typeof meta> = {
                     onPress={() => setHidden(!hidden)}
                   />
                 </div>
-                <div style={{ display: 'grid', gap: 10 }}>
+                <div style={{ display: "grid", gap: 10 }}>
                   <RollingAmount value={balance} size="hero" hidden={hidden} />
-                  <span
-                    style={{
-                      justifySelf: 'start',
-                      padding: '4px 10px',
-                      borderRadius: 999,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: 'var(--ds-color-success)',
-                      background: 'color-mix(in oklab, var(--ds-color-success) 14%, transparent)',
-                    }}
-                  >
-                    {hidden ? 'Hidden' : `↑ ₹${today.toLocaleString('en-IN')} today`}
-                  </span>
+                  {today > 0 && !hidden && (
+                    <span
+                      style={{
+                        justifySelf: "start",
+                        padding: "4px 10px",
+                        borderRadius: 999,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        color: "var(--ds-color-success)",
+                        background:
+                          "color-mix(in oklab, var(--ds-color-success) 14%, transparent)",
+                      }}
+                    >
+                      ↑ ₹{today.toLocaleString("en-IN")} today
+                    </span>
+                  )}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: 4 }}>
-                  <Action icon={icons.add} label="Add money" variant="solid" onPress={() => add(12500)} />
-                  <Action icon={icons.send} label="Send" variant="glass" onPress={() => setBalance(Math.max(0, balance - 2499.5))} />
-                  <Action icon={icons.scan} label="Scan & pay" variant="glass" onPress={() => setBalance(Math.max(0, balance - 180))} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    paddingTop: 4,
+                  }}
+                >
+                  <Action
+                    icon={icons.add}
+                    label="Add money"
+                    variant="solid"
+                    onPress={() => add(12500)}
+                  />
+                  <Action
+                    icon={icons.send}
+                    label="Send"
+                    variant="glass"
+                    onPress={() => setBalance(Math.max(0, balance - 2499.5))}
+                  />
+                  <Action
+                    icon={icons.scan}
+                    label="Scan & pay"
+                    variant="glass"
+                    onPress={() => setBalance(Math.max(0, balance - 180))}
+                  />
                 </div>
               </div>
             </Surface>

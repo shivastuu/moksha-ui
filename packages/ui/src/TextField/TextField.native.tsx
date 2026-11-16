@@ -6,7 +6,7 @@ import { useTheme } from '../theme/context';
 import { fontFor } from '../theme/textStyle';
 import { useControllableState } from '../utils/useControllableState';
 import { FieldShell } from './FieldShell.native';
-import { clampRaw, identity, type AutoComplete, type TextFieldProps } from './TextField.shared';
+import { clampRaw, fieldColors, identity, type AutoComplete, type TextFieldProps } from './TextField.shared';
 
 const nativeAutoComplete = (value?: AutoComplete) =>
   value === 'one-time-code' && Platform.OS === 'android' ? 'sms-otp' : value;
@@ -81,7 +81,8 @@ export function TextField({
     borderWidth: field.borderWidth,
     borderColor: error || focused ? accent : restingBorder,
     backgroundColor: background,
-    boxShadow: focused ? `0px 0px 0px ${field.borderWidth}px ${accent}` : undefined,
+    // A soft halo while focused, a whisper of depth at rest
+    boxShadow: focused ? `0px 0px 0px ${field.halo}px ${fieldColors(colors)[error ? 'haloDanger' : 'halo']}` : disabled ? undefined : theme.shadows.sm,
     overflow: isGlass ? ('hidden' as const) : undefined,
   };
 

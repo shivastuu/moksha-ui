@@ -1,10 +1,12 @@
-import { useImperativeHandle, useRef, useState, type ComponentRef } from 'react';
+import { useEffect, useImperativeHandle, useRef, useState, type ComponentRef } from 'react';
 import { Animated, Platform, Pressable, TextInput } from 'react-native';
 import { usePop, useShake } from '../motion/nativeMotion.native';
+import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { useShakeOnError } from '../motion/useShakeOnError';
 import { useTheme } from '../theme/context';
 import { fontFor } from '../theme/textStyle';
 import { FieldShell } from '../TextField/FieldShell.native';
+import { fieldColors } from '../TextField/TextField.shared';
 import { useOtp, type OtpFieldProps } from './OtpField.shared';
 
 interface OtpCellProps {
@@ -15,12 +17,34 @@ interface OtpCellProps {
   testID?: string;
 }
 
+/** A blinking bar in the empty cell that takes the next digit. Solid with Reduce Motion */
+function Caret({ color, height, testID }: { color: string; height: number; testID?: string }) {
+  const reduced = useReducedMotion();
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (reduced !== false) {
+      return;
+    }
+    const step = (toValue: number) => Animated.timing(opacity, { toValue, duration: 0, delay: 550, useNativeDriver: true });
+    const blink = Animated.loop(Animated.sequence([step(0), step(1)]));
+    blink.start();
+    return () => {
+      blink.stop();
+      opacity.setValue(1);
+    };
+  }, [reduced, opacity]);
+
+  return <Animated.View testID={testID} style={{ width: 2, height, borderRadius: 1, backgroundColor: color, opacity }} />;
+}
+
 function OtpCell({ digit, masked, active, error, testID }: OtpCellProps) {
   const theme = useTheme();
-  const { colors, components } = theme;
+  const { colors, components, shadows } = theme;
   const { otp, field } = components;
   const scale = usePop(digit);
   const accent = error ? colors.danger : colors.primary;
+  const halo = fieldColors(colors)[error ? 'haloDanger' : 'halo'];
 
   return (
     <Animated.View
@@ -34,9 +58,10 @@ function OtpCell({ digit, masked, active, error, testID }: OtpCellProps) {
         borderWidth: field.borderWidth,
         borderColor: error || active ? accent : colors.border,
         backgroundColor: colors.background,
-        boxShadow: active ? `0px 0px 0px ${field.borderWidth}px ${accent}` : undefined,
+        boxShadow: active ? `0px 0px 0px ${field.halo}px ${halo}` : shadows.sm,
       }}
     >
+      {active && !digit ? <Caret color={accent} height={otp.cellSize * 0.38} testID={testID ? `${testID}-caret` : undefined} /> : null}
       <Animated.Text
         style={{
           color: colors.text,

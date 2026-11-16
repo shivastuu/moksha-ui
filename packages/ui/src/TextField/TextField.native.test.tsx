@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { themes } from '@shivastu/tokens';
+import { components, themes } from '@shivastu/tokens';
+import { fieldColors } from './TextField.shared';
 import {
   AccountNumberField,
   AmountField,
@@ -29,16 +30,18 @@ describe('TextField (native)', () => {
     expect(screen.getByTestId('pan-control')).toHaveStyle({ borderColor: themes.light.colors.danger });
   });
 
-  it('draws a focus ring without changing the border width', async () => {
-    await render(<TextField label="City" testID="city" />);
+  it('rests with a soft shadow and gets a halo on focus, without changing the border width', async () => {
+    const { rerender } = await render(<TextField label="City" testID="city" />);
     const control = screen.getByTestId('city-control');
-    expect(control).toHaveStyle({ borderColor: themes.light.colors.border });
+    expect(control).toHaveStyle({ borderColor: themes.light.colors.border, boxShadow: themes.light.shadows.sm });
     await fireEvent(screen.getByTestId('city'), 'focus');
     expect(control).toHaveStyle({
       borderColor: themes.light.colors.primary,
       borderWidth: 1,
-      boxShadow: `0px 0px 0px 1px ${themes.light.colors.primary}`,
+      boxShadow: `0px 0px 0px ${components.field.halo}px ${fieldColors(themes.light.colors).halo}`,
     });
+    await rerender(<TextField label="City" testID="city" error="Pick a city" />);
+    expect(control).toHaveStyle({ boxShadow: `0px 0px 0px ${components.field.halo}px ${fieldColors(themes.light.colors).haloDanger}` });
   });
 
   it('clears with the clear button', async () => {
@@ -125,5 +128,17 @@ describe('OtpField (native)', () => {
     expect(screen.getByTestId('pin').props.secureTextEntry).toBe(true);
     await fireEvent(screen.getByTestId('pin'), 'focus');
     expect(screen.getByTestId('pin-cell-2')).toHaveStyle({ borderColor: themes.light.colors.primary });
+  });
+
+  it('shows a caret only in the empty cell that takes the next digit', async () => {
+    await render(<OtpField label="Enter OTP" length={4} defaultValue="12" testID="otp" />);
+    expect(screen.queryByTestId('otp-cell-2-caret')).toBeNull();
+    await fireEvent(screen.getByTestId('otp'), 'focus');
+    expect(screen.getByTestId('otp-cell-2-caret')).toBeTruthy();
+    expect(screen.getByTestId('otp-cell-2')).toHaveStyle({
+      boxShadow: `0px 0px 0px ${components.field.halo}px ${fieldColors(themes.light.colors).halo}`,
+    });
+    await fireEvent.changeText(screen.getByTestId('otp'), '1234');
+    expect(screen.queryByTestId('otp-cell-3-caret')).toBeNull();
   });
 });

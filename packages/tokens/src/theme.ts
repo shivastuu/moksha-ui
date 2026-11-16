@@ -153,6 +153,8 @@ export interface Components {
     labelStyle: TextStyleName;
     messageStyle: TextStyleName;
     sizes: Record<'md' | 'lg', { height: number; paddingX: number; fontSize: number }>;
+    /** Width of the soft ring around a focused field, in px */
+    halo: number;
   };
   /** OTP and PIN cells */
   otp: { cellSize: number; gap: number; radius: number; fontSize: number };
@@ -377,7 +379,7 @@ export const components: Components = {
     },
   },
   field: {
-    radius: foundations.radius.md,
+    radius: foundations.radius.lg,
     borderWidth: foundations.borderWidth.thin,
     gap: foundations.space.sm,
     labelGap: foundations.space.sm,
@@ -388,8 +390,9 @@ export const components: Components = {
       md: { height: 48, paddingX: foundations.space.md, fontSize: fontSize.md },
       lg: { height: 56, paddingX: foundations.space.lg, fontSize: fontSize.lg },
     },
+    halo: 4,
   },
-  otp: { cellSize: 48, gap: foundations.space.sm, radius: foundations.radius.md, fontSize: fontSize.xl },
+  otp: { cellSize: 52, gap: foundations.space.sm, radius: foundations.radius.lg, fontSize: fontSize.xl },
   modal: {
     radius: foundations.radius.xl,
     padding: foundations.space.xl,
