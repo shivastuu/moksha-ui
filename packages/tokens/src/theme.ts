@@ -131,6 +131,22 @@ export interface Components {
     fontWeight: FontWeightName;
     sizes: Record<ComponentSize, { height: number; paddingX: number; fontSize: number }>;
   };
+  /** Text inputs: TextField and everything built on it */
+  field: {
+    radius: number;
+    borderWidth: number;
+    /** Space between prefix, input and suffix */
+    gap: number;
+    /** Space between the label and the input */
+    labelGap: number;
+    /** Space between the input and the helper or error text */
+    messageGap: number;
+    labelStyle: TextStyleName;
+    messageStyle: TextStyleName;
+    sizes: Record<'md' | 'lg', { height: number; paddingX: number; fontSize: number }>;
+  };
+  /** OTP and PIN cells */
+  otp: { cellSize: number; gap: number; radius: number; fontSize: number };
 }
 
 /** A complete theme: what `createTheme` returns and `ThemeProvider` accepts */
@@ -303,6 +319,20 @@ export const components: Components = {
       lg: { height: 52, paddingX: 20, fontSize: fontSize.lg },
     },
   },
+  field: {
+    radius: foundations.radius.md,
+    borderWidth: foundations.borderWidth.thin,
+    gap: foundations.space.sm,
+    labelGap: foundations.space.sm,
+    messageGap: foundations.space.xs,
+    labelStyle: 'label',
+    messageStyle: 'caption',
+    sizes: {
+      md: { height: 48, paddingX: foundations.space.md, fontSize: fontSize.md },
+      lg: { height: 56, paddingX: foundations.space.lg, fontSize: fontSize.lg },
+    },
+  },
+  otp: { cellSize: 48, gap: foundations.space.sm, radius: foundations.radius.md, fontSize: fontSize.xl },
 };
 
 export const defaultTheme: ThemeDefinition = { foundations, components, themes };

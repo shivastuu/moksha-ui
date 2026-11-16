@@ -174,6 +174,41 @@ import { foundations } from '@shivastu/ui';
 | `shadow` | `'none' \| 'sm' \| 'md' \| 'lg'` | `md` for raised and glass, none for solid |
 | `testID` | `string` | |
 
+### Inputs
+
+`TextField` is the base. Every other input is a `TextField` with a formatter, so they all share labels, helper and error text, prefixes, variants (`outline`, `filled`, `glass`), sizes and keyboard handling.
+
+```tsx
+<TextField label="Full name" helperText="As on your PAN card" />
+<PhoneField label="Mobile number" value={mobile} onChangeText={setMobile} />          // +91 98765 43210 → "9876543210"
+<AmountField label="Amount" value={amount} onChangeText={setAmount} />               // ₹ 12,34,567.89 → "1234567.89"
+<AccountNumberField label="Account number" />                                        // masked as •••• •••• 9012 when not editing
+<AccountNumberField label="Re-enter account number" allowPaste={false} maskWhenBlurred={false} error={mismatch} />
+<SearchField label="Search transactions" placeholder="Search" />                     // hidden label, search icon, clear button
+<OtpField label="Enter OTP" onComplete={verify} />                                   // one hidden input: paste and SMS autofill work
+<OtpField label="Card PIN" length={4} masked />
+```
+
+- `onChangeText` always gets the **raw** value (digits, plain number), while the field shows the formatted one. On the web the caret stays where you are typing, even when spaces or commas move.
+- Add your own formatted field with `format` and `parse`: `<TextField format={(v) => groupDigits(v, [4, 4, 4])} parse={digitsOnly} />`.
+- The formatters and validators are exported: `formatAmount`, `parseAmount`, `formatPhone`, `formatAccountNumber`, `maskAccountNumber`, `isValidIndianMobile`, `isValidAccountNumber`, `digitsOnly`, `groupDigits`.
+- Accessibility: the label is the input's accessible name, helper and error text are linked to it (`aria-describedby` on web, `accessibilityHint` on native), and errors set `aria-invalid`.
+
+| TextField prop | Type | Default |
+| --- | --- | --- |
+| `label` | `string` (required) | |
+| `hideLabel` | `boolean`: keeps it for screen readers | |
+| `value` / `defaultValue` / `onChangeText` | raw value, controlled or not | |
+| `helperText` / `error` | `string` | |
+| `variant` | `'outline' \| 'filled' \| 'glass'` | `'outline'` |
+| `size` | `'md' \| 'lg'` | `'md'` |
+| `prefix` / `suffix` | text or any element | |
+| `inputMode` | `'text' \| 'numeric' \| 'decimal' \| 'tel' \| 'email' \| 'search' \| 'url'` | `'text'` |
+| `autoComplete` | `'one-time-code'`, `'tel'`, `'email'`, … | |
+| `format` / `parse` | value ↔ display | |
+| `maxLength`, `secureTextEntry`, `clearable`, `allowPaste`, `required`, `disabled`, `readOnly` | | |
+| `testID` | on the input; the box gets `${testID}-control` | |
+
 ## Development
 
 ```sh

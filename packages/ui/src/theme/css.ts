@@ -1,5 +1,7 @@
 import type { ColorScheme, ThemeDefinition } from '@shivastu/tokens';
 import { buttonCss } from '../Button/Button.css';
+import { fieldCss } from '../TextField/TextField.css';
+import { otpCss } from '../OtpField/OtpField.css';
 import { surfaceCss } from '../Surface/Surface.css';
 
 const kebab = (name: string) => name.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
@@ -31,7 +33,9 @@ export function themeId(definition: ThemeDefinition) {
 export function themeCss(definition: ThemeDefinition, id: string) {
   const { foundations, components, themes } = definition;
   const { typography, space, radius, borderWidth, opacity, focusRing, motion, glass, zIndex } = foundations;
-  const { button } = components;
+  const { button, field, otp } = components;
+  const label = typography.textStyles[field.labelStyle];
+  const message = typography.textStyles[field.messageStyle];
 
   const shared = [
     `--ds-font-sans:${typography.fontFamily.web};`,
@@ -51,6 +55,11 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     vars('z-index', zIndex),
     `--ds-button-radius:${button.radius}px;--ds-button-border-width:${button.borderWidth}px;--ds-button-gap:${button.gap}px;--ds-button-font-weight:${typography.fontWeight[button.fontWeight]};`,
     ...Object.entries(button.sizes).map(([size, m]) => vars(`button-${size}`, m, px)),
+    `--ds-field-radius:${field.radius}px;--ds-field-border-width:${field.borderWidth}px;--ds-field-gap:${field.gap}px;--ds-field-label-gap:${field.labelGap}px;--ds-field-message-gap:${field.messageGap}px;`,
+    `--ds-field-label-font-size:${label.fontSize}px;--ds-field-label-line-height:${label.lineHeight}px;--ds-field-label-font-weight:${typography.fontWeight[label.fontWeight]};`,
+    `--ds-field-message-font-size:${message.fontSize}px;--ds-field-message-line-height:${message.lineHeight}px;`,
+    ...Object.entries(field.sizes).map(([size, m]) => vars(`field-${size}`, m, px)),
+    vars('otp', otp, px),
   ].join('');
 
   const scheme = (name: ColorScheme) =>
@@ -63,4 +72,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 }
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
-export const componentCss = buttonCss + surfaceCss;
+export const componentCss = buttonCss + surfaceCss + fieldCss + otpCss;

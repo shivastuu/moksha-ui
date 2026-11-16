@@ -7,8 +7,14 @@ import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { BlurView } from 'expo-blur';
 import { useFonts } from 'expo-font';
 import {
+  AccountNumberField,
+  AmountField,
   Button,
+  OtpField,
+  PhoneField,
+  SearchField,
   Surface,
+  TextField,
   ThemeProvider,
   foundations,
   palette,
@@ -84,6 +90,17 @@ export default function App() {
           <Button disabled>Disabled</Button>
         </Section>
 
+        <View style={styles.form}>
+          <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Inputs</Text>
+          <SearchField label="Search transactions" placeholder="Search merchants or UPI IDs" />
+          <TextField label="Full name" placeholder="As on your PAN card" helperText="We use this on your card" />
+          <PhoneField label="Mobile number" />
+          <AmountField label="Amount" helperText="Max ₹ 50,00,000 per day" />
+          <AccountNumberField label="Account number" />
+          <OtpField label="Enter OTP" />
+          <TextField label="Glass field" variant="glass" placeholder="Over the backdrop" />
+        </View>
+
         <Section title="Try it">
           <Button fullWidth loading={paying} onPress={pay}>
             {paying ? 'Paying' : 'Pay now'}
@@ -109,6 +126,7 @@ const styles = StyleSheet.create({
   section: { gap: space.sm },
   label: { fontSize: typography.textStyles.caption.fontSize, textTransform: 'uppercase', letterSpacing: typography.letterSpacing.wide },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
+  form: { gap: space.lg },
   backdrop: { padding: space.xl, borderRadius: foundations.radius.xl, overflow: 'hidden' },
   blob: { position: 'absolute', width: 160, height: 160, borderRadius: 80, opacity: 0.9 },
   amount: {
