@@ -31,4 +31,6 @@ ${sizes}
 .ds-field__clear:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 .ds-field__message{margin:var(--ds-field-message-gap) 0 0;font-size:var(--ds-field-message-font-size);line-height:var(--ds-field-message-line-height);color:var(--ds-color-text-muted)}
 .ds-field--invalid .ds-field__message{color:var(--ds-color-danger)}
+.ds-field__control--shake{animation:ds-shake var(--ds-duration-slow) var(--ds-easing-standard)}
+@media (prefers-reduced-motion:reduce){.ds-field__control{transition:none}.ds-field__control--shake{--ds-motion-distance-sm:0px}}
 `;

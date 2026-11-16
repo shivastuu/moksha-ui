@@ -13,6 +13,7 @@ import {
   OtpField,
   PhoneField,
   SearchField,
+  Stagger,
   Surface,
   TextField,
   ThemeProvider,
@@ -63,56 +64,58 @@ export default function App() {
           Same components and tokens as the web, rendered with React Native.
         </Text>
 
-        <View style={styles.backdrop}>
-          <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
-          <View style={[styles.blob, { backgroundColor: palette.brand[500], top: 10, right: -30 }]} />
-          <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
-          <Surface variant="glass" padding="xl" radius="xl">
-            <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
-            <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>
-          </Surface>
-        </View>
+        <Stagger>
+          <View style={styles.backdrop}>
+            <View style={[styles.blob, { backgroundColor: palette.red[300], top: -30, left: -20 }]} />
+            <View style={[styles.blob, { backgroundColor: palette.brand[500], top: 10, right: -30 }]} />
+            <View style={[styles.blob, { backgroundColor: palette.green[300], bottom: -40, left: 90 }]} />
+            <Surface variant="glass" padding="xl" radius="xl">
+              <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
+              <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>
+            </Surface>
+          </View>
 
-        <Section title="Variants">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="ghost">Ghost</Button>
-        </Section>
+          <Section title="Variants">
+            <Button variant="primary">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="ghost">Ghost</Button>
+          </Section>
 
-        <Section title="Sizes">
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
-        </Section>
+          <Section title="Sizes">
+            <Button size="sm">Small</Button>
+            <Button size="md">Medium</Button>
+            <Button size="lg">Large</Button>
+          </Section>
 
-        <Section title="States">
-          <Button loading>Paying</Button>
-          <Button disabled>Disabled</Button>
-        </Section>
+          <Section title="States">
+            <Button loading>Paying</Button>
+            <Button disabled>Disabled</Button>
+          </Section>
 
-        <View style={styles.form}>
-          <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Inputs</Text>
-          <SearchField label="Search transactions" placeholder="Search merchants or UPI IDs" />
-          <TextField label="Full name" placeholder="As on your PAN card" helperText="We use this on your card" />
-          <PhoneField label="Mobile number" />
-          <AmountField label="Amount" helperText="Max ₹ 50,00,000 per day" />
-          <AccountNumberField label="Account number" />
-          <OtpField label="Enter OTP" />
-          <TextField label="Glass field" variant="glass" placeholder="Over the backdrop" />
-        </View>
+          <View style={styles.form}>
+            <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Inputs</Text>
+            <SearchField label="Search transactions" placeholder="Search merchants or UPI IDs" />
+            <TextField label="Full name" placeholder="As on your PAN card" helperText="We use this on your card" />
+            <PhoneField label="Mobile number" />
+            <AmountField label="Amount" helperText="Max ₹ 50,00,000 per day" />
+            <AccountNumberField label="Account number" />
+            <OtpField label="Enter OTP" />
+            <TextField label="Glass field" variant="glass" placeholder="Over the backdrop" />
+          </View>
 
-        <Section title="Try it">
-          <Button fullWidth loading={paying} onPress={pay}>
-            {paying ? 'Paying' : 'Pay now'}
-          </Button>
-          <Button
-            fullWidth
-            variant="secondary"
-            onPress={() => setScheme(scheme === 'light' ? 'dark' : 'light')}
-          >
-            {`Switch to ${scheme === 'light' ? 'dark' : 'light'} mode`}
-          </Button>
-        </Section>
+          <Section title="Try it">
+            <Button fullWidth loading={paying} onPress={pay}>
+              {paying ? 'Paying' : 'Pay now'}
+            </Button>
+            <Button
+              fullWidth
+              variant="secondary"
+              onPress={() => setScheme(scheme === 'light' ? 'dark' : 'light')}
+            >
+              {`Switch to ${scheme === 'light' ? 'dark' : 'light'} mode`}
+            </Button>
+          </Section>
+        </Stagger>
       </ScrollView>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
     </ThemeProvider>

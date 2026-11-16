@@ -28,7 +28,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [Surface and glass](#surface-and-glass)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [Surface and glass](#surface-and-glass) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -225,6 +225,44 @@ The formatters and validators are exported too: `formatAmount`, `parseAmount`, `
 
 </details>
 
+### Motion
+
+Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
+
+```tsx
+import { Motion, Stagger } from '@shivastu/ui';
+
+<Motion preset="fadeUp">
+  <BalanceCard />
+</Motion>
+
+<Stagger>
+  {payments.map((payment) => (
+    <PaymentRow key={payment.id} {...payment} />
+  ))}
+</Stagger>
+```
+
+- Presets: `fade`, `fadeUp`, `fadeDown`, `scaleIn`, `slideUp`. Durations, easings, distances and the stagger interval are theme tokens, so `createTheme` can change them.
+- **Web:** CSS keyframes, with no JavaScript animation loop. **React Native:** `Animated` on the native driver, using the same easing curves as the web.
+- With reduced motion turned on (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), movement becomes a plain fade or is skipped.
+
+<details>
+<summary>Motion props</summary>
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `preset` | `'fade' \| 'fadeUp' \| 'fadeDown' \| 'scaleIn' \| 'slideUp'` | `'fadeUp'` |
+| `delay` | ms | `0` |
+| `duration` | `'fast' \| 'normal' \| 'slow'` | `'normal'` |
+| `easing` | easing token | `'enter'` |
+| `interval` | `Stagger` only: ms between items | theme `motion.stagger` |
+| `testID` | `string` | |
+
+`useReducedMotion()` is exported too, for your own animations.
+
+</details>
+
 ## Design tokens
 
 Every design value lives in one file, [`packages/tokens/src/theme.ts`](packages/tokens/src/theme.ts). Raw hex values exist only in its palette: semantic colors, glass, overlays and shadows are all built from palette tokens, and tests fail if a raw color appears anywhere else.
@@ -308,7 +346,7 @@ packages/ui/src/
 - Text and key color pairs pass **WCAG AA** in both schemes, for the default theme and for every theme `createTheme` generates. This is checked in tests.
 - Inputs use their label as the accessible name. Helper and error text are linked (`aria-describedby` on web, `accessibilityHint` on native), and on the web errors also set `aria-invalid`.
 - Buttons announce busy and disabled states; keyboard focus shows a visible ring.
-- Motion respects `prefers-reduced-motion`, and glass respects `prefers-reduced-transparency`.
+- Motion respects reduced motion on every platform (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), and glass respects `prefers-reduced-transparency`.
 
 ## Development
 
@@ -334,6 +372,8 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] Button, Surface (with glass)
 - [x] TextField, PhoneField, AmountField, AccountNumberField, SearchField, OtpField
 - [x] Storybook docs, theme builder and Expo demo
+- [x] Motion: `Motion`, `Stagger` and built-in component animations
+- [ ] AutoForm: build a whole form from a list of fields, with validation
 - [ ] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner
 - [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
 - [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar

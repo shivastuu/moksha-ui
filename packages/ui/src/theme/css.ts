@@ -3,6 +3,7 @@ import { buttonCss } from '../Button/Button.css';
 import { fieldCss } from '../TextField/TextField.css';
 import { otpCss } from '../OtpField/OtpField.css';
 import { surfaceCss } from '../Surface/Surface.css';
+import { motionCss } from '../motion/motion.css';
 
 const kebab = (name: string) => name.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
 
@@ -50,6 +51,8 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     vars('focus-ring', focusRing, px),
     vars('duration', motion.duration, ms),
     vars('easing', motion.easing),
+    vars('motion-distance', motion.distance, px),
+    vars('motion-scale', motion.scale),
     vars('glass-blur', glass.blur, px),
     `--ds-glass-saturation:${glass.saturation};`,
     vars('z-index', zIndex),
@@ -72,4 +75,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 }
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
-export const componentCss = buttonCss + surfaceCss + fieldCss + otpCss;
+export const componentCss = motionCss + buttonCss + surfaceCss + fieldCss + otpCss;

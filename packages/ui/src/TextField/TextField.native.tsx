@@ -1,5 +1,7 @@
 import { useState, type ReactNode } from 'react';
-import { Platform, Pressable, Text, TextInput, View } from 'react-native';
+import { Animated, Platform, Pressable, Text, TextInput, View } from 'react-native';
+import { useShake } from '../motion/nativeMotion.native';
+import { useShakeOnError } from '../motion/useShakeOnError';
 import { useTheme } from '../theme/context';
 import { fontFor } from '../theme/textStyle';
 import { useControllableState } from '../utils/useControllableState';
@@ -60,6 +62,8 @@ export function TextField({
         : colors.background;
   const text = { fontSize: metrics.fontSize, ...fontFor(theme, 'regular') };
   const controlTestID = testID ? `${testID}-control` : undefined;
+  const [shaking, shakeDone] = useShakeOnError(error);
+  const shakeX = useShake(shaking, shakeDone);
 
   const affix = (node: ReactNode) =>
     typeof node === 'string' ? <Text style={[text, { color: colors.textMuted }]}>{node}</Text> : node;
@@ -131,20 +135,22 @@ export function TextField({
       invalid={!!error}
       disabled={disabled}
     >
-      {isGlass && BlurView ? (
-        <BlurView
-          intensity={Math.min(100, glass.blur.sm * 2)}
-          tint={scheme}
-          style={controlStyle}
-          testID={controlTestID}
-        >
-          {content}
-        </BlurView>
-      ) : (
-        <View style={controlStyle} testID={controlTestID}>
-          {content}
-        </View>
-      )}
+      <Animated.View style={{ transform: [{ translateX: shakeX }] }}>
+        {isGlass && BlurView ? (
+          <BlurView
+            intensity={Math.min(100, glass.blur.sm * 2)}
+            tint={scheme}
+            style={controlStyle}
+            testID={controlTestID}
+          >
+            {content}
+          </BlurView>
+        ) : (
+          <View style={controlStyle} testID={controlTestID}>
+            {content}
+          </View>
+        )}
+      </Animated.View>
     </FieldShell>
   );
 }

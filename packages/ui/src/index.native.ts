@@ -22,6 +22,9 @@ export type {
 } from './inputs/fields.shared';
 export { OtpField } from './OtpField/OtpField.native';
 export type { OtpFieldProps } from './OtpField/OtpField.shared';
+export { Motion, Stagger } from './motion/Motion.native';
+export { useReducedMotion } from './motion/useReducedMotion.native';
+export type { MotionPreset, MotionProps, StaggerProps } from './motion/motion.shared';
 export {
   digitsOnly,
   formatAccountNumber,

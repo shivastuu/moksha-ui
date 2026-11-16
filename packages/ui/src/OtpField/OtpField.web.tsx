@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
+import { useShakeOnError } from '../motion/useShakeOnError';
 import { FieldShell } from '../TextField/FieldShell.web';
 import { useOtp, type OtpFieldProps } from './OtpField.shared';
 
@@ -24,6 +25,7 @@ export function OtpField({
   const message = error ?? helperText;
   const { code, change, cells, activeIndex } = useOtp({ length, value, defaultValue, onChangeText, onComplete });
   const [focused, setFocused] = useState(false);
+  const [shaking, shakeDone] = useShakeOnError(error);
 
   return (
     <FieldShell
@@ -35,14 +37,17 @@ export function OtpField({
       invalid={!!error}
       disabled={disabled}
     >
-      <div className="ds-otp">
+      <div
+        className={shaking ? 'ds-otp ds-otp--shake' : 'ds-otp'}
+        onAnimationEnd={(event) => event.animationName === 'ds-shake' && shakeDone()}
+      >
         {cells.map((digit, index) => (
           <div
             key={index}
             aria-hidden="true"
             className={focused && index === activeIndex ? 'ds-otp__cell ds-otp__cell--active' : 'ds-otp__cell'}
           >
-            {digit && (masked ? '•' : digit)}
+            {digit && <span className="ds-otp__digit">{masked ? '•' : digit}</span>}
           </div>
         ))}
         <input

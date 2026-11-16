@@ -67,6 +67,12 @@ export interface Foundations {
     duration: { fast: number; normal: number; slow: number };
     /** CSS easing curves */
     easing: { standard: string; enter: string; exit: string };
+    /** How far things move when they enter or shake, in px */
+    distance: { sm: number; md: number; lg: number };
+    /** Scale factors: pressed buttons, entering elements, OTP digits popping in */
+    scale: { pressed: number; enter: number; pop: number };
+    /** Delay between items of a staggered list, in ms */
+    stagger: number;
   };
   /** Frosted glass: backdrop blur radius in px, and color saturation behind the glass */
   glass: { blur: Record<BlurToken, number>; saturation: number };
@@ -237,6 +243,9 @@ export const foundations: Foundations = {
       enter: 'cubic-bezier(0, 0, 0, 1)',
       exit: 'cubic-bezier(0.3, 0, 1, 1)',
     },
+    distance: { sm: 4, md: 8, lg: 24 },
+    scale: { pressed: 0.97, enter: 0.96, pop: 1.15 },
+    stagger: 50,
   },
   glass: { blur: { sm: 12, md: 24, lg: 40 }, saturation: 1.8 },
   zIndex: { base: 0, dropdown: 1000, overlay: 1100, modal: 1200, toast: 1300 },

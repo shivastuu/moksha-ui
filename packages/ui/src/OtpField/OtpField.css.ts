@@ -7,4 +7,7 @@ export const otpCss = `
 .ds-field--disabled .ds-otp{opacity:var(--ds-opacity-disabled)}
 .ds-otp__input{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;background:transparent;color:transparent;caret-color:transparent;font-size:var(--ds-font-size-md);cursor:text}
 .ds-otp__input:disabled{cursor:not-allowed}
+.ds-otp__digit{animation:ds-pop var(--ds-duration-normal) var(--ds-easing-enter)}
+.ds-otp--shake{animation:ds-shake var(--ds-duration-slow) var(--ds-easing-standard)}
+@media (prefers-reduced-motion:reduce){.ds-otp__cell{transition:none}.ds-otp__digit{animation:none}.ds-otp--shake{--ds-motion-distance-sm:0px}}
 `;

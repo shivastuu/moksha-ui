@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useLayoutEffect, useRef, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useShakeOnError } from '../motion/useShakeOnError';
 import { useControllableState } from '../utils/useControllableState';
 import { FieldShell } from './FieldShell.web';
 import { clampRaw, identity, type InputMode, type TextFieldProps } from './TextField.shared';
@@ -65,6 +66,7 @@ export function TextField({
   const pendingCaret = useRef<number | null>(null);
   const display = format(raw);
   const message = error ?? helperText;
+  const [shaking, shakeDone] = useShakeOnError(error);
 
   useLayoutEffect(() => {
     if (pendingCaret.current === null || !inputRef.current) {
@@ -107,7 +109,8 @@ export function TextField({
       size={size}
     >
       <div
-        className={`ds-field__control ds-field__control--${variant}`}
+        className={`ds-field__control ds-field__control--${variant}${shaking ? ' ds-field__control--shake' : ''}`}
+        onAnimationEnd={(event) => event.animationName === 'ds-shake' && shakeDone()}
         data-testid={testID ? `${testID}-control` : undefined}
       >
         {prefix !== undefined && <span className="ds-field__affix">{prefix}</span>}
