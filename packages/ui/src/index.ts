@@ -31,6 +31,8 @@ export { defineFields, validateForm } from './AutoForm/AutoForm.shared';
 export type { AutoFormField, AutoFormProps, FormErrors, FormValues } from './AutoForm/AutoForm.shared';
 export { Banner } from './Banner/Banner.web';
 export type { BannerProps, BannerTone } from './Banner/Banner.shared';
+export { PromoBanner } from './PromoBanner/PromoBanner.web';
+export type { PromoBannerProps } from './PromoBanner/PromoBanner.shared';
 export { BottomSheet, Dialog } from './Dialog/Dialog.web';
 export type { BottomSheetProps, DialogPresentation, DialogProps } from './Dialog/Dialog.shared';
 export { SnackbarProvider } from './Snackbar/Snackbar.web';
@@ -55,6 +57,7 @@ export {
   foundations,
   generateScale,
   getTheme,
+  mix,
   palette,
   readableTextOn,
   resolveTheme,

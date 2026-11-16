@@ -36,6 +36,22 @@ export function alpha(hex: string, opacity: number) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
+function toOklab(hex: string) {
+  const { l, c, h } = hexToOklch(hex);
+  const radians = (h * Math.PI) / 180;
+  return { l, a: c * Math.cos(radians), b: c * Math.sin(radians) };
+}
+
+/** Mixes `weight` of `a` into `b` in OKLab, like CSS `color-mix(in oklab, a, b)`: 0.1 gives a light tint of `a` */
+export function mix(a: string, b: string, weight: number) {
+  const x = toOklab(a);
+  const y = toOklab(b);
+  const lerp = (from: number, to: number) => from * weight + to * (1 - weight);
+  const A = lerp(x.a, y.a);
+  const B = lerp(x.b, y.b);
+  return oklchToHex({ l: lerp(x.l, y.l), c: Math.hypot(A, B), h: (Math.atan2(B, A) * 180) / Math.PI });
+}
+
 const toLinear = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
 
 const toGamma = (c: number) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);

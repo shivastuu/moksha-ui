@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Banner, BottomSheet, Button, Dialog, SnackbarProvider, useSnackbar } from '@shivastu/ui';
+import { Banner, BottomSheet, Button, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from '@shivastu/ui';
 
 const meta = { title: 'Components/Overlays' } satisfies Meta;
 
@@ -10,15 +10,37 @@ type Story = StoryObj<typeof meta>;
 
 export const Banners: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 12, maxWidth: 480 }}>
-      <Banner title="New card on the way">It reaches you in 3 to 5 working days.</Banner>
-      <Banner tone="success">₹ 2,500.00 sent to Asha Rao</Banner>
+    <div style={{ display: 'grid', gap: 12, maxWidth: 560 }}>
+      <Banner title="New card on the way" action={{ label: 'Track', onPress: () => {} }}>
+        It reaches you in 3 to 5 working days.
+      </Banner>
+      <Banner tone="success" title="₹ 2,500.00 sent to Asha Rao">
+        UPI ref 4183 2290 1174
+      </Banner>
       <Banner tone="warning" title="KYC pending" action={{ label: 'Complete KYC', onPress: () => {} }} onDismiss={() => {}}>
         Finish it by 30 November to keep using your card.
       </Banner>
       <Banner tone="danger" title="Payment failed" action={{ label: 'Try again', onPress: () => {} }}>
-        Your bank declined the payment. No money was taken.
+        Your bank declined it. No money was taken.
       </Banner>
+      <Banner tone="success">Autopay is on for your credit card bill</Banner>
+    </div>
+  ),
+};
+
+export const Promo: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, maxWidth: 560 }}>
+      <PromoBanner
+        eyebrow="Travel card"
+        title="Pay abroad with zero forex markup"
+        description="Use it in 180+ countries. Free ATM withdrawals."
+        action={{ label: 'Get the card', onPress: () => {} }}
+        onDismiss={() => {}}
+      />
+      <div style={{ maxWidth: 360 }}>
+        <PromoBanner eyebrow="Rewards" title="2% back on every bill payment" action={{ label: 'See offers', onPress: () => {} }} />
+      </div>
     </div>
   ),
 };

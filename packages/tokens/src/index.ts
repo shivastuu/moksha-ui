@@ -4,6 +4,7 @@ export {
   contrastRatio,
   generateScale,
   hexToOklch,
+  mix,
   oklchToHex,
   type ColorScale,
   type Oklch,

@@ -14,6 +14,7 @@ import {
   BottomSheet,
   Button,
   Dialog,
+  PromoBanner,
   OtpField,
   PhoneField,
   SearchField,
@@ -58,7 +59,12 @@ function Overlays() {
   const [sheet, setSheet] = useState(false);
   return (
     <Section title="Overlays">
-      <View style={{ width: '100%' }}>
+      <View style={{ width: '100%', gap: space.md }}>
+        <PromoBanner
+          eyebrow="Travel card"
+          title="Pay abroad with zero forex markup"
+          action={{ label: 'Get the card', onPress: () => {} }}
+        />
         <Banner tone="warning" title="KYC pending" action={{ label: 'Complete KYC', onPress: () => {} }}>
           Finish it to keep using your card.
         </Banner>

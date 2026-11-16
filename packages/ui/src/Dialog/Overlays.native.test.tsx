@@ -1,7 +1,13 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo, Pressable, Text } from 'react-native';
 import { components, themes } from '@shivastu/tokens';
-import { Banner, Dialog, SnackbarProvider, useSnackbar } from '../index';
+import { bannerColors } from '../Banner/Banner.shared';
+import { Banner, Dialog, PromoBanner, SnackbarProvider, useSnackbar } from '../index';
+import { promoColors } from '../PromoBanner/PromoBanner.shared';
+
+// React Native's own gradient parser (no type declarations); it returns one entry per gradient it understood
+const processBackgroundImage: (value: string) => unknown[] =
+  require('react-native/Libraries/StyleSheet/processBackgroundImage').default;
 
 describe('Banner (native)', () => {
   it('uses the tone colors, announces danger, and wires its buttons', async () => {
@@ -12,10 +18,26 @@ describe('Banner (native)', () => {
       </Banner>
     );
     const banner = screen.getByTestId('banner');
-    expect(banner).toHaveStyle({ backgroundColor: themes.light.colors.dangerSubtle, borderLeftColor: themes.light.colors.danger });
+    const tones = bannerColors('danger', themes.light.colors, components.banner.tint);
+    expect(banner).toHaveStyle({ backgroundColor: tones.background, borderColor: tones.border });
     expect(banner.props.accessibilityRole).toBe('alert');
     await fireEvent.press(screen.getByRole('button', { name: 'Dismiss' }));
     expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('PromoBanner (native)', () => {
+  it('draws the brand gradient that React Native can parse, and wires its buttons', async () => {
+    const onPress = jest.fn();
+    await render(
+      <PromoBanner eyebrow="Travel card" title="Pay abroad with zero forex markup" action={{ label: 'Get the card', onPress }} testID="promo" />
+    );
+    const { background } = promoColors(themes.light.colors);
+    expect(screen.getByTestId('promo')).toHaveStyle({ backgroundImage: background });
+    expect(processBackgroundImage(background)).toHaveLength(2);
+    expect(screen.getByRole('header', { name: 'Pay abroad with zero forex markup' })).toBeTruthy();
+    await fireEvent.press(screen.getByRole('button', { name: 'Get the card' }));
+    expect(onPress).toHaveBeenCalledTimes(1);
   });
 });
 

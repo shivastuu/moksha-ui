@@ -15,17 +15,7 @@ const textPairs: [keyof SemanticColors, keyof SemanticColors][] = [
   ['primary', 'background'],
   ['primary', 'primarySubtle'],
   ['danger', 'background'],
-  ['text', 'successSubtle'],
-  ['text', 'warningSubtle'],
-  ['text', 'dangerSubtle'],
   ['text', 'primarySubtle'],
-];
-
-const accentPairs: [keyof SemanticColors, keyof SemanticColors][] = [
-  ['success', 'successSubtle'],
-  ['warning', 'warningSubtle'],
-  ['danger', 'dangerSubtle'],
-  ['primary', 'primarySubtle'],
 ];
 
 function checkScheme(label: string, tokens: SchemeTokens) {
@@ -35,13 +25,6 @@ function checkScheme(label: string, tokens: SchemeTokens) {
     test(`${label}: ${fg} on ${bg} meets WCAG AA (4.5:1)`, () => {
       const ratio = contrastRatio(colors[fg], colors[bg]);
       assert.ok(ratio >= 4.5, `${colors[fg]} on ${colors[bg]} is ${ratio.toFixed(2)}:1`);
-    });
-  }
-
-  for (const [fg, bg] of accentPairs) {
-    test(`${label}: ${fg} accent is visible on ${bg} (3:1)`, () => {
-      const ratio = contrastRatio(colors[fg], colors[bg]);
-      assert.ok(ratio >= 3, `${colors[fg]} on ${colors[bg]} is ${ratio.toFixed(2)}:1`);
     });
   }
 

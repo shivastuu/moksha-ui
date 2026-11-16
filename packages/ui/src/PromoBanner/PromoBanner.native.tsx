@@ -1,0 +1,98 @@
+import { Pressable, Text, View } from 'react-native';
+import { useTheme } from '../theme/context';
+import { fontFor, textStyleFor } from '../theme/textStyle';
+import { promoColors, type PromoBannerProps } from './PromoBanner.shared';
+
+/** A card for offers and announcements, on the brand gradient */
+export function PromoBanner({ eyebrow, title, description, action, onDismiss, art, testID }: PromoBannerProps) {
+  const theme = useTheme();
+  const { colors, components, space, radius, borderWidth, typography } = theme;
+  const { promo, button } = components;
+  const tones = promoColors(colors);
+  const onBrand = { color: colors.textOnPrimary, maxWidth: '62%' as const };
+
+  // The art is a drawing, so its sizes are fixed pixels
+  const card = (
+    <View
+      style={{
+        width: 150,
+        height: 96,
+        marginRight: -14,
+        marginBottom: -22,
+        borderWidth: borderWidth.thin,
+        borderColor: tones.artBorder,
+        borderRadius: radius.lg,
+        backgroundColor: tones.artFill,
+        transform: [{ rotate: '-12deg' }],
+      }}
+    >
+      <View style={{ position: 'absolute', left: 16, top: 22, width: 26, height: 20, borderRadius: 5, backgroundColor: tones.artDetail }} />
+      <View style={{ position: 'absolute', left: 16, bottom: 18, width: 84, height: 6, borderRadius: 3, backgroundColor: tones.artDetail }} />
+    </View>
+  );
+
+  return (
+    <View
+      testID={testID}
+      style={{
+        overflow: 'hidden',
+        alignItems: 'flex-start',
+        gap: space.xs,
+        minHeight: promo.minHeight,
+        padding: promo.padding,
+        borderRadius: promo.radius,
+        backgroundImage: tones.background,
+      }}
+    >
+      <View
+        pointerEvents="none"
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        style={{ position: 'absolute', right: 0, bottom: 0 }}
+      >
+        {art === undefined ? card : art}
+      </View>
+      {eyebrow ? (
+        <Text
+          style={[
+            textStyleFor(theme, 'caption'),
+            fontFor(theme, 'semibold'),
+            { color: colors.textOnPrimary, letterSpacing: typography.letterSpacing.wide, textTransform: 'uppercase' },
+          ]}
+        >
+          {eyebrow}
+        </Text>
+      ) : null}
+      <Text accessibilityRole="header" style={[textStyleFor(theme, 'title'), onBrand]}>
+        {title}
+      </Text>
+      {description ? <Text style={[textStyleFor(theme, 'bodySmall'), onBrand]}>{description}</Text> : null}
+      {action ? (
+        <Pressable
+          accessibilityRole="button"
+          onPress={action.onPress}
+          style={{
+            marginTop: space.sm,
+            minHeight: button.sizes.sm.height,
+            justifyContent: 'center',
+            paddingHorizontal: button.sizes.sm.paddingX,
+            borderRadius: radius.full,
+            backgroundColor: colors.textOnPrimary,
+          }}
+        >
+          <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: colors.primaryPressed }]}>{action.label}</Text>
+        </Pressable>
+      ) : null}
+      {onDismiss ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Dismiss"
+          onPress={onDismiss}
+          style={{ position: 'absolute', top: space.sm, right: space.sm, width: space['2xl'], height: space['2xl'], alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text style={{ color: colors.textOnPrimary, fontSize: typography.fontSize.md }}>✕</Text>
+        </Pressable>
+      ) : null}
+    </View>
+  );
+}

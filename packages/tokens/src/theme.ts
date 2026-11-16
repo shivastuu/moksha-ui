@@ -112,16 +112,10 @@ export interface SemanticColors {
   primarySubtle: string;
   /** Positive status */
   success: string;
-  /** Background for success messages */
-  successSubtle: string;
   /** Needs attention */
   warning: string;
-  /** Background for warning messages */
-  warningSubtle: string;
   /** Errors and destructive actions */
   danger: string;
-  /** Background for error messages */
-  dangerSubtle: string;
   /** Keyboard focus outline */
   focusRing: string;
   /** Backdrop behind modals and sheets */
@@ -177,7 +171,16 @@ export interface Components {
     /** How long a snackbar stays, in ms */
     duration: number;
   };
-  banner: { radius: number; padding: number; accentWidth: number };
+  banner: {
+    radius: number;
+    padding: number;
+    gap: number;
+    iconSize: number;
+    /** How much of the tone color tints the background and the border, 0 to 1 */
+    tint: { background: number; border: number };
+  };
+  /** Offer and announcement cards */
+  promo: { radius: number; padding: number; minHeight: number };
 }
 
 /** A complete theme: what `createTheme` returns and `ThemeProvider` accepts */
@@ -220,9 +223,9 @@ export const palette = {
     900: '#14171F',
     950: '#0D0F14',
   },
-  green: { 50: '#ECFDF3', 300: '#6FD49C', 500: '#1F9D57', 900: '#0B3D24' },
-  amber: { 50: '#FFF8EB', 300: '#F2C46D', 500: '#B7791F', 900: '#3D2A07' },
-  red: { 50: '#FEF1F1', 300: '#FF8A8A', 500: '#D93636', 900: '#4A1515' },
+  green: { 300: '#6FD49C', 500: '#1F9D57' },
+  amber: { 300: '#F2C46D', 500: '#B7791F' },
+  red: { 300: '#FF8A8A', 500: '#D93636' },
 } as const;
 
 /* -------------------------------------------------------------- foundations */
@@ -298,11 +301,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       primaryPressed: palette.brand[700],
       primarySubtle: palette.brand[50],
       success: palette.green[500],
-      successSubtle: palette.green[50],
       warning: palette.amber[500],
-      warningSubtle: palette.amber[50],
       danger: palette.red[500],
-      dangerSubtle: palette.red[50],
       focusRing: palette.brand[500],
       overlay: alpha(palette.slate[950], 0.5),
     },
@@ -330,11 +330,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       primaryPressed: palette.brand[200],
       primarySubtle: palette.brand[900],
       success: palette.green[300],
-      successSubtle: palette.green[900],
       warning: palette.amber[300],
-      warningSubtle: palette.amber[900],
       danger: palette.red[300],
-      dangerSubtle: palette.red[900],
       focusRing: palette.brand[300],
       overlay: alpha(palette.slate[950], 0.7),
     },
@@ -389,7 +386,14 @@ export const components: Components = {
     offset: foundations.space.lg,
     duration: 4000,
   },
-  banner: { radius: foundations.radius.md, padding: foundations.space.md, accentWidth: 4 },
+  banner: {
+    radius: foundations.radius.lg,
+    padding: foundations.space.md,
+    gap: foundations.space.md,
+    iconSize: 32,
+    tint: { background: 0.1, border: 0.3 },
+  },
+  promo: { radius: foundations.radius.xl, padding: foundations.space.xl, minHeight: 152 },
 };
 
 export const defaultTheme: ThemeDefinition = { foundations, components, themes };

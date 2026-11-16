@@ -5,6 +5,9 @@ import { otpCss } from '../OtpField/OtpField.css';
 import { surfaceCss } from '../Surface/Surface.css';
 import { motionCss } from '../motion/motion.css';
 import { bannerCss } from '../Banner/Banner.css';
+import { bannerColors, bannerTones } from '../Banner/Banner.shared';
+import { promoCss } from '../PromoBanner/PromoBanner.css';
+import { promoColors } from '../PromoBanner/PromoBanner.shared';
 import { dialogCss } from '../Dialog/Dialog.css';
 import { snackbarCss } from '../Snackbar/Snackbar.css';
 
@@ -37,7 +40,7 @@ export function themeId(definition: ThemeDefinition) {
 export function themeCss(definition: ThemeDefinition, id: string) {
   const { foundations, components, themes } = definition;
   const { typography, space, radius, borderWidth, opacity, focusRing, motion, glass, zIndex } = foundations;
-  const { button, field, otp, modal, snackbar, banner } = components;
+  const { button, field, otp, modal, snackbar, banner, promo } = components;
   const label = typography.textStyles[field.labelStyle];
   const message = typography.textStyles[field.messageStyle];
 
@@ -68,17 +71,22 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     vars('otp', otp, px),
     vars('modal', modal, px),
     `--ds-snackbar-radius:${snackbar.radius}px;--ds-snackbar-padding:${snackbar.padding}px;--ds-snackbar-max-width:${snackbar.maxWidth}px;--ds-snackbar-offset:${snackbar.offset}px;`,
-    vars('banner', banner, px),
+    `--ds-banner-radius:${banner.radius}px;--ds-banner-padding:${banner.padding}px;--ds-banner-gap:${banner.gap}px;--ds-banner-icon-size:${banner.iconSize}px;`,
+    vars('promo', promo, px),
   ].join('');
 
   const scheme = (name: ColorScheme) =>
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
+    )}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+      'promo',
+      promoColors(themes[name].colors)
     )}}`;
 
   return `[data-ds-theme="${id}"]{${shared}}${scheme('light')}${scheme('dark')}`;
 }
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
-export const componentCss = motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + dialogCss + snackbarCss;
+export const componentCss =
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss;

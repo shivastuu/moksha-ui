@@ -275,7 +275,7 @@ const fields = defineFields([
 <table>
 <tr>
 <td width="36%"><img src="docs/images/sheet.png" alt="On a phone, the Block your card dialog opens as a bottom sheet with a handle, a message, and Cancel and Block card buttons" /></td>
-<td><img src="docs/images/banners.png" alt="Info, success, warning and danger banners, with a title, a text action and a dismiss button" /></td>
+<td><img src="docs/images/banners.png" alt="Info, success, warning and danger banners: a soft tint of each tone, a round icon, a title and message, and a dark pill action" /></td>
 </tr>
 </table>
 
@@ -300,6 +300,13 @@ const fields = defineFields([
   Finish it by 30 November to keep using your card.
 </Banner>
 
+<PromoBanner
+  eyebrow="Travel card"
+  title="Pay abroad with zero forex markup"
+  description="Use it in 180+ countries. Free ATM withdrawals."
+  action={{ label: 'Get the card', onPress: openOffer }}
+/>
+
 // Once, near the root:
 <SnackbarProvider><App /></SnackbarProvider>
 // Anywhere below:
@@ -310,7 +317,10 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **Dialog** is centered on larger screens and becomes a bottom sheet on phones (`presentation="auto"`). On the web it uses the native `<dialog>` element, so focus stays inside, Escape closes it, the page behind can't be reached, and focus goes back to the button that opened it. On React Native it uses `Modal`, and Android back closes it. `dismissible={false}` keeps it open until an action is chosen.
 - **BottomSheet** always slides up from the bottom, with a handle.
 - **Snackbar** shows one message at a time and queues the rest. It hides after the theme's `snackbar.duration`, and on the web stays while the pointer is over it or it has keyboard focus. Screen readers announce every message.
-- **Banner** has four tones on the status colors. Only `danger` interrupts a screen reader; the others wait their turn.
+- **Banner** has four tones (info, success, warning, danger), each a soft tint of its color with a round icon. The action sits on the right, and moves under the text on narrow screens. Text passes WCAG AA on every tone, in every theme `createTheme` makes. Only `danger` interrupts a screen reader; the others wait their turn.
+- **PromoBanner** is for offers on a home screen: the brand gradient, an eyebrow, a title, one call to action, and a glass card drawn in the corner (pass `art` to use your own). The same gradient is drawn on React Native.
+
+![Promo banner on the brand gradient: Travel card, Pay abroad with zero forex markup, and a Get the card button](docs/images/promo.png)
 
 ### Motion
 
@@ -461,7 +471,7 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] Storybook docs, theme builder and Expo demo
 - [x] Motion: `Motion`, `Stagger` and built-in component animations
 - [x] AutoForm: build a whole form from a list of fields, with validation
-- [x] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner
+- [x] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner, PromoBanner
 - [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
 - [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar
 - [ ] Hosted Storybook and automated npm releases

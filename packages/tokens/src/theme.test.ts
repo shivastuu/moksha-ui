@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { generateScale, hexToOklch, oklchToHex } from './color.ts';
+import { generateScale, hexToOklch, mix, oklchToHex } from './color.ts';
 import { createTheme, defaultTheme, foundations, getTheme, palette, readableTextOn, themes } from './theme.ts';
 
 test('hex survives a round trip through OKLCH', () => {
@@ -90,4 +90,10 @@ test('createTheme handles brand colors at both ends of the scale', () => {
       assert.match(primaryPressed, /^#[0-9A-F]{6}$/);
     }
   }
+});
+
+test('mix() matches CSS color-mix in OKLab', () => {
+  assert.equal(mix('#000000', '#FFFFFF', 0.5), '#636363');
+  assert.equal(mix('#3355FF', '#FFFFFF', 0), '#FFFFFF');
+  assert.equal(mix('#3355FF', '#FFFFFF', 1), '#3355FF');
 });
