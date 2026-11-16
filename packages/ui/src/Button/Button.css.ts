@@ -1,16 +1,12 @@
-import { components } from '@shivastu/tokens';
-
-const { button } = components;
-
-const sizes = Object.entries(button.sizes)
+const sizes = ['sm', 'md', 'lg']
   .map(
-    ([size, m]) =>
-      `.ds-button--${size}{min-height:${m.height}px;padding:0 ${m.paddingX}px;font-size:${m.fontSize}px}`
+    (size) =>
+      `.ds-button--${size}{min-height:var(--ds-button-${size}-height);padding:0 var(--ds-button-${size}-padding-x);font-size:var(--ds-button-${size}-font-size)}`
   )
   .join('');
 
 export const buttonCss = `
-.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:${button.gap}px;box-sizing:border-box;border:${button.borderWidth}px solid transparent;border-radius:${button.radius}px;font-family:var(--ds-font-sans);font-weight:${button.fontWeight};line-height:1.2;cursor:pointer;transition:background-color var(--ds-duration-fast) var(--ds-easing-standard),border-color var(--ds-duration-fast) var(--ds-easing-standard)}
+.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:var(--ds-button-gap);box-sizing:border-box;border:var(--ds-button-border-width) solid transparent;border-radius:var(--ds-button-radius);font-family:var(--ds-font-sans);font-weight:var(--ds-button-font-weight);line-height:1.2;cursor:pointer;transition:background-color var(--ds-duration-fast) var(--ds-easing-standard),border-color var(--ds-duration-fast) var(--ds-easing-standard)}
 .ds-button:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 .ds-button:disabled{cursor:not-allowed}
 .ds-button:disabled:not([aria-busy=true]){opacity:var(--ds-opacity-disabled)}

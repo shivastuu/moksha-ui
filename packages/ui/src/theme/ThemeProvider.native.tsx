@@ -1,8 +1,15 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { ThemeContext } from './context';
-import { createTheme, type ThemeProviderProps } from './theme';
+import { buildTheme, type ThemeProviderProps } from './theme';
 
-export function ThemeProvider({ colorScheme = 'light', fonts, children }: ThemeProviderProps) {
-  const theme = useMemo(() => createTheme(colorScheme, fonts), [colorScheme, fonts]);
-  return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
+export function ThemeProvider({ theme, colorScheme = 'light', fonts, blurView, children }: ThemeProviderProps) {
+  const parent = useContext(ThemeContext);
+  const definition = theme ?? parent.definition;
+  const nativeFonts = fonts ?? parent.nativeFonts;
+  const blur = blurView ?? parent.blurView;
+  const value = useMemo(
+    () => buildTheme(definition, colorScheme, nativeFonts, blur),
+    [definition, colorScheme, nativeFonts, blur]
+  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

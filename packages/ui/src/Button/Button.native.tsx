@@ -24,7 +24,7 @@ export function Button({
   accessibilityLabel,
   testID,
 }: ButtonProps) {
-  const { colors, components, opacity, nativeFonts } = useTheme();
+  const { colors, components, opacity, typography, nativeFonts } = useTheme();
   const { button } = components;
   const metrics = button.sizes[size];
   const isDisabled = !!disabled || !!loading;
@@ -63,8 +63,8 @@ export function Button({
         style={{
           color,
           fontSize: metrics.fontSize,
-          fontFamily: nativeFonts?.semibold,
-          fontWeight: nativeFonts ? undefined : button.fontWeight,
+          fontFamily: nativeFonts?.[button.fontWeight],
+          fontWeight: nativeFonts ? undefined : typography.fontWeight[button.fontWeight],
         }}
       >
         {children}

@@ -49,9 +49,10 @@ Every design value lives in one file: [`packages/tokens/src/theme.ts`](packages/
 | --- | --- |
 | `palette` | Raw color scales (violet, slate, green, amber, red). Components never use these directly. |
 | `themes.light` / `themes.dark` | Semantic `colors` and `shadows` for each color scheme |
-| `foundations` | `typography` (families, weights, sizes, line heights, letter spacing, `textStyles`), `space`, `radius`, `borderWidth`, `opacity`, `focusRing`, `motion`, `zIndex`, `breakpoints` |
+| `foundations` | `typography` (families, weights, sizes, line heights, letter spacing, `textStyles`), `space`, `radius`, `borderWidth`, `opacity`, `focusRing`, `motion`, `glass`, `zIndex`, `breakpoints` |
 | `components` | Component decisions built from the above (button sizes, radius, gap) |
-| `getTheme(scheme)` | Everything above resolved for `'light'` or `'dark'` |
+| `createTheme(options)` | Your own theme: a brand color plus any overrides (see below) |
+| `getTheme(scheme)` | The default theme resolved for `'light'` or `'dark'` |
 
 In components, `useTheme()` returns that resolved theme on both platforms:
 
@@ -75,13 +76,56 @@ Semantic colors are named by role and grouped by prefix, so autocomplete shows r
 
 | Group | Tokens |
 | --- | --- |
-| Backgrounds | `background`, `surface`, `surfaceRaised`, `surfaceInverse` |
+| Backgrounds | `background`, `surface`, `surfaceRaised`, `surfaceInverse`, `glassSurface`, `glassBorder` |
 | Text | `text`, `textMuted`, `textOnPrimary`, `textInverse` |
 | Brand | `primary`, `primaryPressed`, `primarySubtle` |
 | Status | `success`, `warning`, `danger` |
 | Other | `border`, `focusRing`, `overlay` |
 
 Shadows are CSS `box-shadow` strings, used as is on the web and as `boxShadow` on React Native 0.76+.
+
+## Customize
+
+Give one brand color and `createTheme` builds the rest: a 10-step scale (generated in OKLCH so steps look even), and the primary tokens for light and dark. Every step is picked to pass WCAG AA, and your exact color is kept in the scale. Tests run this on 12 very different brand colors, from yellow to near-black.
+
+```tsx
+import { ThemeProvider, createTheme } from '@shivastu/ui';
+
+const theme = createTheme({
+  brandColor: '#0E7C66',
+  colors: { light: { primary: '#0E7C66' } }, // any semantic color, per scheme
+  foundations: {
+    radius: { md: 12 },
+    typography: { fontFamily: { web: 'Manrope, sans-serif' } },
+  },
+  components: { button: { sizes: { md: { height: 48 } } } },
+});
+
+<ThemeProvider theme={theme} colorScheme="dark">
+  <App />
+</ThemeProvider>
+```
+
+- Every option is optional; anything you leave out keeps the default.
+- Overriding `primary` on its own recomputes `textOnPrimary` so text stays readable.
+- A nested `ThemeProvider` keeps its parent's theme, so `<ThemeProvider colorScheme="dark">` inside a branded section only switches the scheme.
+- Several themes can live on one page: each theme's CSS variables are scoped to its own provider.
+- Storybook has a **Theme builder** page: pick a color and see the scale and both schemes live.
+
+## Glass
+
+`Surface` has three variants: `solid`, `raised` and `glass`. Glass is a translucent fill over a backdrop blur, with a hairline border, in both color schemes.
+
+- **Web:** `backdrop-filter` with the theme's blur and saturation. Browsers without it, and users who turn on "reduce transparency", get a solid surface instead.
+- **React Native:** pass a blur view once and every glass surface uses it. Without it, glass falls back to a solid raised surface, so `@shivastu/ui` doesn't force a native module on your app.
+
+```tsx
+import { BlurView } from 'expo-blur';
+
+<ThemeProvider colorScheme={scheme} blurView={BlurView}>
+  <Surface variant="glass" blur="lg" padding="xl" radius="xl">…</Surface>
+</ThemeProvider>
+```
 
 ## Usage
 
@@ -119,6 +163,17 @@ import { foundations } from '@shivastu/ui';
 | `accessibilityLabel` | `string` | the label |
 | `testID` | `string`: `data-testid` on web, `testID` on native | |
 
+### Surface
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `'solid' \| 'raised' \| 'glass'` | `'solid'` |
+| `padding` | spacing token: `'xs'` … `'3xl'` | `'lg'` |
+| `radius` | radius token: `'sm'` … `'full'` | `'lg'` |
+| `blur` | glass only: `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `shadow` | `'none' \| 'sm' \| 'md' \| 'lg'` | `md` for raised and glass, none for solid |
+| `testID` | `string` | |
+
 ## Development
 
 ```sh
@@ -132,7 +187,11 @@ npm run native       # Expo dev server, open in Expo Go
 
 ## Roadmap
 
-TextInput, OTP / PIN input, BottomSheet, Snackbar, then automated releases with Changesets.
+- **Inputs:** TextInput, OTP / PIN input, phone, amount and account-number inputs, search
+- **Overlays and feedback:** Dialog (becomes a bottom sheet on small screens), BottomSheet, Snackbar, Banner
+- **Navigation:** AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
+- **Interaction:** TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar / logo
+- Automated releases with Changesets
 
 ## License
 

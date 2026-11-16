@@ -4,8 +4,17 @@ import { ScrollView, StyleSheet, Text, View, useColorScheme } from 'react-native
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
+import { BlurView } from 'expo-blur';
 import { useFonts } from 'expo-font';
-import { Button, ThemeProvider, foundations, themes, useTheme, type ColorScheme } from '@shivastu/ui';
+import {
+  Button,
+  Surface,
+  ThemeProvider,
+  foundations,
+  themes,
+  useTheme,
+  type ColorScheme,
+} from '@shivastu/ui';
 
 const { space, typography } = foundations;
 
@@ -37,7 +46,7 @@ export default function App() {
   };
 
   return (
-    <ThemeProvider colorScheme={scheme} fonts={typography.fontFamily.native}>
+    <ThemeProvider colorScheme={scheme} fonts={typography.fontFamily.native} blurView={BlurView}>
       <ScrollView
         style={{ backgroundColor: themes[scheme].colors.background }}
         contentContainerStyle={styles.content}
@@ -46,6 +55,16 @@ export default function App() {
         <Text style={[styles.subtitle, { color: themes[scheme].colors.textMuted }]}>
           Same components and tokens as the web, rendered with React Native.
         </Text>
+
+        <View style={styles.backdrop}>
+          <View style={[styles.blob, { backgroundColor: '#FF7A59', top: -30, left: -20 }]} />
+          <View style={[styles.blob, { backgroundColor: '#7158EE', top: 10, right: -30 }]} />
+          <View style={[styles.blob, { backgroundColor: '#06B6D4', bottom: -40, left: 90 }]} />
+          <Surface variant="glass" padding="xl" radius="xl">
+            <Text style={[styles.label, { color: themes[scheme].colors.textMuted }]}>Card balance</Text>
+            <Text style={[styles.amount, { color: themes[scheme].colors.text }]}>₹ 24,580.00</Text>
+          </Surface>
+        </View>
 
         <Section title="Variants">
           <Button variant="primary">Primary</Button>
@@ -89,4 +108,11 @@ const styles = StyleSheet.create({
   section: { gap: space.sm },
   label: { fontSize: typography.textStyles.caption.fontSize, textTransform: 'uppercase', letterSpacing: typography.letterSpacing.wide },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
+  backdrop: { padding: space.xl, borderRadius: foundations.radius.xl, overflow: 'hidden' },
+  blob: { position: 'absolute', width: 160, height: 160, borderRadius: 80, opacity: 0.9 },
+  amount: {
+    fontFamily: typography.fontFamily.native.semibold,
+    fontSize: typography.textStyles.heading.fontSize,
+    marginTop: space.xs,
+  },
 });

@@ -2,13 +2,146 @@
  * The single source of truth for the design system.
  *
  * - `palette`: raw color scales. Components never use these directly.
- * - `foundations`: values that are the same in light and dark (type, space, radius, motion, ...).
+ * - `foundations`: values that are the same in light and dark (type, space, radius, motion, glass, ...).
  * - `themes.light` / `themes.dark`: semantic colors and shadows for each color scheme.
  * - `components`: component-level decisions built from the values above.
- * - `getTheme(scheme)`: everything above, resolved for one color scheme.
+ * - `createTheme(options)`: your own theme from a brand color and any overrides.
+ * - `getTheme(scheme)` / `resolveTheme(theme, scheme)`: everything resolved for one color scheme.
  */
 
+import { contrastRatio, generateScale, type ColorScale, type ScaleStep } from './color.ts';
+
 export type ColorScheme = 'light' | 'dark';
+
+/* -------------------------------------------------------------------- types */
+
+export type FontWeightName = 'regular' | 'medium' | 'semibold';
+export type FontSizeToken = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+export type TextStyleName = 'display' | 'heading' | 'title' | 'body' | 'bodySmall' | 'label' | 'caption';
+export type SpaceToken = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+export type RadiusToken = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type ShadowName = 'sm' | 'md' | 'lg';
+export type BlurToken = 'sm' | 'md' | 'lg';
+export type ComponentSize = 'sm' | 'md' | 'lg';
+
+export interface TextStyle {
+  fontSize: number;
+  lineHeight: number;
+  fontWeight: FontWeightName;
+}
+
+export type NativeFonts = Record<FontWeightName, string>;
+
+export interface Typography {
+  fontFamily: {
+    /** CSS font stack for the web */
+    web: string;
+    /** One family per weight on React Native, as loaded with expo-font (Android does not synthesize weights) */
+    native: NativeFonts;
+  };
+  /** CSS / React Native font weight per name */
+  fontWeight: Record<FontWeightName, '400' | '500' | '600' | '700'>;
+  /** Font sizes in px */
+  fontSize: Record<FontSizeToken, number>;
+  /** Line heights in px */
+  lineHeight: Record<FontSizeToken, number>;
+  /** Letter spacing in px */
+  letterSpacing: { tight: number; normal: number; wide: number };
+  /** Ready-made combinations for headings, body text and labels */
+  textStyles: Record<TextStyleName, TextStyle>;
+}
+
+export interface Foundations {
+  typography: Typography;
+  /** Spacing scale in px (4-point grid) */
+  space: Record<SpaceToken, number>;
+  /** Corner radius in px */
+  radius: Record<RadiusToken, number>;
+  /** Border widths in px */
+  borderWidth: { thin: number; thick: number };
+  opacity: { disabled: number; muted: number };
+  /** Keyboard focus indicator, in px */
+  focusRing: { width: number; offset: number };
+  motion: {
+    /** Durations in ms */
+    duration: { fast: number; normal: number; slow: number };
+    /** CSS easing curves */
+    easing: { standard: string; enter: string; exit: string };
+  };
+  /** Frosted glass: backdrop blur radius in px, and color saturation behind the glass */
+  glass: { blur: Record<BlurToken, number>; saturation: number };
+  zIndex: { base: number; dropdown: number; overlay: number; modal: number; toast: number };
+  /** Min widths in px */
+  breakpoints: { sm: number; md: number; lg: number; xl: number };
+}
+
+export interface SemanticColors {
+  /** Page background */
+  background: string;
+  /** Cards, sections and inputs on top of the background */
+  surface: string;
+  /** Floating layers: sheets, menus, dialogs (pair with a shadow) */
+  surfaceRaised: string;
+  /** Dark-on-light (or light-on-dark) layer such as a snackbar */
+  surfaceInverse: string;
+  /** Translucent fill for glass surfaces (shown over a backdrop blur) */
+  glassSurface: string;
+  /** Hairline edge that makes glass surfaces readable */
+  glassBorder: string;
+  /** Main text */
+  text: string;
+  /** Secondary text: hints, captions, placeholders */
+  textMuted: string;
+  /** Text and icons placed on `primary` */
+  textOnPrimary: string;
+  /** Text and icons placed on `surfaceInverse` */
+  textInverse: string;
+  /** Dividers and input borders */
+  border: string;
+  /** Brand color: primary buttons, links, selected states */
+  primary: string;
+  /** `primary` while pressed or hovered */
+  primaryPressed: string;
+  /** Tinted background for secondary and ghost states */
+  primarySubtle: string;
+  /** Positive status */
+  success: string;
+  /** Needs attention */
+  warning: string;
+  /** Errors and destructive actions */
+  danger: string;
+  /** Keyboard focus outline */
+  focusRing: string;
+  /** Backdrop behind modals and sheets */
+  overlay: string;
+}
+
+export interface SchemeTokens {
+  scheme: ColorScheme;
+  colors: SemanticColors;
+  /** CSS box-shadow values, used as is on the web and as `boxShadow` on React Native (0.76+) */
+  shadows: Record<ShadowName, string>;
+}
+
+export interface Components {
+  button: {
+    radius: number;
+    borderWidth: number;
+    gap: number;
+    fontWeight: FontWeightName;
+    sizes: Record<ComponentSize, { height: number; paddingX: number; fontSize: number }>;
+  };
+}
+
+/** A complete theme: what `createTheme` returns and `ThemeProvider` accepts */
+export interface ThemeDefinition {
+  foundations: Foundations;
+  components: Components;
+  themes: Record<ColorScheme, SchemeTokens>;
+}
+
+/** Everything for one color scheme, as returned by `useTheme()` */
+export type ResolvedTheme = Foundations & SchemeTokens & { components: Components };
 
 /* ------------------------------------------------------------------ palette */
 
@@ -46,22 +179,19 @@ export const palette = {
 
 /* -------------------------------------------------------------- foundations */
 
-const fontSize = { xs: 12, sm: 14, md: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30 } as const;
-const lineHeight = { xs: 16, sm: 20, md: 24, lg: 28, xl: 28, '2xl': 32, '3xl': 38 } as const;
-const fontWeight = { regular: '400', medium: '500', semibold: '600' } as const;
+const fontSize: Record<FontSizeToken, number> = { xs: 12, sm: 14, md: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30 };
+const lineHeight: Record<FontSizeToken, number> = { xs: 16, sm: 20, md: 24, lg: 28, xl: 28, '2xl': 32, '3xl': 38 };
 
-export const typography = {
+export const typography: Typography = {
   fontFamily: {
-    /** CSS font stack for the web */
     web: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-    /** One family per weight on React Native, as loaded with expo-font (Android does not synthesize weights) */
     native: {
       regular: 'Inter_400Regular',
       medium: 'Inter_500Medium',
       semibold: 'Inter_600SemiBold',
     },
   },
-  fontWeight,
+  fontWeight: { regular: '400', medium: '500', semibold: '600' },
   fontSize,
   lineHeight,
   letterSpacing: { tight: -0.2, normal: 0, wide: 0.6 },
@@ -74,25 +204,16 @@ export const typography = {
     label: { fontSize: fontSize.sm, lineHeight: lineHeight.sm, fontWeight: 'medium' },
     caption: { fontSize: fontSize.xs, lineHeight: lineHeight.xs, fontWeight: 'regular' },
   },
-} as const;
+};
 
-export type NativeFonts = Record<keyof typeof typography.fontFamily.native, string>;
-
-export type TextStyleName = keyof typeof typography.textStyles;
-
-export const foundations = {
+export const foundations: Foundations = {
   typography,
-  /** Spacing scale in px (4-point grid) */
   space: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, '2xl': 32, '3xl': 48 },
-  /** Corner radius in px */
   radius: { sm: 6, md: 10, lg: 14, xl: 20, full: 999 },
-  /** Border widths in px */
   borderWidth: { thin: 1, thick: 2 },
   opacity: { disabled: 0.5, muted: 0.7 },
-  /** Keyboard focus indicator, in px */
   focusRing: { width: 2, offset: 2 },
   motion: {
-    /** Durations in ms */
     duration: { fast: 150, normal: 250, slow: 350 },
     easing: {
       standard: 'cubic-bezier(0.2, 0, 0, 1)',
@@ -100,58 +221,12 @@ export const foundations = {
       exit: 'cubic-bezier(0.3, 0, 1, 1)',
     },
   },
+  glass: { blur: { sm: 12, md: 24, lg: 40 }, saturation: 1.8 },
   zIndex: { base: 0, dropdown: 1000, overlay: 1100, modal: 1200, toast: 1300 },
-  /** Min widths in px */
   breakpoints: { sm: 640, md: 768, lg: 1024, xl: 1280 },
-} as const;
+};
 
 /* ------------------------------------------------------------ color schemes */
-
-export interface SemanticColors {
-  /** Page background */
-  background: string;
-  /** Cards, sections and inputs on top of the background */
-  surface: string;
-  /** Floating layers: sheets, menus, dialogs (pair with a shadow) */
-  surfaceRaised: string;
-  /** Dark-on-light (or light-on-dark) layer such as a snackbar */
-  surfaceInverse: string;
-  /** Main text */
-  text: string;
-  /** Secondary text: hints, captions, placeholders */
-  textMuted: string;
-  /** Text and icons placed on `primary` */
-  textOnPrimary: string;
-  /** Text and icons placed on `surfaceInverse` */
-  textInverse: string;
-  /** Dividers and input borders */
-  border: string;
-  /** Brand color: primary buttons, links, selected states */
-  primary: string;
-  /** `primary` while pressed or hovered */
-  primaryPressed: string;
-  /** Tinted background for secondary and ghost states */
-  primarySubtle: string;
-  /** Positive status */
-  success: string;
-  /** Needs attention */
-  warning: string;
-  /** Errors and destructive actions */
-  danger: string;
-  /** Keyboard focus outline */
-  focusRing: string;
-  /** Backdrop behind modals and sheets */
-  overlay: string;
-}
-
-export type ShadowName = 'sm' | 'md' | 'lg';
-
-export interface SchemeTokens {
-  scheme: ColorScheme;
-  colors: SemanticColors;
-  /** CSS box-shadow values, used as is on the web and as `boxShadow` on React Native (0.76+) */
-  shadows: Record<ShadowName, string>;
-}
 
 export const themes: Record<ColorScheme, SchemeTokens> = {
   light: {
@@ -161,6 +236,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       surface: palette.slate[50],
       surfaceRaised: palette.slate[0],
       surfaceInverse: palette.slate[900],
+      glassSurface: 'rgba(255, 255, 255, 0.6)',
+      glassBorder: 'rgba(255, 255, 255, 0.7)',
       text: palette.slate[900],
       textMuted: palette.slate[600],
       textOnPrimary: palette.slate[0],
@@ -188,6 +265,8 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
       surface: palette.slate[900],
       surfaceRaised: palette.slate[800],
       surfaceInverse: palette.slate[50],
+      glassSurface: 'rgba(35, 40, 51, 0.55)',
+      glassBorder: 'rgba(255, 255, 255, 0.12)',
       text: palette.slate[50],
       textMuted: palette.slate[400],
       textOnPrimary: palette.slate[950],
@@ -212,24 +291,124 @@ export const themes: Record<ColorScheme, SchemeTokens> = {
 
 /* --------------------------------------------------------------- components */
 
-export const components = {
+export const components: Components = {
   button: {
     radius: foundations.radius.md,
     borderWidth: foundations.borderWidth.thin,
     gap: foundations.space.sm,
-    fontWeight: typography.fontWeight.semibold,
+    fontWeight: 'semibold',
     sizes: {
       sm: { height: 36, paddingX: foundations.space.md, fontSize: fontSize.sm },
       md: { height: 44, paddingX: foundations.space.lg, fontSize: fontSize.md },
       lg: { height: 52, paddingX: 20, fontSize: fontSize.lg },
     },
   },
-} as const;
+};
 
-/* ------------------------------------------------------------------ resolve */
+export const defaultTheme: ThemeDefinition = { foundations, components, themes };
 
-export function getTheme(scheme: ColorScheme) {
-  return { ...foundations, components, ...themes[scheme] };
+/* -------------------------------------------------------------- customising */
+
+export type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K] };
+
+export interface ThemeOptions {
+  /** Your brand color. Generates the primary scale and every primary token for light and dark, kept WCAG AA */
+  brandColor?: string;
+  /** Override any semantic color per scheme. Overriding `primary` alone recomputes `textOnPrimary` */
+  colors?: Partial<Record<ColorScheme, Partial<SemanticColors>>>;
+  shadows?: Partial<Record<ColorScheme, Partial<Record<ShadowName, string>>>>;
+  /** Override any foundation value: fonts, space, radius, motion, glass, ... */
+  foundations?: DeepPartial<Foundations>;
+  /** Override component decisions, for example button heights */
+  components?: DeepPartial<Components>;
 }
 
-export type ResolvedTheme = ReturnType<typeof getTheme>;
+function merge<T extends object>(base: T, override: DeepPartial<T> | undefined): T {
+  if (!override) {
+    return base;
+  }
+  const result = { ...base } as Record<string, unknown>;
+  for (const [key, value] of Object.entries(override)) {
+    const current = (base as Record<string, unknown>)[key];
+    result[key] =
+      value && typeof value === 'object' && current && typeof current === 'object'
+        ? merge(current, value as DeepPartial<typeof current>)
+        : value;
+  }
+  return result as T;
+}
+
+/** White or near-black, whichever reads better on `background` */
+export function readableTextOn(background: string) {
+  return contrastRatio(palette.slate[0], background) >= contrastRatio(palette.slate[950], background)
+    ? palette.slate[0]
+    : palette.slate[950];
+}
+
+function primaryTokens(scale: ColorScale, scheme: ColorScheme, background: string) {
+  const candidates: ScaleStep[] = scheme === 'light' ? [600, 700, 800, 900] : [300, 200, 400, 100];
+  const pressedOf = (step: ScaleStep): ScaleStep =>
+    scheme === 'light' ? (Math.min(900, step + 100) as ScaleStep) : (Math.max(100, step - 100) as ScaleStep);
+  const subtle = scheme === 'light' ? scale[50] : scale[900];
+
+  const pick =
+    candidates.find((step) => {
+      const primary = scale[step];
+      const text = readableTextOn(primary);
+      return (
+        contrastRatio(primary, background) >= 4.5 &&
+        contrastRatio(primary, subtle) >= 4.5 &&
+        contrastRatio(text, primary) >= 4.5 &&
+        contrastRatio(text, scale[pressedOf(step)]) >= 4.5
+      );
+    }) ?? candidates[candidates.length - 1]!;
+
+  const focusSteps: ScaleStep[] = scheme === 'light' ? [400, 500, 600, 700] : [300, 400, 200];
+  const focus = focusSteps.find((step) => contrastRatio(scale[step], background) >= 3) ?? pick;
+
+  return {
+    primary: scale[pick],
+    primaryPressed: scale[pressedOf(pick)],
+    primarySubtle: subtle,
+    textOnPrimary: readableTextOn(scale[pick]),
+    focusRing: scale[focus],
+  };
+}
+
+/**
+ * Builds a theme from a brand color and any overrides.
+ *
+ * @example
+ * const theme = createTheme({ brandColor: '#0E7C66', foundations: { radius: { md: 12 } } });
+ * <ThemeProvider theme={theme} colorScheme="dark">…</ThemeProvider>
+ */
+export function createTheme(options: ThemeOptions = {}): ThemeDefinition {
+  const scale = options.brandColor ? generateScale(options.brandColor) : undefined;
+
+  const schemeTokens = (scheme: ColorScheme): SchemeTokens => {
+    const base = themes[scheme];
+    const brand = scale ? primaryTokens(scale, scheme, base.colors.background) : {};
+    const overrides = options.colors?.[scheme] ?? {};
+    const colors = { ...base.colors, ...brand, ...overrides };
+    if (overrides.primary && !overrides.textOnPrimary) {
+      colors.textOnPrimary = readableTextOn(overrides.primary);
+    }
+    return { scheme, colors, shadows: { ...base.shadows, ...options.shadows?.[scheme] } };
+  };
+
+  return {
+    foundations: merge(foundations, options.foundations),
+    components: merge(components, options.components),
+    themes: { light: schemeTokens('light'), dark: schemeTokens('dark') },
+  };
+}
+
+/** Everything in `theme` for one color scheme */
+export function resolveTheme(theme: ThemeDefinition, scheme: ColorScheme): ResolvedTheme {
+  return { ...theme.foundations, components: theme.components, ...theme.themes[scheme] };
+}
+
+/** The default theme for one color scheme */
+export function getTheme(scheme: ColorScheme): ResolvedTheme {
+  return resolveTheme(defaultTheme, scheme);
+}
