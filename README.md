@@ -13,22 +13,25 @@ The same component API and design tokens, with native rendering on each platform
 
 </div>
 
-![Tandem UI components in light and dark mode: a glass balance card, phone, amount and OTP fields, and buttons](docs/images/hero.png)
+<p align="center"><img src="docs/images/balance-card.png" width="520" alt="A glass balance card on a dark stage lit in the brand color: available balance ₹ 37,080.00 with small currency and decimals, a green '₹12,500 today' chip, and round Add money, Send and Scan & pay buttons" /></p>
+
+![Tandem UI components in light and dark mode: a glass balance card, phone, amount and OTP fields, and pill buttons](docs/images/hero.png)
 
 ## Why Tandem UI
 
-- **One API, two platforms.** `import { Button } from '@shivastu/ui'` renders a real `<button>` with CSS on the web and `Pressable` with `StyleSheet` on iOS and Android. No `react-native-web`, no bundler config.
+- **One API, two platforms.** `import { Button } from 'tandemui'` renders a real `<button>` with CSS on the web and `Pressable` with `StyleSheet` on iOS and Android. No `react-native-web`, no bundler config.
 - **Every design value in one file.** Colors, type, spacing, radius, shadows, motion, glass and component sizes live in [`theme.ts`](packages/tokens/src/theme.ts). Change it and web and native update together.
 - **Your brand in one line.** `createTheme({ brandColor })` generates a full color scale and both light and dark tokens, kept at WCAG AA contrast. Tests check this for 12 very different brand colors.
+- **Premium by default.** Motion runs on real spring physics that feel the same on web and native, surfaces have depth, hairline edges and frosted glass, and showpieces like a 3D bank card and a rolling balance come built in.
 - **Light, dark and glass.** Every component supports both color schemes, and surfaces and inputs have a frosted glass variant.
 - **Built for fintech forms.** Phone, amount (Indian digit grouping), bank account (masked) and OTP / PIN fields that keep the caret in place while they format.
-- **Accessible by default.** Labelled inputs, linked error messages, visible focus rings, and support for reduced motion and reduced transparency.
+- **Accessible by default.** Labelled inputs, linked error messages, visible focus rings, and support for reduced motion and reduced transparency. Colored text, badges and tags are adjusted automatically until they pass WCAG AA.
 
 ## Contents
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -38,7 +41,7 @@ The same component API and design tokens, with native rendering on each platform
 ## Quick start
 
 ```sh
-npm install @shivastu/ui
+npm install tandemui
 ```
 
 > The packages are not on npm yet. Until the first release, clone this repo and run `npm install && npm run build`.
@@ -46,7 +49,7 @@ npm install @shivastu/ui
 **Web** (Vite, Next.js, any React 19 app). Load the Inter font, then wrap your app:
 
 ```tsx
-import { Button, ThemeProvider } from '@shivastu/ui';
+import { Button, ThemeProvider } from 'tandemui';
 
 export function App() {
   return (
@@ -63,7 +66,7 @@ There are no CSS files to import: `ThemeProvider` adds the styles once, works wi
 
 ```tsx
 import { BlurView } from 'expo-blur';
-import { ThemeProvider, foundations } from '@shivastu/ui';
+import { ThemeProvider, foundations } from 'tandemui';
 
 <ThemeProvider colorScheme={scheme} fonts={foundations.typography.fontFamily.native} blurView={BlurView}>
   <App />
@@ -79,7 +82,7 @@ Give one brand color and `createTheme` builds the rest: a 10-step scale generate
 ![Theme builder: an emerald brand color generates a 10-step scale and light and dark previews with their contrast ratios](docs/images/theme-builder.png)
 
 ```tsx
-import { ThemeProvider, createTheme } from '@shivastu/ui';
+import { ThemeProvider, createTheme } from 'tandemui';
 
 const theme = createTheme({
   brandColor: '#0E9F7A',
@@ -115,7 +118,13 @@ const theme = createTheme({
 <Button fullWidth disabled={!valid}>Continue</Button>
 ```
 
-A loading button keeps its color, shows a spinner and is announced as busy; only a disabled button fades.
+Buttons are pills. The primary one is lit from the top with a thin highlight and a soft glow in the brand color; secondary is a soft tint. Hover fades in a pressed layer instead of swapping the gradient, so nothing flickers, and every button shrinks slightly on press. A loading button keeps its color, shows a spinner and is announced as busy; only a disabled button fades.
+
+`IconButton` is the round version for a single icon, in `solid`, `soft`, `glass` and `ghost`. It needs an `accessibilityLabel`, since an icon alone has no name:
+
+```tsx
+<IconButton icon={<EyeIcon />} accessibilityLabel="Hide balance" pressed={hidden} variant="ghost" />
+```
 
 <details>
 <summary>Button props</summary>
@@ -137,6 +146,8 @@ A loading button keeps its color, shows a spinner and is announced as busy; only
 ### Inputs
 
 `TextField` is the base. Every other input is a `TextField` with a formatter, so they all share labels, helper and error text, prefixes, variants (`outline`, `filled`, `glass`), sizes and keyboard handling.
+
+Fields rest with a soft shadow and get a 4 px halo in the brand color on focus (red when there is an error), with a brand-colored caret. OTP cells show a blinking caret in the cell that takes the next digit.
 
 ![Inputs: text field with helper text, PAN field with an error, phone with +91, amount with Indian grouping, masked account number, search, OTP, masked PIN, clearable and disabled fields](docs/images/inputs.png)
 
@@ -208,7 +219,7 @@ Pass a list of fields and get a complete form: the right input for each type, va
 <td>
 
 ```tsx
-import { AutoForm, defineFields } from '@shivastu/ui';
+import { AutoForm, defineFields } from 'tandemui';
 
 const fields = defineFields([
   { name: 'name', type: 'text', label: 'Payee name', required: true },
@@ -322,12 +333,69 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 
 ![Promo banner on the brand gradient: Travel card, Pay abroad with zero forex markup, and a Get the card button](docs/images/promo.png)
 
+### Bank card
+
+![Three bank cards in brand, midnight and metal finishes; the middle one tilts in 3D toward the pointer](docs/images/bank-card.png)
+
+```tsx
+<BankCard last4="4821" holder="Shivastu Shrivastava" expiry="08/29" finish="midnight" />
+<BankCard {...card} flipped />  {/* the back: signature strip and CVV */}
+<BankCard {...card} frozen />   {/* frosted, says "Frozen" */}
+```
+
+- Tilts toward the pointer (web) or finger (React Native) with a spring, and catches the light: a glare follows the pointer and a holographic band shifts across the card.
+- Finishes: `brand` (follows your `createTheme` brand color), `midnight` and `metal`, with a gold chip, contactless mark and engraved pattern.
+- `flipped` turns it over with a spring; `frozen` frosts it. With reduced motion it stays flat and flips at once.
+- A card is a physical object, so it looks the same in light and dark mode. Screen readers hear one line: "Tandem card ending in 4821, Shivastu Shrivastava, expires 08/29".
+- Bring your own network mark through `network`; real network logos are trademarks.
+
+### Rolling amount
+
+<img src="docs/images/balance-card.png" width="420" alt="Balance card with ₹ 37,080.00: large digits, smaller muted currency sign and decimals" />
+
+```tsx
+<RollingAmount value={balance} size="xl" hidden={hideBalance} />
+```
+
+- Each digit is a reel that rolls to its new value with the `smooth` spring, lower places first, so a change ripples across the number like a mechanical counter. Digits roll up from 0 when the amount first appears.
+- A digit keeps its reel as the number grows or shrinks: the units reel stays the units reel from 9,999 to 10,000.
+- `hidden` blurs the amount on the web and shows bullets on React Native, for a "hide balance" toggle. Screen readers hear "Balance hidden" instead of the digits.
+- Screen readers hear the amount once ("₹24,580.00"), never digit by digit. Indian grouping by default; `currency` and `decimals` change the rest.
+
+### Primitives
+
+![Tags with tones and status dots, and filter chips with two selected](docs/images/chips.png)
+
+![Avatars with name-based gradients and status dots, an avatar group with +3, a budget progress bar, an indeterminate bar, progress rings and an external link](docs/images/people.png)
+
+```tsx
+<Text variant="heading" as="h2">Good evening, Shivastu</Text>
+<Text variant="label" tone="success">Paid</Text>
+
+<Stack direction="row" gap="md" align="center">
+  <Avatar name="Shivastu Shrivastava" status="online" />
+  <Tag tone="warning" dot>KYC pending</Tag>
+  <Badge count={3} label="3 unread notifications" />
+</Stack>
+
+<Chip label="Food" selected={food} onSelectedChange={setFood} />
+<ProgressBar value={42} label="Monthly budget used" />
+<ProgressRing value={72} label="Budget used">72%</ProgressRing>
+<Skeleton lines={2} />
+```
+
+- **Text** uses the theme's type styles; tones are adjusted to pass AA, so green and amber text stay readable. **Stack** lays children out with theme spacing; **Divider** can carry a label like "or continue with".
+- **Badge** pops each time its count changes and has a hairline and a glossy top edge. **Tag** is a bordered status pill; **Chip** is a bordered filter that springs a check mark in when selected.
+- **Avatar** shows a photo, or initials on a gradient picked from the name, so the same person always gets the same colors. **AvatarGroup** overlaps them with clean rings and reads the names once.
+- **ProgressBar** springs its gradient fill to the value, or sweeps when the amount of work is unknown. **ProgressRing** is a circular gauge, drawn without SVG on React Native.
+- **Spinner** and **Skeleton** cover loading; the skeleton shimmer stops with reduced motion. **Link** fades its underline in on hover and marks external links for screen readers.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
 
 ```tsx
-import { Motion, Stagger } from '@shivastu/ui';
+import { Motion, Stagger } from 'tandemui';
 
 <Motion preset="fadeUp">
   <BalanceCard />
@@ -341,6 +409,7 @@ import { Motion, Stagger } from '@shivastu/ui';
 ```
 
 - Presets: `fade`, `fadeUp`, `fadeDown`, `scaleIn`, `slideUp`. Durations, easings, distances and the stagger interval are theme tokens, so `createTheme` can change them.
+- **Springs** (`snappy`, `smooth`, `bouncy`) are real physics: on the web they become CSS `linear()` easings (`var(--ds-spring-smooth)`), and on React Native the same stiffness and damping go to `Animated.spring`, so both platforms move the same way.
 - **Web:** CSS keyframes, with no JavaScript animation loop. **React Native:** `Animated` on the native driver, using the same easing curves as the web.
 - With reduced motion turned on (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), movement becomes a plain fade or is skipped.
 
@@ -414,7 +483,7 @@ On the web, every token is also a CSS variable inside `ThemeProvider`, so your o
 
 ```mermaid
 flowchart LR
-  T["@shivastu/tokens<br/>theme.ts"] --> S["Shared<br/>props, logic, formatters"]
+  T["tandemui-tokens<br/>theme.ts"] --> S["Shared<br/>props, logic, formatters"]
   S --> W["index.ts<br/>*.web.tsx<br/>DOM + CSS variables"]
   S --> N["index.native.ts<br/>*.native.tsx<br/>View, Pressable, StyleSheet"]
   W --> B1["Vite · Next.js · webpack · Node"]
@@ -441,6 +510,7 @@ packages/ui/src/
 ## Accessibility
 
 - Text and key color pairs pass **WCAG AA** in both schemes, for the default theme and for every theme `createTheme` generates. This is checked in tests.
+- Colors that would fail are fixed at the source: `ensureContrast` nudges a color's lightness, keeping its hue, until it passes. Colored text tones, badge fills, tag text and avatar gradients all go through it.
 - Inputs use their label as the accessible name. Helper and error text are linked (`aria-describedby` on web, `accessibilityHint` on native), and on the web errors also set `aria-invalid`.
 - Buttons announce busy and disabled states; keyboard focus shows a visible ring.
 - Motion respects reduced motion on every platform (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), and glass respects `prefers-reduced-transparency`.
@@ -458,8 +528,8 @@ npm run native       # Expo dev server; open it in Expo Go
 
 | Folder | What it is |
 | --- | --- |
-| [`packages/tokens`](packages/tokens) | `@shivastu/tokens`: the theme file, color engine and contrast tests |
-| [`packages/ui`](packages/ui) | `@shivastu/ui`: components, `ThemeProvider` and `createTheme` |
+| [`packages/tokens`](packages/tokens) | `tandemui-tokens`: the theme file, color engine and contrast tests |
+| [`packages/ui`](packages/ui) | `tandemui`: components, `ThemeProvider` and `createTheme` |
 | [`apps/docs`](apps/docs) | Storybook for the web components, with a light/dark switch and the theme builder |
 | [`apps/native-demo`](apps/native-demo) | Expo app using the same components on iOS and Android |
 
@@ -472,9 +542,21 @@ npm run native       # Expo dev server; open it in Expo Go
 - [x] Motion: `Motion`, `Stagger` and built-in component animations
 - [x] AutoForm: build a whole form from a list of fields, with validation
 - [x] Dialog (becomes a bottom sheet on phones), BottomSheet, Snackbar, Banner, PromoBanner
-- [ ] AppBar, NavigationBar (horizontal, vertical, drawer, rail), Timeline
-- [ ] TapToCopy, SwipeButton, Confetti, FileUpload, DatePicker, Avatar
+- [x] Spring motion tokens and the 3D BankCard
+- [x] RollingAmount (balance with rolling digits)
+- [ ] Blocks: slide to pay, payment success, phone + OTP login, transactions feed
+- [ ] Showcase site with a live gallery, and one-command install (shadcn registry, llms.txt)
 - [ ] Hosted Storybook and automated npm releases
+
+### Next 50 components
+
+Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
+
+- **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
+- **Selection and input:** [ ] Switch · [ ] Checkbox · [ ] RadioGroup · [ ] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
+- **Navigation:** [ ] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
+- **Lists and display:** [ ] ListItem · [ ] ListGroup · [ ] Accordion · [ ] StatCard · [ ] DetailRow · [ ] Timeline · [ ] EmptyState · [ ] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
+- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [ ] ResendTimer
 
 ## License
 
