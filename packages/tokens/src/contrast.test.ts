@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { colors, type ColorScheme, type SemanticColors } from './index.ts';
+import { themes, type ColorScheme, type SemanticColors } from './theme.ts';
 
 function luminance(hex: string) {
   const [r, g, b] = [1, 3, 5].map((i) => {
@@ -20,23 +20,32 @@ const textPairs: [keyof SemanticColors, keyof SemanticColors][] = [
   ['text', 'surface'],
   ['textMuted', 'background'],
   ['textMuted', 'surface'],
-  ['onPrimary', 'primary'],
-  ['onPrimary', 'primaryPressed'],
+  ['textOnPrimary', 'primary'],
+  ['textOnPrimary', 'primaryPressed'],
   ['primary', 'background'],
   ['primary', 'primarySubtle'],
   ['danger', 'background'],
+  ['text', 'surfaceRaised'],
+  ['textInverse', 'surfaceInverse'],
 ];
 
 for (const scheme of ['light', 'dark'] as ColorScheme[]) {
+  const { colors } = themes[scheme];
+
   for (const [fg, bg] of textPairs) {
     test(`${scheme}: ${fg} on ${bg} meets WCAG AA (4.5:1)`, () => {
-      const ratio = contrast(colors[scheme][fg], colors[scheme][bg]);
+      const ratio = contrast(colors[fg], colors[bg]);
       assert.ok(ratio >= 4.5, `${ratio.toFixed(2)}:1`);
     });
   }
 
   test(`${scheme}: focus ring is visible on background (3:1)`, () => {
-    const ratio = contrast(colors[scheme].focus, colors[scheme].background);
+    const ratio = contrast(colors.focusRing, colors.background);
     assert.ok(ratio >= 3, `${ratio.toFixed(2)}:1`);
+  });
+
+  test(`${scheme}: defines a value for every semantic color and shadow`, () => {
+    assert.deepEqual(Object.keys(colors).sort(), Object.keys(themes.light.colors).sort());
+    assert.deepEqual(Object.keys(themes[scheme].shadows).sort(), ['lg', 'md', 'sm']);
   });
 }

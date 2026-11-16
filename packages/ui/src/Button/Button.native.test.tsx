@@ -1,6 +1,29 @@
+import { Text } from 'react-native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { colors } from '@shivastu/tokens';
-import { Button, ThemeProvider } from '../index';
+import { foundations, themes } from '@shivastu/tokens';
+import { Button, ThemeProvider, useTheme } from '../index';
+
+function ThemeProbe() {
+  const theme = useTheme();
+  return (
+    <Text testID="probe">
+      {[theme.scheme, theme.shadows.md, theme.space.lg, theme.typography.textStyles.body.fontSize].join('|')}
+    </Text>
+  );
+}
+
+describe('useTheme (native)', () => {
+  it('returns the full theme for the color scheme', async () => {
+    await render(
+      <ThemeProvider colorScheme="dark">
+        <ThemeProbe />
+      </ThemeProvider>
+    );
+    expect(screen.getByTestId('probe')).toHaveTextContent(
+      ['dark', themes.dark.shadows.md, foundations.space.lg, foundations.typography.textStyles.body.fontSize].join('|')
+    );
+  });
+});
 
 describe('Button (native)', () => {
   it('renders a pressable with the button role and its label', async () => {
@@ -47,8 +70,8 @@ describe('Button (native)', () => {
         <Button testID="pay">Pay now</Button>
       </ThemeProvider>
     );
-    expect(screen.getByTestId('pay')).toHaveStyle({ backgroundColor: colors.dark.primary });
-    expect(screen.getByText('Pay now')).toHaveStyle({ color: colors.dark.onPrimary });
+    expect(screen.getByTestId('pay')).toHaveStyle({ backgroundColor: themes.dark.colors.primary });
+    expect(screen.getByText('Pay now')).toHaveStyle({ color: themes.dark.colors.textOnPrimary });
   });
 
   it('uses the app fonts when ThemeProvider receives them', async () => {

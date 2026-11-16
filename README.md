@@ -18,7 +18,7 @@ The same code runs in a Vite or Next.js app and in an Expo or React Native app. 
 
 | Package | What it is |
 | --- | --- |
-| [`@shivastu/tokens`](packages/tokens) | Colors (light and dark), typography, spacing and radius. The single source of truth, with WCAG AA contrast checked in tests. |
+| [`@shivastu/tokens`](packages/tokens) | The theme: one file with every color (light and dark), type style, spacing, radius, shadow, motion and component size. WCAG AA contrast is checked in tests. |
 | [`@shivastu/ui`](packages/ui) | Components and `ThemeProvider`, built on the tokens. |
 | [`apps/docs`](apps/docs) | Storybook for the web components, with a light/dark toolbar switch. |
 | [`apps/native-demo`](apps/native-demo) | Expo app that uses the same components on iOS and Android. |
@@ -41,6 +41,48 @@ src/
 - On the web, `ThemeProvider` renders one deduplicated React 19 `<style>` tag with CSS variables per color scheme plus the component styles. There are no CSS files to import, and it works with SSR. Web components are marked `'use client'` for the Next.js App Router.
 - On native, `ThemeProvider` is a context; components read colors and fonts from it.
 
+## Theme
+
+Every design value lives in one file: [`packages/tokens/src/theme.ts`](packages/tokens/src/theme.ts). Change it and both web and native update.
+
+| Export | What it holds |
+| --- | --- |
+| `palette` | Raw color scales (violet, slate, green, amber, red). Components never use these directly. |
+| `themes.light` / `themes.dark` | Semantic `colors` and `shadows` for each color scheme |
+| `foundations` | `typography` (families, weights, sizes, line heights, letter spacing, `textStyles`), `space`, `radius`, `borderWidth`, `opacity`, `focusRing`, `motion`, `zIndex`, `breakpoints` |
+| `components` | Component decisions built from the above (button sizes, radius, gap) |
+| `getTheme(scheme)` | Everything above resolved for `'light'` or `'dark'` |
+
+In components, `useTheme()` returns that resolved theme on both platforms:
+
+```tsx
+const { colors, space, radius, shadows, typography } = useTheme();
+```
+
+On the web, every token is also a CSS variable inside `ThemeProvider`, so your own CSS can use them:
+
+```css
+.card {
+  background: var(--ds-color-surface-raised);
+  padding: var(--ds-space-lg);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ds-shadow-md);
+  transition: transform var(--ds-duration-fast) var(--ds-easing-standard);
+}
+```
+
+Semantic colors are named by role and grouped by prefix, so autocomplete shows related ones together:
+
+| Group | Tokens |
+| --- | --- |
+| Backgrounds | `background`, `surface`, `surfaceRaised`, `surfaceInverse` |
+| Text | `text`, `textMuted`, `textOnPrimary`, `textInverse` |
+| Brand | `primary`, `primaryPressed`, `primarySubtle` |
+| Status | `success`, `warning`, `danger` |
+| Other | `border`, `focusRing`, `overlay` |
+
+Shadows are CSS `box-shadow` strings, used as is on the web and as `boxShadow` on React Native 0.76+.
+
 ## Usage
 
 ```sh
@@ -56,9 +98,9 @@ npm install @shivastu/ui
 **React Native:** load the Inter weights with `expo-font`, then pass their names so text uses them (otherwise the system font is used):
 
 ```tsx
-import { tokens } from '@shivastu/ui';
+import { foundations } from '@shivastu/ui';
 
-<ThemeProvider colorScheme={scheme} fonts={tokens.fontFamily.native}>
+<ThemeProvider colorScheme={scheme} fonts={foundations.typography.fontFamily.native}>
   {children}
 </ThemeProvider>
 ```

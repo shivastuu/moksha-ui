@@ -22,9 +22,3 @@ export interface ButtonProps {
   /** Id for tests: `data-testid` on web, `testID` on native. The loading spinner gets `${testID}-spinner` */
   testID?: string;
 }
-
-export const buttonMetrics: Record<ButtonSize, { height: number; paddingX: number; fontSize: number }> = {
-  sm: { height: 36, paddingX: 12, fontSize: 14 },
-  md: { height: 44, paddingX: 16, fontSize: 16 },
-  lg: { height: 52, paddingX: 20, fontSize: 18 },
-};

@@ -1,12 +1,8 @@
 import type { ReactNode } from 'react';
-import { colors, fontFamily, tokens, type ColorScheme, type SemanticColors } from '@shivastu/tokens';
+import { getTheme, type ColorScheme, type NativeFonts, type ResolvedTheme } from '@shivastu/tokens';
 
-export type NativeFonts = Record<keyof typeof fontFamily.native, string>;
-
-export interface Theme {
-  scheme: ColorScheme;
-  colors: SemanticColors;
-  tokens: typeof tokens;
+export interface Theme extends ResolvedTheme {
+  /** React Native only: the font families passed to ThemeProvider */
   nativeFonts?: NativeFonts;
 }
 
@@ -19,5 +15,5 @@ export interface ThemeProviderProps {
 }
 
 export function createTheme(scheme: ColorScheme, nativeFonts?: NativeFonts): Theme {
-  return { scheme, colors: colors[scheme], tokens, nativeFonts };
+  return { ...getTheme(scheme), nativeFonts };
 }

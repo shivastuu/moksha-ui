@@ -1,7 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 import type { SemanticColors } from '@shivastu/tokens';
 import { useTheme } from '../theme/context';
-import { buttonMetrics, type ButtonProps, type ButtonVariant } from './Button.shared';
+import type { ButtonProps, ButtonVariant } from './Button.shared';
 
 function variantStyle(variant: ButtonVariant, colors: SemanticColors, pressed: boolean) {
   if (variant === 'primary') {
@@ -24,10 +24,11 @@ export function Button({
   accessibilityLabel,
   testID,
 }: ButtonProps) {
-  const { colors, tokens, nativeFonts } = useTheme();
-  const metrics = buttonMetrics[size];
+  const { colors, components, opacity, nativeFonts } = useTheme();
+  const { button } = components;
+  const metrics = button.sizes[size];
   const isDisabled = !!disabled || !!loading;
-  const color = variant === 'primary' ? colors.onPrimary : colors.primary;
+  const color = variant === 'primary' ? colors.textOnPrimary : colors.primary;
 
   return (
     <Pressable
@@ -42,12 +43,13 @@ export function Button({
         {
           minHeight: metrics.height,
           paddingHorizontal: metrics.paddingX,
-          borderRadius: tokens.radius.md,
-          gap: tokens.space.sm,
+          borderRadius: button.radius,
+          borderWidth: button.borderWidth,
+          gap: button.gap,
         },
         variantStyle(variant, colors, pressed),
         fullWidth ? styles.fullWidth : styles.inline,
-        disabled && styles.disabled,
+        disabled && { opacity: opacity.disabled },
       ]}
     >
       {loading && (
@@ -62,7 +64,7 @@ export function Button({
           color,
           fontSize: metrics.fontSize,
           fontFamily: nativeFonts?.semibold,
-          fontWeight: nativeFonts ? undefined : tokens.fontWeight.semibold,
+          fontWeight: nativeFonts ? undefined : button.fontWeight,
         }}
       >
         {children}
@@ -76,10 +78,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     borderColor: 'transparent',
   },
   inline: { alignSelf: 'flex-start' },
   fullWidth: { alignSelf: 'stretch' },
-  disabled: { opacity: 0.5 },
 });

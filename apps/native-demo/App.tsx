@@ -5,7 +5,9 @@ import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { useFonts } from 'expo-font';
-import { Button, ThemeProvider, colors, tokens, useTheme, type ColorScheme } from '@shivastu/ui';
+import { Button, ThemeProvider, foundations, themes, useTheme, type ColorScheme } from '@shivastu/ui';
+
+const { space, typography } = foundations;
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   const theme = useTheme();
@@ -35,13 +37,13 @@ export default function App() {
   };
 
   return (
-    <ThemeProvider colorScheme={scheme} fonts={tokens.fontFamily.native}>
+    <ThemeProvider colorScheme={scheme} fonts={typography.fontFamily.native}>
       <ScrollView
-        style={{ backgroundColor: colors[scheme].background }}
+        style={{ backgroundColor: themes[scheme].colors.background }}
         contentContainerStyle={styles.content}
       >
-        <Text style={[styles.title, { color: colors[scheme].text }]}>@shivastu/ui</Text>
-        <Text style={[styles.subtitle, { color: colors[scheme].textMuted }]}>
+        <Text style={[styles.title, { color: themes[scheme].colors.text }]}>@shivastu/ui</Text>
+        <Text style={[styles.subtitle, { color: themes[scheme].colors.textMuted }]}>
           Same components and tokens as the web, rendered with React Native.
         </Text>
 
@@ -81,10 +83,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  content: { padding: tokens.space.xl, paddingTop: 72, gap: tokens.space.xl },
-  title: { fontFamily: tokens.fontFamily.native.semibold, fontSize: tokens.fontSize['2xl'] },
-  subtitle: { fontFamily: tokens.fontFamily.native.regular, fontSize: tokens.fontSize.sm, marginTop: -12 },
-  section: { gap: tokens.space.sm },
-  label: { fontSize: tokens.fontSize.xs, textTransform: 'uppercase', letterSpacing: 0.6 },
-  row: { flexDirection: 'row', flexWrap: 'wrap', gap: tokens.space.md },
+  content: { padding: space.xl, paddingTop: 72, gap: space.xl },
+  title: { fontFamily: typography.fontFamily.native.semibold, fontSize: typography.textStyles.heading.fontSize },
+  subtitle: { fontFamily: typography.fontFamily.native.regular, fontSize: typography.textStyles.bodySmall.fontSize, marginTop: -space.md },
+  section: { gap: space.sm },
+  label: { fontSize: typography.textStyles.caption.fontSize, textTransform: 'uppercase', letterSpacing: typography.letterSpacing.wide },
+  row: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
 });

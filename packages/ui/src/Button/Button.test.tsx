@@ -82,6 +82,11 @@ describe('ThemeProvider (web)', () => {
     );
     const styles = document.querySelectorAll('style[data-href="shivastu-ui"]');
     expect(styles).toHaveLength(1);
-    expect(styles[0]?.textContent).toContain('--ds-color-primary:');
+    const css = styles[0]?.textContent ?? '';
+    expect(css).toContain('--ds-color-primary:#5B40DB');
+    expect(css).toContain('--ds-space-lg:16px');
+    expect(css).toContain('--ds-radius-md:10px');
+    expect(css).toContain('--ds-duration-fast:150ms');
+    expect(css).toContain('--ds-shadow-md:');
   });
 });
