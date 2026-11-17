@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -424,6 +424,35 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **Tabs** have an underline that slides and resizes to the selected tab on the same spring on web and native. Arrow keys, Home and End move between tabs, and the underline is kept at 3:1 contrast for every brand color.
 - **Accordion** opens to the content's real height on a spring (no fixed max-height), one section at a time or several with `multiple`. Closed sections are out of the tab order and hidden from screen readers.
 
+### Data display
+
+<table>
+<tr>
+<td><img src="docs/images/transactions.png" alt="A transaction feed grouped by day: debits with a minus sign, a pending payment with an amber tag, a failed one struck through with a red tag, and a salary credit in green" /></td>
+<td><img src="docs/images/receipt.png" alt="Dark mode payment details: label and value rows for paid to, amount, a Successful status tag, UTR, account and date" /></td>
+</tr>
+<tr>
+<td><img src="docs/images/stats.png" alt="Three stat cards: spending up 12.4% in red, savings up 8% in green, and rewards unchanged in gray" /></td>
+<td><img src="docs/images/empty-state.png" alt="Dark mode empty state: an inbox icon in a medallion with fading rings, No transactions yet, a hint and an Add money button" /></td>
+</tr>
+</table>
+
+```tsx
+<ListGroup title="Today">
+  <TransactionRow name="Swiggy" amount={486} direction="debit" method="UPI" time="1:24 pm" onPress={openPayment} />
+  <TransactionRow name="Moksha Labs" amount={102400} direction="credit" method="Salary" time="10:00 am" />
+</ListGroup>
+
+<DetailRow label="UTR" value="4021 8876 1290" />
+<StatCard label="Spent this month" value="₹ 42,180" change="12.4%" trend="up" upIsGood={false} caption="vs October" />
+<EmptyState icon={<InboxIcon />} title="No transactions yet" action={{ label: 'Add money', onPress: addMoney }} />
+```
+
+- **TransactionRow** formats the amount itself: Indian grouping, a real minus sign, and spaces that never break "₹" from the number. Money in is green, kept at AA on both the page and the card; money out stays in the text color, because red debits read like errors. Pending and failed payments get a tag, and failed amounts are struck through. Screen readers hear one sentence: "Paid ₹486.00 to Swiggy, 1:24 pm".
+- **DetailRow** is a label and value for receipts and account details. Long values like reference numbers wrap instead of overflowing, and in a ListGroup each divider starts under the label.
+- **StatCard** shows a figure and its change. Set `upIsGood={false}` for spending and a rise turns red. The arrow is drawn, and the direction ("Up 12.4%") is what screen readers hear.
+- **EmptyState** puts an icon in a soft brand-colored circle with rings that fade outward, then a title, a hint and one next step.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -589,7 +618,7 @@ Every one ships for web and React Native, uses only theme tokens, and is tested 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
 - **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
 - **Navigation:** [x] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
-- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [ ] StatCard · [ ] DetailRow · [ ] Timeline · [ ] EmptyState · [ ] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
+- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [ ] Timeline · [x] EmptyState · [x] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
 - **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [ ] ResendTimer
 
 ## License

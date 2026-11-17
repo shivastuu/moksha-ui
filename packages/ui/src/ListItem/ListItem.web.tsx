@@ -5,7 +5,7 @@ import { ChevronIcon } from '../Icon/ChevronIcon.web';
 import { isTextValue, type ListItemProps } from './ListItem.shared';
 
 /** A row with a title, an optional description, something before it and a value or control after it */
-export function ListItem({ title, description, leading, trailing, onPress, disabled, testID }: ListItemProps) {
+export function ListItem({ title, description, leading, trailing, onPress, disabled, accessibilityLabel, testID }: ListItemProps) {
   const id = useId();
   const value = isTextValue(trailing);
   const body = (
@@ -48,7 +48,8 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
       className="ds-list-item"
       onClick={onPress}
       disabled={disabled}
-      aria-labelledby={value ? `${id}-title ${id}-value` : `${id}-title`}
+      aria-label={accessibilityLabel}
+      aria-labelledby={accessibilityLabel ? undefined : value ? `${id}-title ${id}-value` : `${id}-title`}
       aria-describedby={description ? `${id}-description` : undefined}
       data-testid={testID}
     >

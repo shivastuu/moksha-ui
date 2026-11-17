@@ -10,6 +10,8 @@ export interface ListItemProps {
   /** Makes the whole row a button with a chevron */
   onPress?: () => void;
   disabled?: boolean;
+  /** Replaces the spoken name (title and value) with one sentence, like "Paid ₹486.00 to Swiggy" */
+  accessibilityLabel?: string;
   testID?: string;
 }
 

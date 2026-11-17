@@ -9,7 +9,7 @@ import { fontFor, textStyleFor } from '../theme/textStyle';
 import { isTextValue, type ListItemProps } from './ListItem.shared';
 
 /** A row with a title, an optional description, something before it and a value or control after it */
-export function ListItem({ title, description, leading, trailing, onPress, disabled, testID }: ListItemProps) {
+export function ListItem({ title, description, leading, trailing, onPress, disabled, accessibilityLabel, testID }: ListItemProps) {
   const theme = useTheme();
   const { colors, space, opacity } = theme;
   const separated = useContext(ListGroupContext);
@@ -43,7 +43,8 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
 
   if (!onPress) {
     return (
-      <View testID={testID} style={row}>
+      // With a label, the row reads as one element; without, a control in it stays reachable
+      <View testID={testID} accessible={!!accessibilityLabel} accessibilityLabel={accessibilityLabel} style={row}>
         {body}
       </View>
     );
@@ -52,7 +53,7 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
     <Pressable
       testID={testID}
       accessibilityRole="button"
-      accessibilityLabel={value ? `${title}, ${trailing}` : title}
+      accessibilityLabel={accessibilityLabel ?? (value ? `${title}, ${trailing}` : title)}
       accessibilityHint={description}
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}

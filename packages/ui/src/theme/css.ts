@@ -27,6 +27,11 @@ import { segmentedCss } from '../SegmentedControl/SegmentedControl.css';
 import { tabsCss } from '../Tabs/Tabs.css';
 import { listCss } from '../ListItem/ListItem.css';
 import { accordionCss } from '../Accordion/Accordion.css';
+import { detailRowCss } from '../DetailRow/DetailRow.css';
+import { statCardCss } from '../StatCard/StatCard.css';
+import { emptyStateCss } from '../EmptyState/EmptyState.css';
+import { transactionCss } from '../TransactionRow/TransactionRow.css';
+import { transactionColors } from '../TransactionRow/TransactionRow.shared';
 import { controlColors } from '../utils/controls';
 import { softTones, solidTones, textTones } from '../utils/tones';
 import { snackbarColors } from '../Snackbar/Snackbar.shared';
@@ -132,7 +137,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
     `[data-ds-theme="${id}"][data-ds-scheme=${name}]{color-scheme:${name};${vars('color', themes[name].colors)}${vars(
       'shadow',
       themes[name].shadows
-    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('text-tone', textTones(themes[name].colors))}${vars('skeleton', skeletonColors(themes[name].colors))}${Object.entries(solidTones(themes[name].colors)).map(([tone, colors]) => vars(`badge-${tone}`, colors)).join('')}${Object.entries(softTones(themes[name].colors)).map(([tone, colors]) => vars(`tag-${tone}`, colors)).join('')}${vars('chip', chipColors(themes[name].colors))}${vars('progress', progressColors(themes[name].colors))}${vars('control', controlColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
+    )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('text-tone', textTones(themes[name].colors))}${vars('skeleton', skeletonColors(themes[name].colors))}${Object.entries(solidTones(themes[name].colors)).map(([tone, colors]) => vars(`badge-${tone}`, colors)).join('')}${Object.entries(softTones(themes[name].colors)).map(([tone, colors]) => vars(`tag-${tone}`, colors)).join('')}${vars('chip', chipColors(themes[name].colors))}${vars('progress', progressColors(themes[name].colors))}${vars('control', controlColors(themes[name].colors))}${vars('transaction', transactionColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
       promoColors(themes[name].colors)
     )}}`;
@@ -142,4 +147,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss + detailRowCss + statCardCss + emptyStateCss + transactionCss;

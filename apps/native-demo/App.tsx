@@ -9,13 +9,13 @@ import { useFonts } from 'expo-font';
 import {
   Accordion,
   AccountNumberField,
-  Avatar,
   AutoForm,
   AmountField,
   Banner,
   BankCard,
   BottomSheet,
   Button,
+  DetailRow,
   Dialog,
   ListGroup,
   ListItem,
@@ -25,12 +25,14 @@ import {
   PhoneField,
   SearchField,
   SnackbarProvider,
+  StatCard,
   Stagger,
   Surface,
   Switch,
   Tabs,
   TextField,
   ThemeProvider,
+  TransactionRow,
   defineFields,
   foundations,
   palette,
@@ -67,6 +69,7 @@ function Lists() {
   return (
     <Section title="Lists">
       <View style={[styles.form, { flex: 1 }]}>
+        <StatCard label="Spent this month" value="₹ 42,180" change="12.4%" trend="up" upIsGood={false} caption="vs October" />
         <Tabs
           accessibilityLabel="Account activity"
           items={[
@@ -75,8 +78,20 @@ function Lists() {
               label: 'Activity',
               content: (
                 <ListGroup>
-                  <ListItem title="Swiggy" description="UPI · Today, 1:24 pm" trailing="− ₹ 486.00" leading={<Avatar name="Swiggy" />} onPress={tap} />
-                  <ListItem title="Moksha Labs" description="Salary · 1 Nov" trailing="+ ₹ 1,02,400.00" leading={<Avatar name="Moksha Labs" />} onPress={tap} />
+                  <TransactionRow name="Swiggy" amount={486} direction="debit" method="UPI" time="Today, 1:24 pm" onPress={tap} />
+                  <TransactionRow name="Ravi Kumar" amount={1200} direction="debit" method="UPI" time="11:05 am" status="pending" onPress={tap} />
+                  <TransactionRow name="Moksha Labs" amount={102400} direction="credit" method="Salary" time="1 Nov" onPress={tap} />
+                </ListGroup>
+              ),
+            },
+            {
+              value: 'receipt',
+              label: 'Receipt',
+              content: (
+                <ListGroup title="Payment details">
+                  <DetailRow label="Paid to" value="Swiggy" />
+                  <DetailRow label="Amount" value="₹ 486.00" />
+                  <DetailRow label="UTR" value="4021 8876 1290" />
                 </ListGroup>
               ),
             },
