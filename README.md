@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -453,6 +453,39 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **StatCard** shows a figure and its change. Set `upIsGood={false}` for spending and a rise turns red. The arrow is drawn, and the direction ("Up 12.4%") is what screen readers hear.
 - **EmptyState** puts an icon in a soft brand-colored circle with rings that fade outward, then a title, a hint and one next step.
 
+### Flows
+
+<table>
+<tr>
+<td><img src="docs/images/steps.png" alt="KYC steps: PAN done with a check, Aadhaar current with a soft halo, Selfie and Done still ahead, joined by a line filled up to the current step" /></td>
+<td><img src="docs/images/timeline.png" alt="Dark mode payment timeline: two steps done with green checks and times, Sending to Swiggy in progress with a pulsing dot, and Credited still ahead on a dashed line" /></td>
+</tr>
+<tr>
+<td><img src="docs/images/resend.png" alt="A six digit OTP field with a hint, and a Resend code countdown below it" /></td>
+<td><img src="docs/images/copy-field.png" alt="Copy fields for UPI ID, account number and IFSC; the UPI ID's copy icon has turned into a green check" /></td>
+</tr>
+</table>
+
+```tsx
+<StepIndicator steps={['PAN', 'Aadhaar', 'Selfie', 'Done']} current={1} accessibilityLabel="KYC progress" />
+
+<Timeline
+  items={[
+    { title: 'Debited from Savings •• 4821', time: '1:24:05 pm', status: 'complete' },
+    { title: 'Sending to Swiggy', status: 'current' },
+    { title: 'Credited to Swiggy', status: 'upcoming' },
+  ]}
+/>
+
+<ResendTimer seconds={30} onResend={sendOtp} />
+<CopyField label="UPI ID" value="shivastu@moksha" />
+```
+
+- **StepIndicator** fills the line into each step on a spring once you reach it. Screen readers hear "Done: PAN" and the current step on the web, and one "Step 2 of 4: Aadhaar" on native.
+- **Timeline** follows a payment step by step: a check when done, a pulsing dot while in progress, a cross if it failed, and a dashed line for what's still ahead. Every status is spoken, not just shown in color.
+- **ResendTimer** counts down to a fixed end time and reads the clock on every tick, so it's still right after the phone sleeps or the browser throttles a background tab. It restarts only after `onResend` succeeds; if sending fails, the user can try again straight away. The countdown isn't announced every second.
+- **CopyField** shows the check only after the copy actually succeeds, and announces "UPI ID copied" once. If the browser blocks the clipboard, it selects the value so Ctrl/Cmd+C still works. On React Native, pass your app's clipboard function (like expo-clipboard's `setStringAsync`) as `onCopy`; without it, the value can still be long-pressed and copied.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -616,10 +649,10 @@ npm run native       # Expo dev server; open it in Expo Go
 Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
-- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [ ] CopyField
-- **Navigation:** [x] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [ ] StepIndicator · [ ] Drawer
-- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [ ] Timeline · [x] EmptyState · [x] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
-- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [ ] ResendTimer
+- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [x] CopyField
+- **Navigation:** [x] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [x] StepIndicator · [ ] Drawer
+- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
+- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [x] ResendTimer
 
 ## License
 

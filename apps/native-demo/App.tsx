@@ -12,6 +12,7 @@ import {
   AutoForm,
   AmountField,
   Banner,
+  CopyField,
   BankCard,
   BottomSheet,
   Button,
@@ -20,17 +21,20 @@ import {
   ListGroup,
   ListItem,
   PromoBanner,
+  ResendTimer,
   RollingAmount,
   OtpField,
   PhoneField,
   SearchField,
   SnackbarProvider,
   StatCard,
+  StepIndicator,
   Stagger,
   Surface,
   Switch,
   Tabs,
   TextField,
+  Timeline,
   ThemeProvider,
   TransactionRow,
   defineFields,
@@ -113,6 +117,27 @@ function Lists() {
             { value: 'fees', title: 'Are there any fees?', content: 'No. UPI payments from your account are free.' },
           ]}
         />
+      </View>
+    </Section>
+  );
+}
+
+function Flows() {
+  return (
+    <Section title="Flows">
+      <View style={[styles.form, { flex: 1 }]}>
+        <StepIndicator steps={['PAN', 'Aadhaar', 'Selfie', 'Done']} current={1} accessibilityLabel="KYC progress" />
+        <Timeline
+          items={[
+            { title: 'Payment started', time: '1:24:03 pm', status: 'complete' },
+            { title: 'Debited from Savings •• 4821', time: '1:24:05 pm', status: 'complete' },
+            { title: 'Sending to Swiggy', description: 'Usually takes a few seconds', status: 'current' },
+            { title: 'Credited to Swiggy', status: 'upcoming' },
+          ]}
+        />
+        {/* No clipboard module in this demo, so the value is long-press selectable */}
+        <CopyField label="UPI ID" value="shivastu@moksha" />
+        <ResendTimer seconds={30} onResend={() => new Promise((resolve) => setTimeout(resolve, 600))} />
       </View>
     </Section>
   );
@@ -261,6 +286,8 @@ export default function App() {
             <Overlays />
 
             <Lists />
+
+            <Flows />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>
