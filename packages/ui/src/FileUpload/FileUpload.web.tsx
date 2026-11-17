@@ -117,7 +117,7 @@ export function FileUpload({ label, accept, maxSize, multiple, value, defaultVal
                 <span className="ds-upload__name">{file.name}</span>
                 <span className="ds-upload__size">{formatBytes(file.size)}</span>
               </span>
-              <button type="button" className="ds-upload__remove" aria-label={`Remove ${file.name}`} onClick={() => remove(file)}>
+              <button type="button" className="ds-upload__remove ds-press ds-press--object" aria-label={`Remove ${file.name}`} onClick={() => remove(file)}>
                 ×
               </button>
             </li>

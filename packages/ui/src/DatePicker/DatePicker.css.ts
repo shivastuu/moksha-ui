@@ -9,7 +9,6 @@ export const datePickerCss = `
 .ds-calendar__header{display:flex;align-items:center;justify-content:space-between;gap:var(--ds-space-sm)}
 .ds-calendar__title{font-size:var(--ds-font-size-md);line-height:var(--ds-line-height-md);font-weight:var(--ds-font-weight-semibold);color:var(--ds-color-text)}
 .ds-calendar__nav{display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:var(--ds-radius-full);background:transparent;color:var(--ds-color-text);font-size:16px;cursor:pointer}
-.ds-calendar__nav:hover:not(:disabled){background:var(--ds-control-segment-track)}
 .ds-calendar__nav:disabled{opacity:var(--ds-opacity-disabled);cursor:not-allowed}
 .ds-calendar__nav:focus-visible,.ds-calendar__day:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 .ds-calendar__grid{border-collapse:collapse;overflow:hidden}
@@ -20,8 +19,6 @@ export const datePickerCss = `
 @keyframes ds-calendar-next{from{opacity:0;transform:translateX(24px)}}
 @keyframes ds-calendar-previous{from{opacity:0;transform:translateX(-24px)}}
 .ds-calendar__day{position:relative;display:grid;place-items:center;width:${day}px;height:${day}px;padding:0;border:0;border-radius:var(--ds-radius-full);background:transparent;color:var(--ds-color-text);font:inherit;font-size:var(--ds-font-size-sm);font-variant-numeric:tabular-nums;cursor:pointer;isolation:isolate}
-.ds-calendar__day::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:currentColor;opacity:0;transition:opacity var(--ds-duration-fast) var(--ds-easing-standard)}
-.ds-calendar__day:hover:not([aria-disabled])::before{opacity:0.07}
 .ds-calendar__day[data-outside]{color:var(--ds-color-text-muted)}
 .ds-calendar__day[aria-current=date]{color:var(--ds-text-tone-primary);font-weight:var(--ds-font-weight-semibold)}
 .ds-calendar__day[aria-current=date]::after{content:'';position:absolute;bottom:5px;width:4px;height:4px;border-radius:var(--ds-radius-full);background:currentColor}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Animated, Pressable, Text, View } from 'react-native';
 import { BottomSheet } from '../Dialog/Dialog.native';
+import { Press } from '../motion/Press.native';
 import { CheckIcon } from '../Icon/CheckIcon.native';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
 import { useShake } from '../motion/nativeMotion.native';
@@ -61,8 +62,10 @@ export function Select({ label, options, value, defaultValue = '', onValueChange
           {options.map((option) => {
             const checked = option.value === selected;
             return (
-              <Pressable
+              <Press
                 key={option.value}
+                ink={colors.text}
+                fill={checked ? controlColors(colors).selectedFill : undefined}
                 accessibilityRole="radio"
                 accessibilityState={{ checked, disabled: !!option.disabled }}
                 disabled={option.disabled}
@@ -70,20 +73,11 @@ export function Select({ label, options, value, defaultValue = '', onValueChange
                   setSelected(option.value);
                   setOpen(false);
                 }}
-                style={({ pressed }) => ({
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  minHeight: 48,
-                  paddingHorizontal: space.md,
-                  borderRadius: radius.md,
-                  backgroundColor: checked ? controlColors(colors).selectedFill : pressed ? colors.border : 'transparent',
-                  opacity: option.disabled ? opacity.disabled : 1,
-                })}
+                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 48, paddingHorizontal: space.md, borderRadius: radius.md, opacity: option.disabled ? opacity.disabled : 1 }}
               >
                 <Text style={[textStyleFor(theme, 'body'), checked ? fontFor(theme, 'medium') : null, { color: colors.text }]}>{option.label}</Text>
                 {checked ? <CheckIcon color={textTones(colors).primary} size={18} /> : null}
-              </Pressable>
+              </Press>
             );
           })}
         </View>

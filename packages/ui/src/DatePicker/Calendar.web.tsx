@@ -46,7 +46,7 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
   return (
     <div className="ds-calendar">
       <div className="ds-calendar__header">
-        <button type="button" className="ds-calendar__nav" aria-label="Previous month" disabled={!!min && monthIndex(focus) <= monthIndex(min)} onClick={() => go(addMonths(focus, -1))}>
+        <button type="button" className="ds-calendar__nav ds-press ds-press--object" aria-label="Previous month" disabled={!!min && monthIndex(focus) <= monthIndex(min)} onClick={() => go(addMonths(focus, -1))}>
           <ChevronIcon direction="left" />
         </button>
         <span id={titleId} className="ds-calendar__title" aria-live="polite">
@@ -54,7 +54,7 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
         </span>
         <button
           type="button"
-          className="ds-calendar__nav"
+          className="ds-calendar__nav ds-press ds-press--object"
           aria-label="Next month"
           disabled={!!max && monthIndex(focus) >= monthIndex(max)}
           onClick={() => go(addMonths(focus, 1))}
@@ -83,7 +83,7 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
                   <td key={dayText(day)} aria-selected={chosen}>
                     <button
                       type="button"
-                      className="ds-calendar__day"
+                      className="ds-calendar__day ds-press ds-press--object"
                       tabIndex={sameDay(day, focus) ? 0 : -1}
                       aria-label={spokenDay(day)}
                       aria-current={sameDay(day, today) ? 'date' : undefined}

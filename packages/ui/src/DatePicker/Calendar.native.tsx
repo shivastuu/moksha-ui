@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { buttonDepth } from '../Button/Button.shared';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
 import { Motion } from '../motion/Motion.native';
+import { Press } from '../motion/Press.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { textTones } from '../utils/tones';
@@ -29,7 +30,9 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
   const days = monthGrid(month.year, month.month, weekStartsOn);
   const weekdays = Array.from({ length: 7 }, (_, index) => weekdayNames[(index + weekStartsOn) % 7]!);
   const nav = (label: string, direction: 'left' | 'right', disabled: boolean, step: number) => (
-    <Pressable
+    <Press
+      object
+      ink={colors.text}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled }}
@@ -38,7 +41,7 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
       style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center', borderRadius: radius.full, opacity: disabled ? opacity.disabled : 1 }}
     >
       <ChevronIcon direction={direction} color={colors.text} />
-    </Pressable>
+    </Press>
   );
 
   return (
@@ -66,25 +69,27 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
               const chosen = sameDay(day, selected);
               const isToday = sameDay(day, today);
               return (
-                <Pressable
+                <Press
                   key={dayText(day)}
+                  object
+                  ink={chosen ? colors.textOnPrimary : colors.text}
+                  fill={chosen ? colors.primary : undefined}
                   accessibilityRole="button"
                   accessibilityLabel={isToday ? `${spokenDay(day)}, today` : spokenDay(day)}
                   accessibilityState={{ selected: chosen, disabled: !enabled }}
                   disabled={!enabled}
                   onPress={() => onPick(day)}
-                  style={({ pressed }) => ({
+                  style={{
                     width: size,
                     height: size,
                     margin: 1,
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: size / 2,
-                    backgroundColor: chosen ? colors.primary : pressed ? colors.border : 'transparent',
                     backgroundImage: chosen ? depth.primaryFill : undefined,
                     boxShadow: chosen ? depth.primaryShadow : undefined,
                     opacity: enabled ? 1 : 0.35,
-                  })}
+                  }}
                 >
                   <Text
                     style={[
@@ -99,7 +104,7 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
                   >
                     {day.day}
                   </Text>
-                </Pressable>
+                </Press>
               );
             })}
           </View>

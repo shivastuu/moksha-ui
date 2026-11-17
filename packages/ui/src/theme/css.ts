@@ -123,6 +123,7 @@ export function themeCss(definition: ThemeDefinition, id: string) {
       const { easing, duration } = springCurve(spring);
       return `--ds-spring-${name}:${easing};--ds-spring-${name}-duration:${duration}ms;`;
     }),
+    `--ds-breathe-period:${motion.breathe.period}ms;--ds-breathe-low:${motion.breathe.low};--ds-breathe-easing:${motion.breathe.easing};`,
     vars('glass-blur', glass.blur, px),
     `--ds-glass-saturation:${glass.saturation};`,
     vars('z-index', zIndex),

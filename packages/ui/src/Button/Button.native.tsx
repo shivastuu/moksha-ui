@@ -1,6 +1,6 @@
 import { ActivityIndicator, Animated, Pressable, StyleSheet, Text } from 'react-native';
-import type { SemanticColors } from '@moksha-ui/tokens';
-import { usePressScale } from '../motion/nativeMotion.native';
+import { alpha, type SemanticColors } from '@moksha-ui/tokens';
+import { breathOpacity, useBreathe, usePressScale } from '../motion/nativeMotion.native';
 import { useTheme } from '../theme/context';
 import { buttonDepth, type ButtonProps, type ButtonVariant } from './Button.shared';
 
@@ -28,15 +28,31 @@ export function Button({
   accessibilityLabel,
   testID,
 }: ButtonProps) {
-  const { colors, components, opacity, typography, nativeFonts } = useTheme();
+  const { colors, components, motion, opacity, typography, nativeFonts } = useTheme();
   const { button } = components;
   const metrics = button.sizes[size];
   const isDisabled = !!disabled || !!loading;
   const press = usePressScale();
+  const glowing = !!loading && variant === 'primary';
+  const breath = useBreathe(glowing);
   const color = variant === 'primary' ? colors.textOnPrimary : colors.primary;
 
   return (
     <Animated.View style={[fullWidth ? styles.fullWidth : styles.inline, { transform: [{ scale: press.scale }] }]}>
+      {glowing ? (
+        // A soft glow behind a loading button that breathes, so waiting feels alive
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              borderRadius: button.radius,
+              boxShadow: `0px 0px 0px 3px ${alpha(colors.primary, 0.22)}, 0px 8px 28px -4px ${alpha(colors.primary, 0.7)}`,
+              opacity: breathOpacity(breath, motion.breathe.low),
+            },
+          ]}
+        />
+      ) : null}
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel}

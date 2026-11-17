@@ -14,6 +14,5 @@ export const promoCss = `
 .ds-promo__card::after{bottom:18px;width:84px;height:6px;border-radius:3px}
 .ds-promo__dismiss{position:absolute;top:var(--ds-space-sm);right:var(--ds-space-sm);display:grid;place-items:center;width:var(--ds-space-2xl);height:var(--ds-space-2xl);padding:0;border:0;border-radius:var(--ds-radius-full);background:transparent;color:inherit;cursor:pointer}
 .ds-promo__dismiss svg{width:56%;height:56%}
-.ds-promo__dismiss:hover{background:var(--ds-promo-art-fill)}
 .ds-promo__action:focus-visible,.ds-promo__dismiss:focus-visible{outline:var(--ds-focus-ring-width) solid currentColor;outline-offset:var(--ds-focus-ring-offset)}
 `;

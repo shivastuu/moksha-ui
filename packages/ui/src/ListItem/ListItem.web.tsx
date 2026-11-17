@@ -45,7 +45,7 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
   return (
     <button
       type="button"
-      className="ds-list-item"
+      className="ds-list-item ds-press"
       onClick={onPress}
       disabled={disabled}
       aria-label={accessibilityLabel}

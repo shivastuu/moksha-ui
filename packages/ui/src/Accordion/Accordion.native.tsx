@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
-import { alpha } from '@moksha-ui/tokens';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
 import { isTextValue } from '../ListItem/ListItem.shared';
+import { Press } from '../motion/Press.native';
 import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { surfaceColors } from '../Surface/Surface.shared';
 import { useTheme } from '../theme/context';
@@ -31,17 +31,12 @@ function Section({ item, expanded, separated, onToggle }: { item: AccordionItem;
   return (
     <View>
       {separated ? <View style={{ height: StyleSheet.hairlineWidth, marginHorizontal: space.lg, backgroundColor: surfaceColors(colors).edge }} /> : null}
-      <Pressable
-        accessibilityRole="button"
-        accessibilityState={{ expanded }}
-        onPress={onToggle}
-        style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: space.md, padding: space.lg, backgroundColor: alpha(colors.text, pressed ? 0.08 : 0) })}
-      >
+      <Press ink={colors.text} accessibilityRole="button" accessibilityState={{ expanded }} onPress={onToggle} style={{ flexDirection: 'row', alignItems: 'center', gap: space.md, padding: space.lg }}>
         <Text style={[textStyleFor(theme, 'body'), fontFor(theme, 'medium'), { flex: 1, color: colors.text }]}>{item.title}</Text>
         <Animated.View style={{ transform: [{ rotate: progress.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '180deg'] }) }] }}>
           <ChevronIcon direction="down" />
         </Animated.View>
-      </Pressable>
+      </Press>
       <Animated.View
         accessibilityElementsHidden={!expanded}
         importantForAccessibility={expanded ? 'auto' : 'no-hide-descendants'}

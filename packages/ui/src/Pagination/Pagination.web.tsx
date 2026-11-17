@@ -15,7 +15,7 @@ export function Pagination({ page, defaultPage = 1, onPageChange, pageCount, acc
     <nav aria-label={accessibilityLabel} data-testid={testID}>
       <ul className="ds-pagination__list">
         <li>
-          <button type="button" className="ds-pagination__item" aria-label="Previous page" disabled={current <= 1} onClick={() => go(current - 1)}>
+          <button type="button" className="ds-pagination__item ds-press ds-press--object" aria-label="Previous page" disabled={current <= 1} onClick={() => go(current - 1)}>
             <ChevronIcon direction="left" className="ds-pagination__arrow" />
           </button>
         </li>
@@ -24,7 +24,7 @@ export function Pagination({ page, defaultPage = 1, onPageChange, pageCount, acc
             <li key={item}>
               <button
                 type="button"
-                className="ds-pagination__item"
+                className="ds-pagination__item ds-press ds-press--object"
                 aria-label={`Page ${item}`}
                 aria-current={item === current ? 'page' : undefined}
                 onClick={() => go(item)}
@@ -39,7 +39,7 @@ export function Pagination({ page, defaultPage = 1, onPageChange, pageCount, acc
           )
         )}
         <li>
-          <button type="button" className="ds-pagination__item" aria-label="Next page" disabled={current >= pageCount} onClick={() => go(current + 1)}>
+          <button type="button" className="ds-pagination__item ds-press ds-press--object" aria-label="Next page" disabled={current >= pageCount} onClick={() => go(current + 1)}>
             <ChevronIcon direction="right" className="ds-pagination__arrow" />
           </button>
         </li>

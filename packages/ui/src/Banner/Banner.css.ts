@@ -22,6 +22,5 @@ ${tones}
 .ds-banner__title+.ds-banner__text{color:var(--ds-color-text-muted)}
 .ds-banner__action{${roundButton};min-height:var(--ds-button-sm-height);padding:0 var(--ds-button-sm-padding-x);background:var(--ds-color-surface-inverse);color:var(--ds-color-text-inverse);font:inherit;font-weight:var(--ds-font-weight-semibold);white-space:nowrap}
 .ds-banner__dismiss{${roundButton};width:var(--ds-banner-icon-size);height:var(--ds-banner-icon-size);background:transparent;color:var(--ds-color-text-muted)}
-.ds-banner__dismiss:hover{background:var(--ds-banner-border)}
 .ds-banner__action:focus-visible,.ds-banner__dismiss:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 `;

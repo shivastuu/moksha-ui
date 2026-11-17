@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
+import { Press } from '../motion/Press.native';
 import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { surfaceColors } from '../Surface/Surface.shared';
 import { useTheme } from '../theme/context';
@@ -68,8 +69,9 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
             const active = item.value === selected;
             const color = active ? textTones(colors).primary : colors.textMuted;
             return (
-              <Pressable
+              <Press
                 key={item.value}
+                ink={colors.text}
                 accessibilityRole="button"
                 accessibilityLabel={itemLabel(item)}
                 accessibilityState={{ selected: active }}
@@ -78,7 +80,7 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
                   const y = event.nativeEvent.layout.y;
                   setTops((previous) => (previous[item.value] === y ? previous : { ...previous, [item.value]: y }));
                 }}
-                style={{ flexDirection: 'row', alignItems: 'center', gap: space.md, height: sidebarRow, marginBottom: 2, paddingHorizontal: space.md }}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: space.md, height: sidebarRow, marginBottom: 2, paddingHorizontal: space.md, borderRadius: radius.md }}
               >
                 {item.icon ? <View style={{ width: 20, alignItems: 'center' }}>{item.icon(color)}</View> : null}
                 <Text numberOfLines={1} style={[textStyleFor(theme, 'bodySmall'), fontFor(theme, 'medium'), { flex: 1, color: active ? colors.text : colors.textMuted }]}>
@@ -89,7 +91,7 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
                     {item.count}
                   </Text>
                 ) : null}
-              </Pressable>
+              </Press>
             );
           }),
         ])}

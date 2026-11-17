@@ -19,7 +19,6 @@ export const fileUploadCss = `
 .ds-upload__name{overflow:hidden;font-size:var(--ds-font-size-sm);line-height:var(--ds-line-height-sm);font-weight:var(--ds-font-weight-medium);color:var(--ds-color-text);white-space:nowrap;text-overflow:ellipsis}
 .ds-upload__size{font-size:var(--ds-font-size-xs);line-height:var(--ds-line-height-xs);color:var(--ds-color-text-muted);font-variant-numeric:tabular-nums}
 .ds-upload__remove{display:grid;place-items:center;flex-shrink:0;width:32px;height:32px;padding:0;border:0;border-radius:var(--ds-radius-full);background:transparent;color:var(--ds-color-text-muted);font:inherit;font-size:18px;line-height:1;cursor:pointer}
-.ds-upload__remove:hover{background:var(--ds-control-segment-track);color:var(--ds-color-text)}
 .ds-upload__remove:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 @media (prefers-reduced-motion:reduce){.ds-upload__zone,.ds-upload__icon{transition:none}.ds-upload__file{animation:none}}
 `;

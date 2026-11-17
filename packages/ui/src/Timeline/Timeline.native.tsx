@@ -1,34 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { Animated, Easing, Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { CheckIcon } from '../Icon/CheckIcon.native';
-import { parseCubicBezier } from '../motion/motion.shared';
-import { useReducedMotion } from '../motion/useReducedMotion.native';
+import { useBreathe } from '../motion/nativeMotion.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { controlColors } from '../utils/controls';
 import { solidTones } from '../utils/tones';
 import { timelineDot, timelineLabel, type TimelineItem, type TimelineProps } from './Timeline.shared';
 
-/** A soft ring that grows and fades behind the current step, on repeat */
-function Pulse({ color }: { color: string }) {
-  const { motion } = useTheme();
-  const reduced = useReducedMotion();
-  const progress = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (reduced !== false) {
-      return;
-    }
-    const loop = Animated.loop(
-      Animated.timing(progress, { toValue: 1, duration: 1800, easing: Easing.bezier(...parseCubicBezier(motion.easing.exit)), useNativeDriver: true })
-    );
-    loop.start();
-    return () => loop.stop();
-  }, [reduced, progress, motion]);
-
-  if (reduced !== false) {
-    return null;
-  }
+/** A soft halo that breathes behind the current step, on the same rhythm as every loader */
+function Halo({ color }: { color: string }) {
+  const breath = useBreathe();
   return (
     <Animated.View
       style={{
@@ -37,8 +18,8 @@ function Pulse({ color }: { color: string }) {
         height: timelineDot,
         borderRadius: timelineDot / 2,
         backgroundColor: color,
-        opacity: progress.interpolate({ inputRange: [0, 1], outputRange: [0.5, 0] }),
-        transform: [{ scale: progress.interpolate({ inputRange: [0, 1], outputRange: [1, 2.2] }) }],
+        opacity: breath.interpolate({ inputRange: [0, 1], outputRange: [0.35, 0.1] }),
+        transform: [{ scale: breath.interpolate({ inputRange: [0, 1], outputRange: [1.5, 2] }) }],
       }}
     />
   );
@@ -64,7 +45,7 @@ function Step({ item, last }: { item: TimelineItem; last: boolean }) {
   return (
     <View accessible accessibilityLabel={timelineLabel(item)} style={{ flexDirection: 'row', gap: space.md }}>
       <View style={{ width: timelineDot, alignItems: 'center', paddingTop: 2 }}>
-        {item.status === 'current' ? <Pulse color={indicator} /> : null}
+        {item.status === 'current' ? <Halo color={indicator} /> : null}
         <View
           style={{
             width: timelineDot,

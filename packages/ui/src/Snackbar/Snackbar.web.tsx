@@ -18,7 +18,7 @@ function SnackbarView({ snackbar, onAction, onPause, onResume }: SnackbarViewPro
           >
             <span className="ds-snackbar__message">{snackbar.message}</span>
             {snackbar.action && (
-              <button type="button" className="ds-snackbar__action" onClick={onAction}>
+              <button type="button" className="ds-snackbar__action ds-press ds-press--object" onClick={onAction}>
                 {snackbar.action.label}
               </button>
             )}

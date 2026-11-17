@@ -62,15 +62,16 @@ describe('Motion (native)', () => {
 });
 
 describe('Component motion (native)', () => {
-  it('scales a button down while pressed and back on release', async () => {
+  it('scales a button down while pressed and back on release, on the snappy spring like the web', async () => {
     reduceMotion(false);
+    const spring = jest.spyOn(Animated, 'spring');
     await render(<Button testID="pay">Pay</Button>);
     await settle();
     await fireEvent(screen.getByTestId('pay'), 'pressIn');
     await fireEvent(screen.getByTestId('pay'), 'pressOut');
-    expect(started()).toEqual([
-      expect.objectContaining({ toValue: motion.scale.pressed, duration: motion.duration.fast }),
-      expect.objectContaining({ toValue: 1, duration: motion.duration.fast }),
+    expect(spring.mock.calls.map(([, config]) => config)).toEqual([
+      expect.objectContaining({ toValue: motion.scale.pressed, ...motion.spring.snappy }),
+      expect.objectContaining({ toValue: 1, ...motion.spring.snappy }),
     ]);
   });
 

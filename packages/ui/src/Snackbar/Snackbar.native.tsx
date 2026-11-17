@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
-import { AccessibilityInfo, Pressable, Text, View } from 'react-native';
+import { AccessibilityInfo, Text, View } from 'react-native';
+import { Press } from '../motion/Press.native';
 import { Motion } from '../motion/Motion.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
@@ -7,7 +8,7 @@ import { createSnackbarProvider, snackbarColors, type SnackbarViewProps } from '
 
 function SnackbarView({ snackbar, onAction }: SnackbarViewProps) {
   const theme = useTheme();
-  const { colors, components, space, shadows } = theme;
+  const { colors, components, space, radius, shadows } = theme;
   const { snackbar: tokens } = components;
   const text = [textStyleFor(theme, 'bodySmall'), { color: colors.textInverse }];
 
@@ -43,9 +44,16 @@ function SnackbarView({ snackbar, onAction }: SnackbarViewProps) {
         >
           <Text style={[text, { flexShrink: 1 }]}>{snackbar.message}</Text>
           {snackbar.action ? (
-            <Pressable accessibilityRole="button" hitSlop={space.sm} onPress={onAction}>
+            <Press
+              object
+              ink={colors.textInverse}
+              accessibilityRole="button"
+              hitSlop={space.sm}
+              onPress={onAction}
+              style={{ marginVertical: -space.xs, marginHorizontal: -space.sm, paddingVertical: space.xs, paddingHorizontal: space.sm, borderRadius: radius.sm }}
+            >
               <Text style={[text, fontFor(theme, 'semibold')]}>{snackbar.action.label}</Text>
-            </Pressable>
+            </Press>
           ) : null}
         </View>
       </Motion>

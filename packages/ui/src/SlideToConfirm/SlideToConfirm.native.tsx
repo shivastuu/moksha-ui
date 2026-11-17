@@ -3,6 +3,7 @@ import { Animated, PanResponder, View } from 'react-native';
 import { buttonDepth } from '../Button/Button.shared';
 import { CheckIcon } from '../Icon/CheckIcon.native';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
+import { breathOpacity, useBreathe } from '../motion/nativeMotion.native';
 import { Spinner } from '../Spinner/Spinner.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
@@ -19,6 +20,7 @@ export function SlideToConfirm({ label, onConfirm, pendingLabel = 'Processing', 
   const offset = useRef(new Animated.Value(0)).current;
   const travel = Math.max(1, width - slide.knob - slide.inset * 2);
   const ready = state === 'idle' && !disabled;
+  const breath = useBreathe(state === 'pending');
 
   const springTo = (toValue: number) => Animated.spring(offset, { toValue, ...motion.spring.snappy, useNativeDriver: true }).start();
 
@@ -89,7 +91,11 @@ export function SlideToConfirm({ label, onConfirm, pendingLabel = 'Processing', 
         style={[
           textStyleFor(theme, 'body'),
           fontFor(theme, 'semibold'),
-          { color: colors.textOnPrimary, opacity: state === 'idle' ? offset.interpolate({ inputRange: [0, travel * 0.6], outputRange: [1, 0], extrapolate: 'clamp' }) : 1 },
+          {
+            color: colors.textOnPrimary,
+            // Fades as the knob moves; breathes while paying
+            opacity: state === 'idle' ? offset.interpolate({ inputRange: [0, travel * 0.6], outputRange: [1, 0], extrapolate: 'clamp' }) : state === 'pending' ? breathOpacity(breath, motion.breathe.low) : 1,
+          },
         ]}
       >
         {text}

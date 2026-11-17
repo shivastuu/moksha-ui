@@ -35,7 +35,7 @@ export function Menu({ anchor, open, onClose, accessibilityLabel, items, side, a
           type="button"
           role="menuitem"
           tabIndex={-1}
-          className="ds-menu__item"
+          className="ds-menu__item ds-press"
           data-tone={item.tone}
           disabled={item.disabled}
           onClick={() => {

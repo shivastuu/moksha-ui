@@ -34,7 +34,7 @@ export function NumberStepper({ label, value, defaultValue, onValueChange, min =
       </span>
       <div className="ds-stepper__control">
         {/* The buttons stay out of the tab order: the spinbutton takes the arrow keys */}
-        <button type="button" tabIndex={-1} className="ds-stepper__button" aria-label={`Decrease ${label}`} disabled={disabled || current <= min} onClick={() => set(current - step)}>
+        <button type="button" tabIndex={-1} className="ds-stepper__button ds-press ds-press--object" aria-label={`Decrease ${label}`} disabled={disabled || current <= min} onClick={() => set(current - step)}>
           −
         </button>
         <span
@@ -53,7 +53,7 @@ export function NumberStepper({ label, value, defaultValue, onValueChange, min =
             {format(current)}
           </span>
         </span>
-        <button type="button" tabIndex={-1} className="ds-stepper__button" aria-label={`Increase ${label}`} disabled={disabled || current >= max} onClick={() => set(current + step)}>
+        <button type="button" tabIndex={-1} className="ds-stepper__button ds-press ds-press--object" aria-label={`Increase ${label}`} disabled={disabled || current >= max} onClick={() => set(current + step)}>
           +
         </button>
       </div>

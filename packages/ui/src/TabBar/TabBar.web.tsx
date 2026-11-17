@@ -17,7 +17,7 @@ export function TabBar({ items, value, defaultValue, onValueChange, accessibilit
           <button
             key={item.value}
             type="button"
-            className="ds-tabbar__item"
+            className="ds-tabbar__item ds-press ds-press--object"
             // The count joins the name ("Pay, 2 new"); the badge itself is hidden so it isn't read twice
             aria-label={item.badge ? `${item.label}, ${item.badge} new` : undefined}
             aria-current={position === index ? 'page' : undefined}

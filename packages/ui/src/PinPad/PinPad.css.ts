@@ -14,10 +14,6 @@ export const pinPadCss = `
 .ds-pin__message{min-height:var(--ds-line-height-sm);margin:0;font-size:var(--ds-font-size-sm);line-height:var(--ds-line-height-sm);color:var(--ds-text-tone-danger);text-align:center}
 .ds-pin__keys{display:grid;grid-template-columns:repeat(3,${pinPad.key}px);gap:${pinPad.rowGap}px ${pinPad.columnGap}px}
 .ds-pin__key{position:relative;display:grid;place-items:center;width:${pinPad.key}px;height:${pinPad.key}px;padding:0;border:0;border-radius:var(--ds-radius-full);background:var(--ds-color-surface);box-shadow:0 0 0 1px var(--ds-surface-edge);color:var(--ds-color-text);font:inherit;font-size:28px;font-weight:var(--ds-font-weight-regular);font-variant-numeric:tabular-nums;cursor:pointer;isolation:isolate;transition:${snappy('transform')}}
-.ds-pin__key::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:currentColor;opacity:0;transition:opacity var(--ds-duration-fast) var(--ds-easing-standard)}
-.ds-pin__key:hover::before{opacity:0.05}
-.ds-pin__key:active{transform:scale(var(--ds-motion-scale-pressed))}
-.ds-pin__key:active::before{opacity:0.12}
 .ds-pin__key--delete{background:transparent;box-shadow:none;color:var(--ds-color-text-muted);font-size:24px}
 .ds-pin__key:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 @media (prefers-reduced-motion:reduce){.ds-pin__key,.ds-pin__dot{transition:none}.ds-pin__dot[data-filled]{animation:none}.ds-pin__dots--shake{--ds-motion-distance-sm:0px}}

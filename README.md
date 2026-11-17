@@ -118,7 +118,7 @@ const theme = createTheme({
 <Button fullWidth disabled={!valid}>Continue</Button>
 ```
 
-Buttons are pills. The primary one is lit from the top with a thin highlight and a soft glow in the brand color; secondary is a soft tint: the pale brand shade in light mode, and a quiet brand wash over the page in dark mode, like iOS tinted buttons. Its text stays at WCAG AA on the tint and on hover, for every brand color. Hover fades in a pressed layer instead of swapping the gradient, so nothing flickers, and every button shrinks slightly on press. A loading button keeps its color, shows a spinner and is announced as busy; only a disabled button fades.
+Buttons are pills. The primary one is lit from the top with a thin highlight and a soft glow in the brand color; secondary is a soft tint: the pale brand shade in light mode, and a quiet brand wash over the page in dark mode, like iOS tinted buttons. Its text stays at WCAG AA on the tint and on hover, for every brand color. Hover fades in a pressed layer instead of swapping the gradient, so nothing flickers, and every button shrinks slightly on press. A loading button keeps its color, shows a spinner, breathes a soft glow and is announced as busy; only a disabled button fades.
 
 `IconButton` is the round version for a single icon, in `solid`, `soft`, `glass` and `ghost`. It needs an `accessibilityLabel`, since an icon alone has no name:
 
@@ -388,7 +388,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **Badge** pops each time its count changes and has a hairline and a glossy top edge. **Tag** is a bordered status pill; **Chip** is a bordered filter that springs a check mark in when selected.
 - **Avatar** shows a photo, or initials on a gradient picked from the name, so the same person always gets the same colors. **AvatarGroup** overlaps them with clean rings and reads the names once.
 - **ProgressBar** springs its gradient fill to the value, or sweeps when the amount of work is unknown. **ProgressRing** is a circular gauge, drawn without SVG on React Native.
-- **Spinner** and **Skeleton** cover loading; the skeleton shimmer stops with reduced motion. **Link** fades its underline in on hover and marks external links for screen readers.
+- **Spinner** and **Skeleton** cover loading, and both breathe: the skeleton fades in and out, and the spinner's arc grows and shrinks as it turns (see Motion). With reduced motion the skeleton holds still. **Link** fades its underline in on hover and marks external links for screen readers.
 
 ### Lists and tabs
 
@@ -669,7 +669,9 @@ import { Motion, Stagger } from '@moksha-ui/core';
 - Presets: `fade`, `fadeUp`, `fadeDown`, `scaleIn`, `slideUp`. Durations, easings, distances and the stagger interval are theme tokens, so `createTheme` can change them.
 - **Springs** (`snappy`, `smooth`, `bouncy`) are real physics: on the web they become CSS `linear()` easings (`var(--ds-spring-smooth)`), and on React Native the same stiffness and damping go to `Animated.spring`, so both platforms move the same way.
 - **Web:** CSS keyframes, with no JavaScript animation loop. **React Native:** `Animated` on the native driver, using the same easing curves as the web.
-- With reduced motion turned on (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), movement becomes a plain fade or is skipped.
+- **One press feel.** Everything you can press uses the same wash of its own text color: `opacity.hover` (6%) on hover and `opacity.pressed` (12%) while held. Objects (buttons, chips, keys, calendar days, tabs) also shrink to 97% on the snappy spring; rows (list items, menu items, sidebar items) only highlight, as on iOS. Hover only applies where there's a real pointer, so a tap on a phone leaves nothing behind. On the web it's one `ds-press` class; on React Native, one `Press` component. A test fails if a component hardcodes its own hover or press strength.
+- **Loading breathes.** Skeletons, the spinner's arc, a loading button's glow, a pending receipt, slide-to-pay while paying, and the timeline's in-progress dot all follow one rhythm, `motion.breathe`: a full breath every 2 seconds on a sine curve, fading to 45% at the out-breath. It animates only opacity and transform, so it stays smooth.
+- With reduced motion turned on (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), movement becomes a plain fade or is skipped, and loaders stop breathing.
 
 <details>
 <summary>Motion props</summary>

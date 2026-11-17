@@ -27,7 +27,7 @@ export function CopyField({ label, value, onCopy = systemClipboard, testID }: Co
           {value}
         </span>
       </span>
-      <button type="button" className="ds-copy__button" aria-label={`Copy ${label}`} data-copied={copied || undefined} onClick={copy}>
+      <button type="button" className="ds-copy__button ds-press ds-press--object" aria-label={`Copy ${label}`} data-copied={copied || undefined} onClick={copy}>
         <CopyIcon className="ds-copy__icon ds-copy__sheets" />
         <CheckIcon className="ds-copy__icon ds-copy__check" />
       </button>

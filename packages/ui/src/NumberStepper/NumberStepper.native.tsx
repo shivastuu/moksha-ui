@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Pressable, Text, View } from 'react-native';
-import { usePressScale } from '../motion/nativeMotion.native';
+import { Animated, Text, View } from 'react-native';
+import { Press } from '../motion/Press.native';
 import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
@@ -11,33 +11,30 @@ import { clampValue, stepperButton, type NumberStepperProps } from './NumberStep
 function Round({ glyph, label, disabled, onPress }: { glyph: string; label: string; disabled: boolean; onPress: () => void }) {
   const theme = useTheme();
   const { colors, opacity } = theme;
-  const press = usePressScale();
   return (
-    <Animated.View style={{ transform: [{ scale: press.scale }] }}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={label}
-        accessibilityState={{ disabled }}
-        disabled={disabled}
-        onPress={onPress}
-        onPressIn={press.onPressIn}
-        onPressOut={press.onPressOut}
-        hitSlop={6}
-        style={{
-          width: stepperButton,
-          height: stepperButton,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: stepperButton / 2,
-          borderWidth: 1.5,
-          borderColor: controlColors(colors).boxBorder,
-          backgroundColor: colors.background,
-          opacity: disabled ? opacity.disabled : 1,
-        }}
-      >
-        <Text style={{ color: colors.text, fontSize: 18, lineHeight: 20, ...fontFor(theme, 'medium') }}>{glyph}</Text>
-      </Pressable>
-    </Animated.View>
+    <Press
+      object
+      ink={colors.text}
+      fill={colors.background}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      hitSlop={6}
+      style={{
+        width: stepperButton,
+        height: stepperButton,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: stepperButton / 2,
+        borderWidth: 1.5,
+        borderColor: controlColors(colors).boxBorder,
+        opacity: disabled ? opacity.disabled : 1,
+      }}
+    >
+      <Text style={{ color: colors.text, fontSize: 18, lineHeight: 20, ...fontFor(theme, 'medium') }}>{glyph}</Text>
+    </Press>
   );
 }
 

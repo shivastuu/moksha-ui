@@ -42,7 +42,7 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
                       }
                     }}
                     type="button"
-                    className="ds-sidebar__item"
+                    className="ds-sidebar__item ds-press"
                     aria-label={item.count ? itemLabel(item) : undefined}
                     aria-current={item.value === selected ? 'page' : undefined}
                     onClick={() => setSelected(item.value)}

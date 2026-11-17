@@ -1,4 +1,5 @@
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Press } from '../motion/Press.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { promoColors, type PromoBannerProps } from './PromoBanner.shared';
@@ -69,30 +70,30 @@ export function PromoBanner({ eyebrow, title, description, action, onDismiss, ar
       </Text>
       {description ? <Text style={[textStyleFor(theme, 'bodySmall'), onBrand]}>{description}</Text> : null}
       {action ? (
-        <Pressable
+        <Press
+          object
+          ink={tones.actionInk}
+          fill={tones.ink}
           accessibilityRole="button"
           onPress={action.onPress}
-          style={{
-            marginTop: space.sm,
-            minHeight: button.sizes.sm.height,
-            justifyContent: 'center',
-            paddingHorizontal: button.sizes.sm.paddingX,
-            borderRadius: radius.full,
-            backgroundColor: tones.ink,
-          }}
+          outerStyle={{ marginTop: space.sm }}
+          style={{ minHeight: button.sizes.sm.height, justifyContent: 'center', paddingHorizontal: button.sizes.sm.paddingX, borderRadius: radius.full }}
         >
           <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: tones.actionInk }]}>{action.label}</Text>
-        </Pressable>
+        </Press>
       ) : null}
       {onDismiss ? (
-        <Pressable
+        <Press
+          object
+          ink={tones.ink}
           accessibilityRole="button"
           accessibilityLabel="Dismiss"
           onPress={onDismiss}
-          style={{ position: 'absolute', top: space.sm, right: space.sm, width: space['2xl'], height: space['2xl'], alignItems: 'center', justifyContent: 'center' }}
+          outerStyle={{ position: 'absolute', top: space.sm, right: space.sm }}
+          style={{ width: space['2xl'], height: space['2xl'], alignItems: 'center', justifyContent: 'center', borderRadius: radius.full }}
         >
           <Text style={{ color: tones.ink, fontSize: typography.fontSize.md }}>✕</Text>
-        </Pressable>
+        </Press>
       ) : null}
     </View>
   );

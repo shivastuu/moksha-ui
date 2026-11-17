@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { Badge } from '../Badge/Badge.native';
+import { Press } from '../motion/Press.native';
 import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { Surface } from '../Surface/Surface.native';
 import { surfaceColors } from '../Surface/Surface.shared';
@@ -52,13 +53,16 @@ export function TabBar({ items, value, defaultValue, onValueChange, accessibilit
           const active = at === index;
           const color = active ? textTones(colors).primary : colors.textMuted;
           return (
-            <Pressable
+            <Press
               key={item.value}
+              object
+              ink={colors.text}
+              outerStyle={{ flex: 1 }}
               accessibilityRole="tab"
               accessibilityLabel={item.badge ? `${item.label}, ${item.badge} new` : item.label}
               accessibilityState={{ selected: active }}
               onPress={() => setSelected(item.value)}
-              style={{ flex: 1, height: 52, alignItems: 'center', justifyContent: 'center', gap: 2 }}
+              style={{ height: 52, alignItems: 'center', justifyContent: 'center', gap: 2, borderRadius: radius.full }}
             >
               <View>
                 {item.icon(color)}
@@ -71,7 +75,7 @@ export function TabBar({ items, value, defaultValue, onValueChange, accessibilit
               <Text numberOfLines={1} style={[textStyleFor(theme, 'caption'), fontFor(theme, 'medium'), { color }]}>
                 {item.label}
               </Text>
-            </Pressable>
+            </Press>
           );
         })}
       </View>

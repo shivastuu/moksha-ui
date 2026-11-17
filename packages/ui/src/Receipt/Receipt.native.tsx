@@ -1,5 +1,6 @@
-import { Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { DetailRow } from '../DetailRow/DetailRow.native';
+import { breathOpacity, useBreathe } from '../motion/nativeMotion.native';
 import { RollingAmount } from '../RollingAmount/RollingAmount.native';
 import { Spinner } from '../Spinner/Spinner.native';
 import { SuccessCheck } from '../SuccessCheck/SuccessCheck.native';
@@ -22,7 +23,8 @@ function Cross({ color }: { color: string }) {
 /** A payment receipt like a torn ticket: the status, the amount rolling in, a tear line, then the details */
 export function Receipt({ status, amount, title, subtitle, details, actions, testID }: ReceiptProps) {
   const theme = useTheme();
-  const { colors, space, radius, shadows } = theme;
+  const { colors, motion, space, radius, shadows } = theme;
+  const breath = useBreathe(status === 'pending');
   const edge = surfaceColors(colors).edge;
   const words = receiptStatusWords[status];
   const pending = softTones(colors).warning;
@@ -48,11 +50,13 @@ export function Receipt({ status, amount, title, subtitle, details, actions, tes
           {status === 'success' ? (
             <SuccessCheck size={receipt.status} accessibilityLabel={words} />
           ) : (
-            <View
+            <Animated.View
               accessible
               accessibilityRole="image"
               accessibilityLabel={words}
               style={{
+                // A pending payment breathes, like every loader
+                opacity: status === 'pending' ? breathOpacity(breath, motion.breathe.low) : 1,
                 width: receipt.status,
                 height: receipt.status,
                 alignItems: 'center',
@@ -64,7 +68,7 @@ export function Receipt({ status, amount, title, subtitle, details, actions, tes
               }}
             >
               {status === 'pending' ? <Spinner size="md" /> : <Cross color={failed.ink} />}
-            </View>
+            </Animated.View>
           )}
           <View style={{ marginTop: space.sm }}>
             <RollingAmount value={amount} size="xl" />

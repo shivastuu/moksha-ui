@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { AccessibilityInfo, Animated, Pressable, Text, View } from 'react-native';
+import { AccessibilityInfo, Animated, Text, View } from 'react-native';
 import { CheckIcon } from '../Icon/CheckIcon.native';
 import { CopyIcon } from '../Icon/CopyIcon.native';
 import { usePop } from '../motion/nativeMotion.native';
+import { Press } from '../motion/Press.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { textTones } from '../utils/tones';
@@ -47,11 +48,13 @@ export function CopyField({ label, value, onCopy, testID }: CopyFieldProps) {
         </Text>
       </View>
       {onCopy ? (
-        <Pressable
+        <Press
+          object
+          ink={colors.textMuted}
           accessibilityRole="button"
           accessibilityLabel={`Copy ${label}`}
           onPress={run}
-          style={({ pressed }) => ({ width: size, height: size, alignItems: 'center', justifyContent: 'center', borderRadius: size / 2, backgroundColor: pressed ? colors.border : 'transparent' })}
+          style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center', borderRadius: size / 2 }}
         >
           {copied ? (
             <Animated.View style={{ transform: [{ scale: pop }] }}>
@@ -60,7 +63,7 @@ export function CopyField({ label, value, onCopy, testID }: CopyFieldProps) {
           ) : (
             <CopyIcon color={colors.textMuted} background={colors.surface} size={17} />
           )}
-        </Pressable>
+        </Press>
       ) : null}
     </View>
   );

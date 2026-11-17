@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { AccessibilityInfo, Animated, Pressable, Text, View } from 'react-native';
-import { usePop, usePressScale, useShake } from '../motion/nativeMotion.native';
+import { AccessibilityInfo, Animated, Text, View } from 'react-native';
+import { usePop, useShake } from '../motion/nativeMotion.native';
+import { Press } from '../motion/Press.native';
 import { useShakeOnError } from '../motion/useShakeOnError';
 import { surfaceColors } from '../Surface/Surface.shared';
 import { useTheme } from '../theme/context';
@@ -32,29 +33,26 @@ function Dot({ filled, invalid }: { filled: boolean; invalid: boolean }) {
 function Key({ value, onPress }: { value: Exclude<PinKey, ''>; onPress: () => void }) {
   const theme = useTheme();
   const { colors } = theme;
-  const press = usePressScale();
   const remove = value === 'delete';
   return (
-    <Animated.View style={{ transform: [{ scale: press.scale }] }}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={remove ? 'Delete' : value}
-        onPress={onPress}
-        onPressIn={press.onPressIn}
-        onPressOut={press.onPressOut}
-        style={({ pressed }) => ({
-          width: pinPad.key,
-          height: pinPad.key,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: pinPad.key / 2,
-          backgroundColor: remove ? 'transparent' : pressed ? colors.border : colors.surface,
-          boxShadow: remove ? undefined : `0px 0px 0px 1px ${surfaceColors(colors).edge}`,
-        })}
-      >
-        <Text style={{ color: remove ? colors.textMuted : colors.text, fontSize: remove ? 22 : 28, fontVariant: ['tabular-nums'], ...fontFor(theme, 'regular') }}>{remove ? '⌫' : value}</Text>
-      </Pressable>
-    </Animated.View>
+    <Press
+      object
+      ink={remove ? colors.textMuted : colors.text}
+      fill={remove ? undefined : colors.surface}
+      accessibilityRole="button"
+      accessibilityLabel={remove ? 'Delete' : value}
+      onPress={onPress}
+      style={{
+        width: pinPad.key,
+        height: pinPad.key,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: pinPad.key / 2,
+        boxShadow: remove ? undefined : `0px 0px 0px 1px ${surfaceColors(colors).edge}`,
+      }}
+    >
+      <Text style={{ color: remove ? colors.textMuted : colors.text, fontSize: remove ? 22 : 28, fontVariant: ['tabular-nums'], ...fontFor(theme, 'regular') }}>{remove ? '⌫' : value}</Text>
+    </Press>
   );
 }
 

@@ -13,7 +13,7 @@ export function Chip({ label, selected = false, onSelectedChange, icon, disabled
   return (
     <button
       type="button"
-      className={`ds-chip ds-chip--${size}`}
+      className={`ds-chip ds-chip--${size} ds-press ds-press--object`}
       aria-pressed={selected}
       disabled={disabled}
       onClick={() => onSelectedChange?.(!selected)}

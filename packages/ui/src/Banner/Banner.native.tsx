@@ -1,4 +1,5 @@
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Press } from '../motion/Press.native';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { bannerColors, type BannerProps, type BannerTone } from './Banner.shared';
@@ -49,25 +50,22 @@ export function Banner({ tone = 'info', title, children, action, onDismiss, test
           )}
         </View>
         {action ? (
-          <Pressable
+          <Press
+            object
+            ink={colors.textInverse}
+            fill={colors.surfaceInverse}
             accessibilityRole="button"
             onPress={action.onPress}
-            style={{
-              minHeight: button.sizes.sm.height,
-              justifyContent: 'center',
-              paddingHorizontal: button.sizes.sm.paddingX,
-              borderRadius: radius.full,
-              backgroundColor: colors.surfaceInverse,
-            }}
+            style={{ minHeight: button.sizes.sm.height, justifyContent: 'center', paddingHorizontal: button.sizes.sm.paddingX, borderRadius: radius.full }}
           >
             <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: colors.textInverse }]}>{action.label}</Text>
-          </Pressable>
+          </Press>
         ) : null}
       </View>
       {onDismiss ? (
-        <Pressable accessibilityRole="button" accessibilityLabel="Dismiss" onPress={onDismiss} style={circle}>
+        <Press object ink={colors.textMuted} accessibilityRole="button" accessibilityLabel="Dismiss" onPress={onDismiss} style={circle}>
           <Text style={{ color: colors.textMuted, fontSize: typography.fontSize.md }}>✕</Text>
-        </Pressable>
+        </Press>
       ) : null}
     </View>
   );

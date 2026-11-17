@@ -60,7 +60,8 @@ export interface Foundations {
   radius: Record<RadiusToken, number>;
   /** Border widths in px */
   borderWidth: { thin: number; thick: number };
-  opacity: { disabled: number; muted: number };
+  /** `hover` and `pressed` are the strength of the text-color wash on anything you can press, the same everywhere */
+  opacity: { disabled: number; muted: number; hover: number; pressed: number };
   /** Keyboard focus indicator, in px */
   focusRing: { width: number; offset: number };
   motion: {
@@ -76,6 +77,8 @@ export interface Foundations {
     stagger: number;
     /** Physical springs: `snappy` for taps and toggles, `smooth` for movement, `bouncy` for playful moments */
     spring: { snappy: Spring; smooth: Spring; bouncy: Spring };
+    /** Loading breathes: one full in-and-out every `period` ms on a sine curve, fading to `low` opacity at the out-breath */
+    breathe: { period: number; low: number; easing: string };
   };
   /** Frosted glass: backdrop blur radius in px, and color saturation behind the glass */
   glass: { blur: Record<BlurToken, number>; saturation: number };
@@ -288,7 +291,7 @@ export const foundations: Foundations = {
   space: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, '2xl': 32, '3xl': 48 },
   radius: { sm: 6, md: 10, lg: 14, xl: 20, full: 999 },
   borderWidth: { thin: 1, thick: 2 },
-  opacity: { disabled: 0.5, muted: 0.7 },
+  opacity: { disabled: 0.5, muted: 0.7, hover: 0.06, pressed: 0.12 },
   focusRing: { width: 2, offset: 2 },
   motion: {
     duration: { fast: 150, normal: 250, slow: 350 },
@@ -305,6 +308,8 @@ export const foundations: Foundations = {
       smooth: { stiffness: 170, damping: 26, mass: 1 },
       bouncy: { stiffness: 300, damping: 16, mass: 1 },
     },
+    // About 15 breaths a minute is calm; a sine in-out has no hard turn at either end
+    breathe: { period: 2000, low: 0.45, easing: 'cubic-bezier(0.37, 0, 0.63, 1)' },
   },
   glass: { blur: { sm: 12, md: 24, lg: 40 }, saturation: 1.8 },
   zIndex: { base: 0, dropdown: 1000, overlay: 1100, modal: 1200, toast: 1300 },

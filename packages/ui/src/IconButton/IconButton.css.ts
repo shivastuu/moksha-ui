@@ -5,7 +5,7 @@ const sizes = ['sm', 'md', 'lg']
 const glassFallback = 'background:var(--ds-color-surface-raised);-webkit-backdrop-filter:none;backdrop-filter:none';
 
 export const iconButtonCss = `
-.ds-icon-button{position:relative;isolation:isolate;display:inline-grid;place-items:center;flex-shrink:0;box-sizing:border-box;padding:0;border:var(--ds-border-width-thin) solid transparent;border-radius:var(--ds-radius-full);cursor:pointer;transition:background-color var(--ds-duration-fast) var(--ds-easing-standard),transform var(--ds-duration-fast) var(--ds-easing-standard)}
+.ds-icon-button{position:relative;isolation:isolate;display:inline-grid;place-items:center;flex-shrink:0;box-sizing:border-box;padding:0;border:var(--ds-border-width-thin) solid transparent;border-radius:var(--ds-radius-full);cursor:pointer;transition:background-color var(--ds-duration-fast) var(--ds-easing-standard),transform var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
 ${sizes}
 .ds-icon-button>svg{width:46%;height:46%}
 .ds-icon-button:not(:disabled):active{transform:scale(var(--ds-motion-scale-pressed))}
@@ -20,6 +20,7 @@ ${sizes}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.ds-icon-button--glass{${glassFallback}}}
 @media (prefers-reduced-transparency:reduce){.ds-icon-button--glass{${glassFallback}}}
 .ds-icon-button--ghost{background:transparent;color:var(--ds-color-text-muted)}
-.ds-icon-button--ghost:not(:disabled):hover{background:var(--ds-color-surface)}
+@media (hover:hover){.ds-icon-button--ghost:not(:disabled):hover{background:color-mix(in oklab,currentColor calc(var(--ds-opacity-hover) * 100%),transparent)}}
+.ds-icon-button--ghost:not(:disabled):active{background:color-mix(in oklab,currentColor calc(var(--ds-opacity-pressed) * 100%),transparent)}
 @media (prefers-reduced-motion:reduce){.ds-icon-button{transition:none}.ds-icon-button:not(:disabled):active{transform:none}}
 `;

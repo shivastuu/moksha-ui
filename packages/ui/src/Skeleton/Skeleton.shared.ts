@@ -1,4 +1,4 @@
-import { hexToOklch, mix, type SemanticColors } from '@moksha-ui/tokens';
+import { mix, type SemanticColors } from '@moksha-ui/tokens';
 
 export interface SkeletonProps {
   /** `text` draws `lines` of text, `rect` a block, `circle` an avatar @default 'text' */
@@ -12,10 +12,9 @@ export interface SkeletonProps {
   testID?: string;
 }
 
-/** A faint block, and a slightly brighter band that sweeps across it */
+/** A faint block that breathes while content loads */
 export function skeletonColors({ text, background }: SemanticColors) {
-  const dark = hexToOklch(text).l > hexToOklch(background).l;
-  return { base: mix(text, background, 0.08), shine: mix(text, background, dark ? 0.16 : 0.02) };
+  return { base: mix(text, background, 0.08) };
 }
 
 export const skeletonBlocks = ({ shape = 'text', lines = 1, width = '100%', height }: SkeletonProps) => {

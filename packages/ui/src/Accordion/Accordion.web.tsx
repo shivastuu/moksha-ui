@@ -19,7 +19,7 @@ export function Accordion({ items, multiple = false, value, defaultValue = [], o
               <button
                 type="button"
                 id={`${id}-${index}`}
-                className="ds-accordion__trigger"
+                className="ds-accordion__trigger ds-press"
                 aria-expanded={expanded}
                 aria-controls={`${id}-${index}-panel`}
                 onClick={() => setOpen(toggle(open, item.value, multiple))}

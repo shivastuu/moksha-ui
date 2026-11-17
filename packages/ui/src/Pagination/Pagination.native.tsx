@@ -1,7 +1,8 @@
-import { Animated, Pressable, Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { buttonDepth } from '../Button/Button.shared';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
 import { usePop } from '../motion/nativeMotion.native';
+import { Press } from '../motion/Press.native';
 import { useTheme } from '../theme/context';
 import { fontFor } from '../theme/textStyle';
 import { useControllableState } from '../utils/useControllableState';
@@ -14,26 +15,28 @@ function PageButton({ page, current, onPress }: { page: number; current: boolean
   const scale = usePop(current);
   return (
     <Animated.View style={{ transform: [{ scale }] }}>
-      <Pressable
+      <Press
+        object
+        ink={current ? colors.textOnPrimary : colors.text}
+        fill={current ? colors.primary : undefined}
         accessibilityRole="button"
         accessibilityLabel={`Page ${page}`}
         accessibilityState={{ selected: current }}
         onPress={onPress}
-        style={({ pressed }) => ({
+        style={{
           minWidth: 36,
           height: 36,
           paddingHorizontal: 8,
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: radius.full,
-          backgroundColor: current ? colors.primary : pressed ? colors.border : 'transparent',
           // The same top-lit fill and glow as a primary Button
           backgroundImage: current ? depth.primaryFill : undefined,
           boxShadow: current ? depth.primaryShadow : undefined,
-        })}
+        }}
       >
         <Text style={{ color: current ? colors.textOnPrimary : colors.text, fontSize: typography.fontSize.sm, fontVariant: ['tabular-nums'], ...fontFor(theme, 'medium') }}>{page}</Text>
-      </Pressable>
+      </Press>
     </Animated.View>
   );
 }
@@ -48,16 +51,18 @@ export function Pagination({ page, defaultPage = 1, onPageChange, pageCount, acc
   }
   const go = (next: number) => next !== current && setCurrent(next);
   const arrow = (direction: 'left' | 'right', disabled: boolean, target: number) => (
-    <Pressable
+    <Press
+      object
+      ink={colors.text}
       accessibilityRole="button"
       accessibilityLabel={direction === 'left' ? 'Previous page' : 'Next page'}
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={() => go(target)}
-      style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center', opacity: disabled ? opacity.disabled : 1 }}
+      style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center', borderRadius: 18, opacity: disabled ? opacity.disabled : 1 }}
     >
       <ChevronIcon direction={direction} color={colors.text} />
-    </Pressable>
+    </Press>
   );
   return (
     <View testID={testID} accessibilityLabel={accessibilityLabel} style={{ flexDirection: 'row', alignItems: 'center', gap: space.xs }}>

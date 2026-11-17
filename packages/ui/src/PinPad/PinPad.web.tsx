@@ -61,7 +61,7 @@ export function PinPad({ label, length = 4, value, defaultValue = '', onValueCha
             <button
               key={key}
               type="button"
-              className={`ds-pin__key${key === 'delete' ? ' ds-pin__key--delete' : ''}`}
+              className={`ds-pin__key ds-press ds-press--object${key === 'delete' ? ' ds-pin__key--delete' : ''}`}
               aria-label={key === 'delete' ? 'Delete' : undefined}
               onClick={() => press(key)}
             >

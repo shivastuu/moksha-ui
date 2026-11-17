@@ -1,4 +1,5 @@
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Press } from '../motion/Press.native';
 import { Floating } from '../Popover/Floating.native';
 import { surfaceColors } from '../Surface/Surface.shared';
 import { useTheme } from '../theme/context';
@@ -16,8 +17,9 @@ export function Menu({ anchor, open, onClose, accessibilityLabel, items, side, a
         {items.map((item) => {
           const color = item.tone === 'danger' ? textTones(colors).danger : colors.text;
           return (
-            <Pressable
+            <Press
               key={item.label}
+              ink={color}
               accessibilityRole="menuitem"
               accessibilityState={{ disabled: !!item.disabled }}
               disabled={item.disabled}
@@ -25,20 +27,11 @@ export function Menu({ anchor, open, onClose, accessibilityLabel, items, side, a
                 onClose();
                 item.onSelect();
               }}
-              style={({ pressed }) => ({
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: space.sm,
-                height: 44,
-                paddingHorizontal: space.md,
-                borderRadius: radius.md,
-                backgroundColor: pressed ? colors.border : 'transparent',
-                opacity: item.disabled ? opacity.disabled : 1,
-              })}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: space.sm, height: 44, paddingHorizontal: space.md, borderRadius: radius.md, opacity: item.disabled ? opacity.disabled : 1 }}
             >
               {item.icon ? <View style={{ width: 18, alignItems: 'center' }}>{item.icon}</View> : null}
               <Text style={[textStyleFor(theme, 'bodySmall'), fontFor(theme, 'medium'), { color }]}>{item.label}</Text>
-            </Pressable>
+            </Press>
           );
         })}
       </View>

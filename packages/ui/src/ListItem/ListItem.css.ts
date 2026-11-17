@@ -3,9 +3,6 @@
 export const listCss = `
 .ds-list-item{position:relative;display:flex;align-items:center;gap:var(--ds-space-md);box-sizing:border-box;width:100%;padding:0 0 0 var(--ds-space-lg);border:0;background:transparent;color:var(--ds-color-text);font:inherit;font-family:var(--ds-font-sans);text-align:start;isolation:isolate}
 button.ds-list-item{cursor:pointer}
-button.ds-list-item::before{content:'';position:absolute;inset:0;z-index:-1;background:currentColor;opacity:0;transition:opacity var(--ds-duration-fast) var(--ds-easing-standard)}
-button.ds-list-item:hover:not(:disabled)::before{opacity:0.04}
-button.ds-list-item:active:not(:disabled)::before{opacity:0.08}
 button.ds-list-item:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:calc(var(--ds-focus-ring-width) * -1)}
 button.ds-list-item:disabled{opacity:var(--ds-opacity-disabled);cursor:not-allowed}
 .ds-list-item__leading{display:flex;flex-shrink:0}
@@ -22,5 +19,5 @@ button.ds-list-item:hover:not(:disabled) .ds-list-item__chevron{transform:transl
 .ds-list-group__title{font-weight:var(--ds-font-weight-medium)}
 .ds-list-group__list{margin:0;padding:0;list-style:none;overflow:hidden;border-radius:var(--ds-radius-xl);background:var(--ds-color-surface-raised);box-shadow:var(--ds-shadow-sm),0 0 0 1px var(--ds-surface-edge)}
 .ds-list-group__item+.ds-list-group__item .ds-list-item__content{box-shadow:inset 0 1px 0 var(--ds-surface-edge)}
-@media (prefers-reduced-motion:reduce){button.ds-list-item::before,.ds-list-item__chevron{transition:none}}
+@media (prefers-reduced-motion:reduce){.ds-list-item__chevron{transition:none}}
 `;

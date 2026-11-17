@@ -29,13 +29,13 @@ export function Banner({ tone = 'info', title, children, action, onDismiss, test
           <div className="ds-banner__text">{children}</div>
         </div>
         {action && (
-          <button type="button" className="ds-banner__action" onClick={action.onPress}>
+          <button type="button" className="ds-banner__action ds-press ds-press--object" onClick={action.onPress}>
             {action.label}
           </button>
         )}
       </div>
       {onDismiss && (
-        <button type="button" className="ds-banner__dismiss" aria-label="Dismiss" onClick={onDismiss}>
+        <button type="button" className="ds-banner__dismiss ds-press ds-press--object" aria-label="Dismiss" onClick={onDismiss}>
           <Glyph>
             <path d="M7 7l10 10M17 7L7 17" />
           </Glyph>

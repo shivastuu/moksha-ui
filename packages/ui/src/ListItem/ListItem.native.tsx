@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { alpha } from '@moksha-ui/tokens';
+import { StyleSheet, Text, View } from 'react-native';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
 import { ListGroupContext } from '../ListGroup/ListGroup.shared';
+import { Press } from '../motion/Press.native';
 import { surfaceColors } from '../Surface/Surface.shared';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
@@ -50,7 +50,8 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
     );
   }
   return (
-    <Pressable
+    <Press
+      ink={colors.text}
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? (value ? `${title}, ${trailing}` : title)}
@@ -58,9 +59,9 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
       accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => [row, { backgroundColor: alpha(colors.text, pressed ? 0.08 : 0), opacity: disabled ? opacity.disabled : 1 }]}
+      style={[row, { opacity: disabled ? opacity.disabled : 1 }]}
     >
       {body}
-    </Pressable>
+    </Press>
   );
 }
