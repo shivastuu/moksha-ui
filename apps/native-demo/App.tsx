@@ -24,6 +24,7 @@ import {
   ListItem,
   NumberStepper,
   PromoBanner,
+  Receipt,
   ResendTimer,
   RollingAmount,
   OtpField,
@@ -31,7 +32,10 @@ import {
   PhoneField,
   PinPad,
   SearchField,
+  SlideToConfirm,
+  Slider,
   SnackbarProvider,
+  Sparkline,
   StatCard,
   StepIndicator,
   SuccessCheck,
@@ -190,6 +194,20 @@ function Navigation() {
   );
 }
 
+function Money() {
+  const [sip, setSip] = useState(5000);
+  return (
+    <Section title="Money">
+      <View style={[styles.form, { flex: 1 }]}>
+        <Slider label="Monthly SIP" min={500} max={50000} step={500} value={sip} onValueChange={setSip} format={(n) => `₹ ${n.toLocaleString('en-IN')}`} />
+        <Sparkline data={[920, 1100, 860, 1340, 1210, 1480, 1510]} upIsGood={false} width={280} height={48} accessibilityLabel="Spending this week, rising" />
+        <SlideToConfirm label="Slide to pay ₹ 486" pendingLabel="Paying" doneLabel="Paid ₹ 486" onConfirm={() => new Promise((resolve) => setTimeout(resolve, 1200))} />
+        <Receipt status="success" amount={486} title="Paid to Swiggy" subtitle="17 Nov 2026, 1:24 pm" details={[{ label: 'UTR', value: '4021 8876 1290' }, { label: 'From', value: 'Savings •• 4821' }]} />
+      </View>
+    </Section>
+  );
+}
+
 function Overlays() {
   const snackbar = useSnackbar();
   const [dialog, setDialog] = useState(false);
@@ -339,6 +357,8 @@ export default function App() {
             <Entry />
 
             <Navigation />
+
+            <Money />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>

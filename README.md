@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -543,6 +543,34 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **Pagination** always shows 7 slots once there are more than 7 pages, so the buttons don't shift as you page. The current page has the primary Button's top-lit fill and glow, and pops in.
 - **TabBar** floats on frosted glass (the same blur as Surface). A raised pill springs to the active section and its icon lifts slightly. Icons are drawn in whatever color you're given, because React Native has no `currentColor`. A badge reads as part of the tab's name: "Scan & pay, 2 new".
 
+### Money
+
+<table>
+<tr>
+<td><img src="docs/images/slider.png" alt="Two sliders: Monthly SIP at ₹ 41,000 with its thumb held and haloed, and Duration at 10 yrs, above a line saying you invest ₹ 49,20,000 over 10 years" /></td>
+<td><img src="docs/images/receipt-ticket.png" alt="Dark mode receipt shaped like a ticket: a green check, ₹ 486.00 with small decimals, Paid to Swiggy, a dashed tear line with notches, then status, UTR, from and to rows, and Share and Download buttons" /></td>
+</tr>
+<tr>
+<td><img src="docs/images/slide-to-pay.png" alt="A blue pill reading Slide to pay ₹ 486 with a white knob holding double chevrons" /></td>
+<td><img src="docs/images/sparkline.png" alt="Two stat cards over sparklines: spending up 18% in red, savings up 6.2% in green, each with a soft fill and a dot on the latest value" /></td>
+</tr>
+</table>
+
+```tsx
+<Slider label="Monthly SIP" min={500} max={50000} step={500} value={sip} onValueChange={setSip} format={(n) => `₹ ${n.toLocaleString('en-IN')}`} />
+
+<SlideToConfirm label="Slide to pay ₹ 486" pendingLabel="Paying" doneLabel="Paid ₹ 486" onConfirm={pay} />
+
+<Sparkline data={week} upIsGood={false} accessibilityLabel="Spending this week, ₹920 rising to ₹1,510" />
+
+<Receipt status="success" amount={486} title="Paid to Swiggy" subtitle="17 Nov 2026, 1:24 pm" details={[{ label: 'UTR', value: '4021 8876 1290' }]} />
+```
+
+- **Slider** is the browser's own range input on the web, restyled, so keyboard, touch, forms and screen readers all work out of the box. The thumb grows while held. On native it's built with touch handling (no extra module) and screen-reader users swipe up and down to change it.
+- **SlideToConfirm** pays only when the knob is let go past 90% of the track, so a slip doesn't send money. Let go earlier and it springs back. If `onConfirm` fails it returns to the start and never shows "Done". On the web, keyboard users press Enter or Space and desktop screen readers activate it; a plain mouse click does nothing. Native screen-reader users double-tap. *Known gap:* with VoiceOver or TalkBack on mobile web, a double-tap only nudges the knob.
+- **Sparkline** uses the same smoothing as d3's `curveMonotoneX`, so the curve never shows a high or low that isn't in the data (tests check every segment). It draws itself in, with a soft fill underneath and a dot on the latest value. On native the same curve is drawn from short line pieces, with no SVG dependency.
+- **Receipt** looks like a torn ticket: a status that's always spoken in words, the amount rolling in, a dashed tear line with notches, and the details below. The notches are filled with the page background (`--ds-receipt-notch` on the web), so place it on the page background.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -706,9 +734,9 @@ npm run native       # Expo dev server; open it in Expo Go
 Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
-- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [x] NumberStepper · [ ] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [x] CopyField
+- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [x] Slider · [x] NumberStepper · [ ] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [x] SlideToConfirm · [ ] FileUpload · [x] CopyField
 - **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [ ] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [ ] Drawer
-- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
+- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [x] Receipt · [x] Sparkline · [ ] CardStack
 - **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [x] SuccessCheck · [x] ResendTimer
 
 ## License
