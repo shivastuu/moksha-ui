@@ -13,6 +13,7 @@ import {
   AutoForm,
   AmountField,
   Banner,
+  DatePicker,
   CopyField,
   BankCard,
   BottomSheet,
@@ -22,6 +23,7 @@ import {
   DetailRow,
   Dialog,
   Drawer,
+  FileUpload,
   ListGroup,
   ListItem,
   Menu,
@@ -267,6 +269,24 @@ function Shell() {
   );
 }
 
+function Pickers() {
+  return (
+    <Section title="Pickers">
+      <View style={[styles.form, { flex: 1 }]}>
+        <DatePicker label="Transfer date" min="2026-11-17" helperText="Scheduled transfers go out at 9 am" />
+        {/* This demo has no document picker module, so it returns a sample file */}
+        <FileUpload
+          label="PAN card"
+          accept=".pdf,image/*"
+          maxSize={5 * 1024 * 1024}
+          hint="PDF or a photo, up to 5 MB"
+          onPick={async () => [{ name: 'pan-card.pdf', size: 214 * 1024, type: 'application/pdf', uri: 'file:///pan-card.pdf' }]}
+        />
+      </View>
+    </Section>
+  );
+}
+
 function Overlays() {
   const snackbar = useSnackbar();
   const [dialog, setDialog] = useState(false);
@@ -422,6 +442,8 @@ export default function App() {
             <Floating />
 
             <Shell />
+
+            <Pickers />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>

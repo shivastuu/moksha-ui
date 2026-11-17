@@ -52,6 +52,8 @@ import { floatingCss } from '../Popover/Popover.css';
 import { selectCss } from '../Select/Select.css';
 import { sidebarCss } from '../Sidebar/Sidebar.css';
 import { cardStackCss } from '../CardStack/CardStack.css';
+import { datePickerCss } from '../DatePicker/DatePicker.css';
+import { fileUploadCss } from '../FileUpload/FileUpload.css';
 import { controlColors } from '../utils/controls';
 import { softTones, solidTones, textTones } from '../utils/tones';
 import { snackbarColors } from '../Snackbar/Snackbar.shared';
@@ -167,4 +169,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss + detailRowCss + statCardCss + emptyStateCss + transactionCss + stepsCss + timelineCss + resendCss + copyFieldCss + successCss + pinPadCss + stepperCss + textAreaCss + paginationCss + breadcrumbsCss + appBarCss + tabBarCss + sliderCss + slideCss + sparklineCss + receiptCss + floatingCss + selectCss + sidebarCss + cardStackCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss + detailRowCss + statCardCss + emptyStateCss + transactionCss + stepsCss + timelineCss + resendCss + copyFieldCss + successCss + pinPadCss + stepperCss + textAreaCss + paginationCss + breadcrumbsCss + appBarCss + tabBarCss + sliderCss + slideCss + sparklineCss + receiptCss + floatingCss + selectCss + sidebarCss + cardStackCss + datePickerCss + fileUploadCss;

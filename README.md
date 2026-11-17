@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Floating](#floating) · [App shell](#app-shell) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Floating](#floating) · [App shell](#app-shell) · [Pickers](#pickers) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -630,6 +630,24 @@ const anchor = useRef(null);
 - **CardStack** stacks cards like a wallet: each card behind is lifted 16px, shrunk 5% and darkened 12%, inside its own rounded corners. Tapping a card's visible edge springs it to the front. Cards behind are buttons ("Show Moksha Metal •• 2290") for keyboard and screen-reader users, and the new front card is announced.
 - **Sidebar** groups navigation under section titles, with a raised pill that springs to the current page like Tabs and TabBar. Counts are part of the name ("Requests, 3 new"), and icons are drawn in the color they're given, the same as in TabBar.
 
+### Pickers
+
+<table>
+<tr>
+<td><img src="docs/images/date-picker.png" alt="Dark mode date picker: a Date of birth field showing 21 Aug 1998, with an August 1998 calendar below, weeks starting Monday and 21 in a glowing pill" /></td>
+<td><img src="docs/images/file-upload.png" alt="Two upload zones: PAN card highlighted while a file is dragged over it, with a message that pan-scan.png is over 5 MB; Bank statements with two PDF rows showing sizes and remove buttons, and a message that photo.jpg isn't an accepted type" /></td>
+</tr>
+</table>
+
+```tsx
+<DatePicker label="Transfer date" min={today} max="2027-02-28" value={date} onValueChange={setDate} />
+
+<FileUpload label="PAN card" accept=".pdf,image/*" maxSize={5 * 1024 * 1024} hint="PDF or a photo, up to 5 MB" onValueChange={setFiles} />
+```
+
+- **DatePicker** stores days as `'YYYY-MM-DD'` and does all date maths in UTC, so time zones and daylight saving can never move a day (a test steps through 400 days in a row). The calendar opens on the chosen day or today, and follows the WAI-ARIA date grid: arrow keys move by day or week, Page Up and Page Down by month, Home and End to the ends of the week. Days outside `min`/`max` are struck through and can't be picked, and each new month slides in from the side it came from. Weeks start on Sunday, as most Indian calendars do; set `weekStartsOn={1}` for Monday. On the web it opens in a Popover and on native in a bottom sheet.
+- **FileUpload** checks every file against one set of rules (`accept` extensions, exact types or `image/*`, `maxSize`, duplicates) and gives a reason for each one it refuses. On the web, files can be dropped or picked with a real file input; after a file is removed, focus moves back to "browse". On native, pass your app's picker (like expo-document-picker) as `onPick`; without it the zone is disabled.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -788,12 +806,12 @@ npm run native       # Expo dev server; open it in Expo Go
 - [ ] Showcase site with a live gallery, and one-command install (shadcn registry, llms.txt)
 - [ ] Hosted Storybook and automated npm releases
 
-### Next 50 components
+### 50 components
 
-Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
+All 50 are done. Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
-- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [x] Slider · [x] NumberStepper · [x] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [x] SlideToConfirm · [ ] FileUpload · [x] CopyField
+- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [x] Slider · [x] NumberStepper · [x] Select · [x] DatePicker · [x] TextArea · [x] PinPad · [x] SlideToConfirm · [x] FileUpload · [x] CopyField
 - **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [x] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [x] Drawer
 - **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [x] Receipt · [x] Sparkline · [x] CardStack
 - **Feedback and overlays:** [x] Tooltip · [x] Popover · [x] Menu · [x] SuccessCheck · [x] ResendTimer
