@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -486,6 +486,34 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **ResendTimer** counts down to a fixed end time and reads the clock on every tick, so it's still right after the phone sleeps or the browser throttles a background tab. It restarts only after `onResend` succeeds; if sending fails, the user can try again straight away. The countdown isn't announced every second.
 - **CopyField** shows the check only after the copy actually succeeds, and announces "UPI ID copied" once. If the browser blocks the clipboard, it selects the value so Ctrl/Cmd+C still works. On React Native, pass your app's clipboard function (like expo-clipboard's `setStringAsync`) as `onCopy`; without it, the value can still be long-pressed and copied.
 
+### Entry
+
+<table>
+<tr>
+<td><img src="docs/images/success-check.png" alt="A green success disc with a white check, above ₹ 486.00 paid to Swiggy" /></td>
+<td><img src="docs/images/pin-pad.png" alt="Dark mode UPI PIN entry: three of six dots filled above a round number keypad with a delete key" /></td>
+</tr>
+<tr>
+<td><img src="docs/images/stepper.png" alt="Number steppers for adults, children and EMI tenure in months, with round minus and plus buttons" /></td>
+<td><img src="docs/images/textarea.png" alt="Dark mode text areas: a note with a 26/120 counter, and one with an error under it" /></td>
+</tr>
+</table>
+
+```tsx
+<SuccessCheck size={88} accessibilityLabel="Payment successful" />
+
+<PinPad label="Enter UPI PIN" length={6} value={pin} onValueChange={setPin} onComplete={verify} error={error} />
+
+<NumberStepper label="EMI tenure" defaultValue={6} min={3} max={24} step={3} format={(months) => `${months} months`} />
+
+<TextArea label="Note for payee" helperText="They see this with the payment" maxLength={120} />
+```
+
+- **SuccessCheck** plays once: the disc springs in (about 19% overshoot, then settles), the check draws itself from start to end, and a ring fades out. On native the check is drawn with two growing lines, so there's no SVG or Lottie dependency. With reduced motion it shows the finished mark straight away.
+- **PinPad** fills a dot with a pop for each digit and shakes the dots on a wrong PIN. Screen readers hear "3 of 6 digits entered", never the digits themselves. On the web, typing digits and Backspace work too.
+- **NumberStepper** rolls the new number in from the direction it moved. On the web it's a spinbutton (arrow keys, Home, End); on native screen-reader users swipe up and down to change it. The buttons disable at the limits.
+- **TextArea** grows one line at a time up to `maxRows`, then scrolls. The counter sits in the corner and turns red at the limit, and screen readers hear it as "42 of 120 characters". It shares TextField's focus halo, error shake and label wiring.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -649,10 +677,10 @@ npm run native       # Expo dev server; open it in Expo Go
 Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
-- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [ ] NumberStepper · [ ] Select · [ ] DatePicker · [ ] TextArea · [ ] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [x] CopyField
+- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [x] NumberStepper · [ ] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [x] CopyField
 - **Navigation:** [x] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [x] StepIndicator · [ ] Drawer
 - **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
-- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [ ] SuccessCheck · [x] ResendTimer
+- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [x] SuccessCheck · [x] ResendTimer
 
 ## License
 

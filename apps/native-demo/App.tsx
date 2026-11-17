@@ -20,19 +20,23 @@ import {
   Dialog,
   ListGroup,
   ListItem,
+  NumberStepper,
   PromoBanner,
   ResendTimer,
   RollingAmount,
   OtpField,
   PhoneField,
+  PinPad,
   SearchField,
   SnackbarProvider,
   StatCard,
   StepIndicator,
+  SuccessCheck,
   Stagger,
   Surface,
   Switch,
   Tabs,
+  TextArea,
   TextField,
   Timeline,
   ThemeProvider,
@@ -138,6 +142,22 @@ function Flows() {
         {/* No clipboard module in this demo, so the value is long-press selectable */}
         <CopyField label="UPI ID" value="shivastu@moksha" />
         <ResendTimer seconds={30} onResend={() => new Promise((resolve) => setTimeout(resolve, 600))} />
+      </View>
+    </Section>
+  );
+}
+
+function Entry() {
+  const [pin, setPin] = useState('');
+  return (
+    <Section title="Entry">
+      <View style={[styles.form, { flex: 1, alignItems: 'stretch' }]}>
+        <View style={{ alignItems: 'center' }}>
+          <SuccessCheck accessibilityLabel="Payment successful" />
+        </View>
+        <NumberStepper label="EMI tenure" defaultValue={6} min={3} max={24} step={3} format={(months) => `${months} months`} />
+        <TextArea label="Note for payee" placeholder="What is this payment for?" maxLength={120} />
+        <PinPad label="Enter UPI PIN" value={pin} onValueChange={setPin} onComplete={() => setPin('')} />
       </View>
     </Section>
   );
@@ -288,6 +308,8 @@ export default function App() {
             <Lists />
 
             <Flows />
+
+            <Entry />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>
