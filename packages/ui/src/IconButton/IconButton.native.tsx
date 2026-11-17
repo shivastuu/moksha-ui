@@ -12,7 +12,7 @@ export function IconButton({ icon, accessibilityLabel, onPress, variant = 'soft'
   const dimension = components.iconButton.sizes[size];
   const look = {
     solid: { backgroundColor: colors.primary, backgroundImage: depth.primaryFill, boxShadow: depth.primaryShadow },
-    soft: { backgroundColor: colors.primarySubtle },
+    soft: { backgroundColor: depth.tint },
     glass: { backgroundColor: BlurView ? colors.glassSurface : colors.surfaceRaised, borderColor: colors.glassBorder },
     ghost: { backgroundColor: 'transparent' },
   }[variant];

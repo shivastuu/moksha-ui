@@ -2,11 +2,11 @@ const textOnBrand = 'max-width:62%;margin:0';
 
 // The art is a drawing, so its sizes are fixed pixels
 export const promoCss = `
-.ds-promo{position:relative;overflow:hidden;isolation:isolate;display:grid;gap:var(--ds-space-xs);justify-items:start;align-content:start;box-sizing:border-box;min-height:var(--ds-promo-min-height);padding:var(--ds-promo-padding);border-radius:var(--ds-promo-radius);background:var(--ds-promo-background);color:var(--ds-color-text-on-primary);font-family:var(--ds-font-sans)}
+.ds-promo{position:relative;overflow:hidden;isolation:isolate;display:grid;gap:var(--ds-space-xs);justify-items:start;align-content:start;box-sizing:border-box;min-height:var(--ds-promo-min-height);padding:var(--ds-promo-padding);border-radius:var(--ds-promo-radius);background:var(--ds-promo-background);color:var(--ds-promo-ink);font-family:var(--ds-font-sans)}
 .ds-promo__eyebrow{font-size:var(--ds-font-size-xs);line-height:var(--ds-line-height-xs);font-weight:var(--ds-font-weight-semibold);letter-spacing:var(--ds-letter-spacing-wide);text-transform:uppercase}
 .ds-promo__title{${textOnBrand};font-size:var(--ds-font-size-xl);line-height:var(--ds-line-height-xl);font-weight:var(--ds-font-weight-semibold)}
 .ds-promo__text{${textOnBrand};font-size:var(--ds-font-size-sm);line-height:var(--ds-line-height-sm)}
-.ds-promo__action{margin-top:var(--ds-space-sm);min-height:var(--ds-button-sm-height);padding:0 var(--ds-button-sm-padding-x);border:0;border-radius:var(--ds-radius-full);background:var(--ds-color-text-on-primary);color:var(--ds-color-primary-pressed);font:inherit;font-size:var(--ds-font-size-sm);font-weight:var(--ds-font-weight-semibold);cursor:pointer}
+.ds-promo__action{margin-top:var(--ds-space-sm);min-height:var(--ds-button-sm-height);padding:0 var(--ds-button-sm-padding-x);border:0;border-radius:var(--ds-radius-full);background:var(--ds-promo-ink);color:var(--ds-promo-action-ink);font:inherit;font-size:var(--ds-font-size-sm);font-weight:var(--ds-font-weight-semibold);cursor:pointer}
 .ds-promo__art{position:absolute;right:0;bottom:0;z-index:-1;pointer-events:none}
 .ds-promo__card{position:relative;display:block;width:150px;height:96px;margin:0 -14px -22px 0;border:var(--ds-border-width-thin) solid var(--ds-promo-art-border);border-radius:var(--ds-radius-lg);background:var(--ds-promo-art-fill);transform:rotate(-12deg);-webkit-backdrop-filter:blur(var(--ds-glass-blur-sm));backdrop-filter:blur(var(--ds-glass-blur-sm))}
 .ds-promo__card::before,.ds-promo__card::after{content:'';position:absolute;left:16px;background:var(--ds-promo-art-detail)}

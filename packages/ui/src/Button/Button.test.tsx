@@ -1,6 +1,8 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Button, ThemeProvider, createTheme, useTheme } from '../index';
+import { contrastRatio, defaultTheme, hexToOklch, type ColorScheme } from '@moksha-ui/tokens';
+import { buttonDepth } from './Button.shared';
 
 afterEach(cleanup);
 
@@ -125,5 +127,25 @@ describe('ThemeProvider (web)', () => {
       </ThemeProvider>
     );
     expect(screen.getByText(`dark ${teal.themes.dark.colors.primary}`)).toBeTruthy();
+  });
+});
+
+describe('button tints', () => {
+  const themes = [defaultTheme, ...['#E11D48', '#F97316', '#FACC15', '#0E7C66', '#06B6D4', '#7C3AED', '#111111', '#F5F5F5'].map((brandColor) => createTheme({ brandColor }))];
+
+  it('keep secondary text at AA on its tint and its hover, in every theme', () => {
+    for (const theme of themes) {
+      for (const scheme of ['light', 'dark'] as ColorScheme[]) {
+        const { colors } = theme.themes[scheme];
+        const { tint, secondaryHover } = buttonDepth(colors);
+        expect(contrastRatio(colors.primary, tint), `tint, ${scheme}`).toBeGreaterThanOrEqual(4.5);
+        expect(contrastRatio(colors.primary, secondaryHover), `hover, ${scheme}`).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
+
+  it('are a quiet wash in dark mode, far less saturated than the old navy step', () => {
+    const { colors } = defaultTheme.themes.dark;
+    expect(hexToOklch(buttonDepth(colors).tint).c).toBeLessThan(hexToOklch(colors.primarySubtle).c / 2);
   });
 });

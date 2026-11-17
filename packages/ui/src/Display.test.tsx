@@ -6,11 +6,11 @@ import { avatarColors, initials } from './Avatar/Avatar.shared';
 
 afterEach(cleanup);
 
-const names = ['Shivastu Shrivastava', 'Asha', 'Ravi Kumar', 'Meera N', 'Zoya Ali', 'Arjun Mehta', 'Kabir', 'Priya Sharma', 'Dev', 'Isha Patel'];
+const names = ['Shivastu Shrivastava', 'Neha', 'Ravi Kumar', 'Meera N', 'Zoya Ali', 'Arjun Mehta', 'Kabir', 'Priya Sharma', 'Dev', 'Isha Patel'];
 
 describe('Avatar (web)', () => {
   it('takes initials from the first and last word', () => {
-    expect(names.slice(0, 3).map(initials)).toEqual(['SS', 'A', 'RK']);
+    expect(names.slice(0, 3).map(initials)).toEqual(['SS', 'N', 'RK']);
     expect(initials('  ')).toBe('');
   });
 
@@ -22,7 +22,7 @@ describe('Avatar (web)', () => {
         expect(contrastRatio(look.ink, stop), `${name} ${stop}`).toBeGreaterThanOrEqual(4.5);
       }
     }
-    expect(avatarColors('Asha', themes.light.colors).background).not.toBe(avatarColors('Ravi', themes.light.colors).background);
+    expect(avatarColors('Neha', themes.light.colors).background).not.toBe(avatarColors('Ravi', themes.light.colors).background);
   });
 
   it('is an image named by the person and status, and falls back to initials when the photo fails', () => {
@@ -37,8 +37,8 @@ describe('Avatar (web)', () => {
 
   it('groups people with "+N", read out once', () => {
     render(<AvatarGroup people={names.slice(0, 6).map((name) => ({ name }))} />);
-    const group = screen.getByRole('group', { name: '6 people: Shivastu Shrivastava, Asha, Ravi Kumar, Meera N, Zoya Ali, Arjun Mehta' });
-    expect(group.textContent).toBe('SSARKMN+2');
+    const group = screen.getByRole('group', { name: '6 people: Shivastu Shrivastava, Neha, Ravi Kumar, Meera N, Zoya Ali, Arjun Mehta' });
+    expect(group.textContent).toBe('SSNRKMN+2');
     expect(screen.queryAllByRole('img')).toHaveLength(0);
   });
 });

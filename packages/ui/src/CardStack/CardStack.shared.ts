@@ -19,8 +19,8 @@ export interface CardStackProps {
   testID?: string;
 }
 
-/** How far each card behind is lifted, shrunk and darkened, per step back */
-export const stackStep = { lift: 16, shrink: 0.05, dim: 0.12 };
+/** How far each card behind is lifted, shrunk and darkened, per step back. A 24px lift keeps each peeking strip a 24px touch target (WCAG 2.5.8) */
+export const stackStep = { lift: 24, shrink: 0.05, dim: 0.12 };
 
 /** Steps behind the front card: the front is 0, the next card 1, and so on, wrapping around */
 export const depthOf = (position: number, front: number, count: number) => (position - front + count) % count;

@@ -161,7 +161,8 @@ export function themeCss(definition: ThemeDefinition, id: string) {
       themes[name].shadows
     )}${vars('button', buttonDepth(themes[name].colors))}${vars('field', fieldColors(themes[name].colors))}${vars('modal', dialogColors(themes[name].colors))}${vars('surface', surfaceColors(themes[name].colors))}${vars('text-tone', textTones(themes[name].colors))}${vars('skeleton', skeletonColors(themes[name].colors))}${Object.entries(solidTones(themes[name].colors)).map(([tone, colors]) => vars(`badge-${tone}`, colors)).join('')}${Object.entries(softTones(themes[name].colors)).map(([tone, colors]) => vars(`tag-${tone}`, colors)).join('')}${vars('chip', chipColors(themes[name].colors))}${vars('progress', progressColors(themes[name].colors))}${vars('control', controlColors(themes[name].colors))}${vars('transaction', transactionColors(themes[name].colors))}${vars('snackbar', snackbarColors(themes[name].colors))}${bannerTones.map((tone) => vars(`banner-${tone}`, bannerColors(tone, themes[name].colors, banner.tint))).join('')}${vars(
       'promo',
-      promoColors(themes[name].colors)
+      // Like a bank card, a promo keeps its light-scheme brand colors in both schemes
+      promoColors(themes.light.colors)
     )}}`;
 
   return `[data-ds-theme="${id}"]{${shared}}${scheme('light')}${scheme('dark')}`;

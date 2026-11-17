@@ -18,10 +18,10 @@ export const buttonCss = `
 /* Hover fades a pressed-color layer in under the label. Swapping the gradient for a color can't animate and flickers */
 .ds-button--primary::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--ds-color-primary-pressed);opacity:0;transition:opacity var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
 .ds-button--primary:not(:disabled):hover::before,.ds-button--primary:not(:disabled):active::before{opacity:1}
-.ds-button--secondary{background:var(--ds-color-primary-subtle);color:var(--ds-color-primary)}
+.ds-button--secondary{background:var(--ds-button-tint);color:var(--ds-color-primary)}
 .ds-button--secondary:not(:disabled):hover,.ds-button--secondary:not(:disabled):active{background:var(--ds-button-secondary-hover)}
 .ds-button--ghost{background:transparent;color:var(--ds-color-primary)}
-.ds-button--ghost:not(:disabled):hover,.ds-button--ghost:not(:disabled):active{background:var(--ds-color-primary-subtle)}
+.ds-button--ghost:not(:disabled):hover,.ds-button--ghost:not(:disabled):active{background:var(--ds-button-tint)}
 ${sizes}
 .ds-spinner{width:1em;height:1em;box-sizing:border-box;border:var(--ds-border-width-thick) solid currentColor;border-right-color:transparent;border-radius:50%;animation:ds-spin .7s linear infinite}
 @keyframes ds-spin{to{transform:rotate(360deg)}}

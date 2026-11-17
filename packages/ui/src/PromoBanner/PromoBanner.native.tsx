@@ -6,10 +6,11 @@ import { promoColors, type PromoBannerProps } from './PromoBanner.shared';
 /** A card for offers and announcements, on the brand gradient */
 export function PromoBanner({ eyebrow, title, description, action, onDismiss, art, testID }: PromoBannerProps) {
   const theme = useTheme();
-  const { colors, components, space, radius, borderWidth, typography } = theme;
+  const { components, space, radius, borderWidth, typography } = theme;
   const { promo, button } = components;
-  const tones = promoColors(colors);
-  const onBrand = { color: colors.textOnPrimary, maxWidth: '62%' as const };
+  // Like a bank card, a promo keeps its light-scheme brand colors in both schemes
+  const tones = promoColors(theme.definition.themes.light.colors);
+  const onBrand = { color: tones.ink, maxWidth: '62%' as const };
 
   // The art is a drawing, so its sizes are fixed pixels
   const card = (
@@ -57,7 +58,7 @@ export function PromoBanner({ eyebrow, title, description, action, onDismiss, ar
           style={[
             textStyleFor(theme, 'caption'),
             fontFor(theme, 'semibold'),
-            { color: colors.textOnPrimary, letterSpacing: typography.letterSpacing.wide, textTransform: 'uppercase' },
+            { color: tones.ink, letterSpacing: typography.letterSpacing.wide, textTransform: 'uppercase' },
           ]}
         >
           {eyebrow}
@@ -77,10 +78,10 @@ export function PromoBanner({ eyebrow, title, description, action, onDismiss, ar
             justifyContent: 'center',
             paddingHorizontal: button.sizes.sm.paddingX,
             borderRadius: radius.full,
-            backgroundColor: colors.textOnPrimary,
+            backgroundColor: tones.ink,
           }}
         >
-          <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: colors.primaryPressed }]}>{action.label}</Text>
+          <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: tones.actionInk }]}>{action.label}</Text>
         </Pressable>
       ) : null}
       {onDismiss ? (
@@ -90,7 +91,7 @@ export function PromoBanner({ eyebrow, title, description, action, onDismiss, ar
           onPress={onDismiss}
           style={{ position: 'absolute', top: space.sm, right: space.sm, width: space['2xl'], height: space['2xl'], alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={{ color: colors.textOnPrimary, fontSize: typography.fontSize.md }}>✕</Text>
+          <Text style={{ color: tones.ink, fontSize: typography.fontSize.md }}>✕</Text>
         </Pressable>
       ) : null}
     </View>

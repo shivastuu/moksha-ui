@@ -17,8 +17,8 @@ describe('display (native)', () => {
   });
 
   it('AvatarGroup reads out the names once and shows +N', async () => {
-    await render(<AvatarGroup people={[{ name: 'Asha Rao' }, { name: 'Ravi' }, { name: 'Meera' }]} max={2} />);
-    expect(screen.getByLabelText('3 people: Asha Rao, Ravi, Meera')).toBeTruthy();
+    await render(<AvatarGroup people={[{ name: 'Neha Gupta' }, { name: 'Ravi' }, { name: 'Meera' }]} max={2} />);
+    expect(screen.getByLabelText('3 people: Neha Gupta, Ravi, Meera')).toBeTruthy();
     expect(screen.getByText('+1')).toBeTruthy();
   });
 

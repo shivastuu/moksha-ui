@@ -31,7 +31,7 @@ export const Presets: Story = {
           {presets.map((preset) => (
             <Motion key={preset} preset={preset} duration="slow">
               <Surface variant="raised" padding="lg" radius="lg" shadow="sm">
-                <code>{preset}</code>
+                <code style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 13 }}>{preset}</code>
               </Surface>
             </Motion>
           ))}

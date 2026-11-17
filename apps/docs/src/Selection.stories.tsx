@@ -40,7 +40,7 @@ export const CardSettings: Story = {
               ]}
             />
             <Checkbox label="Select all payees" checked={all} onCheckedChange={(next) => setPayees(payees.map(() => next))} />
-            {['Shivastu Shrivastava', 'Electricity board', 'Asha Rao'].map((name, index) => (
+            {['Shivastu Shrivastava', 'Electricity board', 'Neha Gupta'].map((name, index) => (
               <Checkbox
                 key={name}
                 label={name}

@@ -69,7 +69,7 @@ describe('CardStack', () => {
 
   it('counts depth from the front card, wrapping around, and steps each card back', () => {
     expect([0, 1, 2].map((position) => depthOf(position, 1, 3))).toEqual([2, 0, 1]);
-    expect(stackLook(2)).toEqual({ y: -32, scale: 0.9, brightness: 0.76 });
+    expect(stackLook(2)).toEqual({ y: -48, scale: 0.9, brightness: 0.76 });
   });
 
   it('shows the front card, offers the rest as buttons, and announces a change (web)', () => {
@@ -83,6 +83,6 @@ describe('CardStack', () => {
     expect(onIndexChange).toHaveBeenCalledWith(2);
     expect(screen.getByRole('status').textContent).toBe('Showing Travel •• 7712');
     expect(items[2]!.style.transform).toBe('translateY(0px) scale(1)');
-    expect(items[0]!.style.transform).toBe('translateY(-16px) scale(0.95)');
+    expect(items[0]!.style.transform).toBe('translateY(-24px) scale(0.95)');
   });
 });

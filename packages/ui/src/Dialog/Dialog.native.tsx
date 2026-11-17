@@ -94,6 +94,7 @@ export function Dialog({
     <Modal visible={open} transparent animationType="fade" onRequestClose={close} statusBarTranslucent>
       <View style={[styles.fill, { justifyContent: sheet ? 'flex-end' : 'center', padding: sheet ? 0 : space.lg }]}>
         <Pressable
+          accessibilityRole="button"
           accessibilityLabel="Close"
           disabled={!dismissible}
           onPress={close}
@@ -102,7 +103,9 @@ export function Dialog({
         <Motion preset={sheet ? 'slideUp' : 'scaleIn'} spring="smooth">
           <View
             testID={testID}
+            // VoiceOver ignores what's outside a modal view, so its escape gesture (two-finger scrub) closes it
             accessibilityViewIsModal
+            onAccessibilityEscape={close}
             style={{
               alignSelf: 'center',
               width: '100%',

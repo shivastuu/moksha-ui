@@ -118,7 +118,7 @@ const theme = createTheme({
 <Button fullWidth disabled={!valid}>Continue</Button>
 ```
 
-Buttons are pills. The primary one is lit from the top with a thin highlight and a soft glow in the brand color; secondary is a soft tint. Hover fades in a pressed layer instead of swapping the gradient, so nothing flickers, and every button shrinks slightly on press. A loading button keeps its color, shows a spinner and is announced as busy; only a disabled button fades.
+Buttons are pills. The primary one is lit from the top with a thin highlight and a soft glow in the brand color; secondary is a soft tint: the pale brand shade in light mode, and a quiet brand wash over the page in dark mode, like iOS tinted buttons. Its text stays at WCAG AA on the tint and on hover, for every brand color. Hover fades in a pressed layer instead of swapping the gradient, so nothing flickers, and every button shrinks slightly on press. A loading button keeps its color, shows a spinner and is announced as busy; only a disabled button fades.
 
 `IconButton` is the round version for a single icon, in `solid`, `soft`, `glass` and `ghost`. It needs an `accessibilityLabel`, since an icon alone has no name:
 
@@ -627,7 +627,7 @@ const anchor = useRef(null);
 ```
 
 - **Select** is the browser's own `<select>` styled like a field, so phones show their native picker and forms and the keyboard just work. A placeholder can't be chosen again. On native it opens a bottom sheet of options, using Dialog's sheet.
-- **CardStack** stacks cards like a wallet: each card behind is lifted 16px, shrunk 5% and darkened 12%, inside its own rounded corners. Tapping a card's visible edge springs it to the front. Cards behind are buttons ("Show Moksha Metal •• 2290") for keyboard and screen-reader users, and the new front card is announced.
+- **CardStack** stacks cards like a wallet: each card behind is lifted 24px, shrunk 5% and darkened 12%, inside its own rounded corners. Tapping a card's visible edge springs it to the front. Each visible edge is a full 24px tap target (WCAG 2.5.8). Cards behind are buttons ("Show Moksha Metal •• 2290") for keyboard and screen-reader users, and the new front card is announced.
 - **Sidebar** groups navigation under section titles, with a raised pill that springs to the current page like Tabs and TabBar. Counts are part of the name ("Requests, 3 new"), and icons are drawn in the color they're given, the same as in TabBar.
 
 ### Pickers

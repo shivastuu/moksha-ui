@@ -126,7 +126,7 @@ export const TagsAndChips: Story = {
   },
 };
 
-const team = ['Shivastu Shrivastava', 'Asha Rao', 'Ravi Kumar', 'Meera Nair', 'Zoya Ali', 'Arjun Mehta', 'Kabir Singh'];
+const team = ['Shivastu Shrivastava', 'Neha Gupta', 'Ravi Kumar', 'Meera Nair', 'Zoya Ali', 'Arjun Mehta', 'Kabir Singh'];
 
 export const PeopleAndProgress: Story = {
   render: function PeopleStory() {
@@ -135,7 +135,7 @@ export const PeopleAndProgress: Story = {
       <Stack gap="xl" align="start">
         <Stack direction="row" gap="lg" align="center">
           <Avatar name="Shivastu Shrivastava" size="xl" status="online" />
-          <Avatar name="Asha Rao" size="lg" />
+          <Avatar name="Neha Gupta" size="lg" />
           <Avatar name="Ravi Kumar" />
           <Avatar name="Meera Nair" size="sm" status="busy" />
           <AvatarGroup people={team.map((name) => ({ name }))} />

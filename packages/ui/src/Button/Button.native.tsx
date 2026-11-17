@@ -12,9 +12,9 @@ function variantStyle(variant: ButtonVariant, colors: SemanticColors, pressed: b
       : { backgroundColor: colors.primary, backgroundImage: depth.primaryFill, boxShadow: depth.primaryShadow };
   }
   if (variant === 'secondary') {
-    return { backgroundColor: pressed ? depth.secondaryHover : colors.primarySubtle };
+    return { backgroundColor: pressed ? depth.secondaryHover : depth.tint };
   }
-  return { backgroundColor: pressed ? colors.primarySubtle : 'transparent' };
+  return { backgroundColor: pressed ? depth.tint : 'transparent' };
 }
 
 export function Button({

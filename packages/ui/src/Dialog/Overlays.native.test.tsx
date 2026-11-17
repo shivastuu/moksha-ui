@@ -69,6 +69,16 @@ describe('Dialog (native)', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it('closes from the VoiceOver escape gesture, only when dismissible', async () => {
+    const onClose = jest.fn();
+    const { rerender } = await render(<Dialog open title="Block card?" onClose={onClose} dismissible={false} testID="panel" />);
+    await fireEvent(screen.getByTestId('panel'), 'accessibilityEscape');
+    expect(onClose).not.toHaveBeenCalled();
+    await rerender(<Dialog open title="Block card?" onClose={onClose} testID="panel" />);
+    await fireEvent(screen.getByTestId('panel'), 'accessibilityEscape');
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it('becomes a bottom sheet with a handle', async () => {
     await render(<Dialog open presentation="sheet" title="Choose account" onClose={jest.fn()} testID="panel" />);
     expect(screen.getByTestId('panel')).toHaveStyle({

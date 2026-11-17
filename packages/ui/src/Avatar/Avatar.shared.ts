@@ -23,7 +23,7 @@ export interface AvatarGroupProps {
   testID?: string;
 }
 
-/** "Shivastu Shrivastava" → "SS", "Asha" → "A" */
+/** "Shivastu Shrivastava" → "SS", "Neha" → "N" */
 export function initials(name: string) {
   const words = name.trim().split(/\s+/).filter(Boolean);
   const first = words[0]?.[0] ?? '';
