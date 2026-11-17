@@ -40,6 +40,10 @@ import { successCss } from '../SuccessCheck/SuccessCheck.css';
 import { pinPadCss } from '../PinPad/PinPad.css';
 import { stepperCss } from '../NumberStepper/NumberStepper.css';
 import { textAreaCss } from '../TextArea/TextArea.css';
+import { paginationCss } from '../Pagination/Pagination.css';
+import { breadcrumbsCss } from '../Breadcrumbs/Breadcrumbs.css';
+import { appBarCss } from '../AppBar/AppBar.css';
+import { tabBarCss } from '../TabBar/TabBar.css';
 import { controlColors } from '../utils/controls';
 import { softTones, solidTones, textTones } from '../utils/tones';
 import { snackbarColors } from '../Snackbar/Snackbar.shared';
@@ -155,4 +159,4 @@ export function themeCss(definition: ThemeDefinition, id: string) {
 
 /** Component styles. They only read CSS variables, so they are the same for every theme */
 export const componentCss =
-  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss + detailRowCss + statCardCss + emptyStateCss + transactionCss + stepsCss + timelineCss + resendCss + copyFieldCss + successCss + pinPadCss + stepperCss + textAreaCss;
+  motionCss + buttonCss + surfaceCss + fieldCss + otpCss + bannerCss + promoCss + dialogCss + snackbarCss + bankCardCss + rollingAmountCss + iconButtonCss + textCss + dividerCss + spinnerCss + skeletonCss + badgeCss + tagCss + chipCss + avatarCss + progressBarCss + progressRingCss + linkCss + switchCss + checkboxCss + radioGroupCss + segmentedCss + tabsCss + listCss + accordionCss + detailRowCss + statCardCss + emptyStateCss + transactionCss + stepsCss + timelineCss + resendCss + copyFieldCss + successCss + pinPadCss + stepperCss + textAreaCss + paginationCss + breadcrumbsCss + appBarCss + tabBarCss;

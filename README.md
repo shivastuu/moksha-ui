@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -514,6 +514,35 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **NumberStepper** rolls the new number in from the direction it moved. On the web it's a spinbutton (arrow keys, Home, End); on native screen-reader users swipe up and down to change it. The buttons disable at the limits.
 - **TextArea** grows one line at a time up to `maxRows`, then scrolls. The counter sits in the corner and turns red at the limit, and screen readers hear it as "42 of 120 characters". It shares TextField's focus halo, error shake and label wiring.
 
+### Navigation
+
+<table>
+<tr>
+<td><img src="docs/images/navigation.png" alt="An app bar with a back button, a centered Statements title over Savings •• 4821 and a download action; breadcrumbs folded to Home, …, Statements, October 2026; and pagination with page 4 as a glowing pill" /></td>
+<td><img src="docs/images/tab-bar.png" alt="A floating glass tab bar over a blue bank card: Home in a raised pill, Cards, Scan & pay with a red 2 badge, and Profile" /></td>
+</tr>
+</table>
+
+```tsx
+<AppBar title="Statements" subtitle="Savings •• 4821" onBack={goBack} actions={<IconButton icon={<DownloadIcon />} accessibilityLabel="Download all" variant="ghost" />} />
+
+<Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Accounts', href: '/accounts' }, { label: 'October 2026' }]} />
+
+<Pagination page={page} onPageChange={setPage} pageCount={12} accessibilityLabel="Statement pages" />
+
+<TabBar
+  items={[
+    { value: 'home', label: 'Home', icon: (color) => <HomeIcon color={color} /> },
+    { value: 'pay', label: 'Scan & pay', icon: (color) => <ScanIcon color={color} />, badge: 2 },
+  ]}
+/>
+```
+
+- **AppBar** keeps the title centered whether or not there's a back button. On the web the title is a real heading.
+- **Breadcrumbs** fold a long middle behind "…". Pressing it shows the full path and moves focus to the first item it revealed, so keyboard users don't lose their place. The last item is marked as the current page.
+- **Pagination** always shows 7 slots once there are more than 7 pages, so the buttons don't shift as you page. The current page has the primary Button's top-lit fill and glow, and pops in.
+- **TabBar** floats on frosted glass (the same blur as Surface). A raised pill springs to the active section and its icon lifts slightly. Icons are drawn in whatever color you're given, because React Native has no `currentColor`. A badge reads as part of the tab's name: "Scan & pay, 2 new".
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -678,7 +707,7 @@ Every one ships for web and React Native, uses only theme tokens, and is tested 
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
 - **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [ ] Slider · [x] NumberStepper · [ ] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [ ] SlideToConfirm · [ ] FileUpload · [x] CopyField
-- **Navigation:** [x] Tabs · [ ] AppBar · [ ] TabBar · [ ] Sidebar · [ ] Breadcrumbs · [ ] Pagination · [x] StepIndicator · [ ] Drawer
+- **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [ ] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [ ] Drawer
 - **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [ ] Receipt · [ ] Sparkline · [ ] CardStack
 - **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [x] SuccessCheck · [x] ResendTimer
 

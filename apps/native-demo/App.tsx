@@ -8,6 +8,7 @@ import { BlurView } from 'expo-blur';
 import { useFonts } from 'expo-font';
 import {
   Accordion,
+  AppBar,
   AccountNumberField,
   AutoForm,
   AmountField,
@@ -15,6 +16,7 @@ import {
   CopyField,
   BankCard,
   BottomSheet,
+  Breadcrumbs,
   Button,
   DetailRow,
   Dialog,
@@ -25,6 +27,7 @@ import {
   ResendTimer,
   RollingAmount,
   OtpField,
+  Pagination,
   PhoneField,
   PinPad,
   SearchField,
@@ -32,6 +35,7 @@ import {
   StatCard,
   StepIndicator,
   SuccessCheck,
+  TabBar,
   Stagger,
   Surface,
   Switch,
@@ -158,6 +162,29 @@ function Entry() {
         <NumberStepper label="EMI tenure" defaultValue={6} min={3} max={24} step={3} format={(months) => `${months} months`} />
         <TextArea label="Note for payee" placeholder="What is this payment for?" maxLength={120} />
         <PinPad label="Enter UPI PIN" value={pin} onValueChange={setPin} onComplete={() => setPin('')} />
+      </View>
+    </Section>
+  );
+}
+
+// Demo icons drawn with plain views; an app would pass its own icon set
+const shape = (round: number) => (color: string) => <View style={{ width: 20, height: 20, borderRadius: round, borderWidth: 2, borderColor: color }} />;
+
+function Navigation() {
+  return (
+    <Section title="Navigation">
+      <View style={[styles.form, { flex: 1 }]}>
+        <AppBar title="Statements" subtitle="Savings •• 4821" onBack={tap} />
+        <Breadcrumbs items={[{ label: 'Home', onPress: tap }, { label: 'Accounts', onPress: tap }, { label: 'Savings', onPress: tap }, { label: 'Statements', onPress: tap }, { label: 'October 2026' }]} />
+        <Pagination pageCount={12} defaultPage={4} />
+        <TabBar
+          items={[
+            { value: 'home', label: 'Home', icon: shape(5) },
+            { value: 'cards', label: 'Cards', icon: shape(3) },
+            { value: 'pay', label: 'Pay', icon: shape(10), badge: 2 },
+            { value: 'profile', label: 'Profile', icon: shape(10) },
+          ]}
+        />
       </View>
     </Section>
   );
@@ -310,6 +337,8 @@ export default function App() {
             <Flows />
 
             <Entry />
+
+            <Navigation />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>

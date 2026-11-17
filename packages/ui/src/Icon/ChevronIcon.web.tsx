@@ -1,5 +1,7 @@
-/** A thin chevron in the text color, pointing right (a row that opens something) or down (a section that expands) */
-export function ChevronIcon({ direction = 'right', className }: { direction?: 'right' | 'down'; className?: string }) {
+const paths = { right: 'm9 6 6 6-6 6', down: 'm6 9 6 6 6-6', left: 'm15 6-6 6 6 6' };
+
+/** A thin chevron in the text color: right (a row that opens something), down (a section that expands) or left (back) */
+export function ChevronIcon({ direction = 'right', className }: { direction?: keyof typeof paths; className?: string }) {
   return (
     <svg
       className={className}
@@ -13,7 +15,7 @@ export function ChevronIcon({ direction = 'right', className }: { direction?: 'r
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path d={direction === 'right' ? 'm9 6 6 6-6 6' : 'm6 9 6 6 6-6'} />
+      <path d={paths[direction]} />
     </svg>
   );
 }
