@@ -21,6 +21,14 @@ html:has(.ds-dialog[open]){overflow:hidden}
 .ds-dialog__content{font-size:var(--ds-font-size-md);line-height:var(--ds-line-height-md);color:var(--ds-color-text-muted)}
 .ds-dialog__actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--ds-space-sm);margin-top:var(--ds-space-sm)}
 ${sheet('.ds-dialog--sheet')}
+.ds-dialog--drawer{width:min(400px,calc(100% - var(--ds-space-3xl)));max-width:none;height:100%;max-height:none;margin:0 0 0 auto;border-radius:var(--ds-modal-radius) 0 0 var(--ds-modal-radius)}
+.ds-dialog--drawer-left{margin:0 auto 0 0;border-radius:0 var(--ds-modal-radius) var(--ds-modal-radius) 0}
+.ds-dialog--drawer[open]{animation-name:ds-drawer-in}
+.ds-dialog--drawer-left[open]{animation-name:ds-drawer-in-left}
+.ds-dialog--drawer .ds-dialog__panel{display:flex;flex-direction:column;min-height:100%;box-sizing:border-box;padding-bottom:calc(var(--ds-modal-padding) + env(safe-area-inset-bottom, 0px))}
+.ds-dialog--drawer .ds-dialog__actions{margin-top:auto}
+@keyframes ds-drawer-in{from{transform:translateX(100%)}}
+@keyframes ds-drawer-in-left{from{transform:translateX(-100%)}}
 @media (max-width:${foundations.breakpoints.sm - 0.02}px){${sheet('.ds-dialog--auto')}
 .ds-dialog--auto .ds-dialog__actions>*{flex:1}}
 @media (prefers-reduced-motion:reduce){.ds-dialog[open]{animation-name:ds-fade}}

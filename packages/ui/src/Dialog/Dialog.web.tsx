@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef } from 'react';
-import type { BottomSheetProps, DialogProps } from './Dialog.shared';
+import type { BottomSheetProps, DialogProps, DrawerProps } from './Dialog.shared';
 
 /**
  * A modal dialog on the native `<dialog>` element, which traps focus, closes on Escape,
@@ -14,6 +14,7 @@ export function Dialog({
   children,
   actions,
   presentation = 'auto',
+  side = 'right',
   dismissible = true,
   testID,
 }: DialogProps) {
@@ -32,7 +33,7 @@ export function Dialog({
   return (
     <dialog
       ref={ref}
-      className={`ds-dialog ds-dialog--${presentation}`}
+      className={`ds-dialog ds-dialog--${presentation}${presentation === 'drawer' ? ` ds-dialog--drawer-${side}` : ''}`}
       aria-labelledby={titleId}
       onCancel={(event) => {
         event.preventDefault();
@@ -66,4 +67,9 @@ export function Dialog({
 /** A panel that slides up from the bottom of the screen */
 export function BottomSheet(props: BottomSheetProps) {
   return <Dialog {...props} presentation="sheet" />;
+}
+
+/** A full-height panel that slides in from the side, for filters, details or navigation */
+export function Drawer(props: DrawerProps) {
+  return <Dialog {...props} presentation="drawer" />;
 }

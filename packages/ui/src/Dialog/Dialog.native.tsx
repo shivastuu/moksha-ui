@@ -1,8 +1,27 @@
-import { Modal, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { Animated, Modal, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Motion } from '../motion/Motion.native';
+import { useReducedMotion } from '../motion/useReducedMotion.native';
 import { useTheme } from '../theme/context';
 import { textStyleFor } from '../theme/textStyle';
-import { dialogColors, type BottomSheetProps, type DialogProps } from './Dialog.shared';
+import { dialogColors, type BottomSheetProps, type DialogProps, type DrawerProps } from './Dialog.shared';
+
+/** Slides the drawer in from its edge on the smooth spring */
+function SlideIn({ from, children }: { from: number; children: ReactNode }) {
+  const { motion } = useTheme();
+  const reduced = useReducedMotion();
+  const offset = useRef(new Animated.Value(from)).current;
+  useEffect(() => {
+    if (reduced !== false) {
+      offset.setValue(0);
+      return;
+    }
+    const spring = Animated.spring(offset, { toValue: 0, ...motion.spring.smooth, useNativeDriver: true });
+    spring.start();
+    return () => spring.stop();
+  }, [reduced, offset, motion]);
+  return <Animated.View style={{ flex: 1, transform: [{ translateX: offset }] }}>{children}</Animated.View>;
+}
 
 /** A modal dialog. Android back and a tap outside close it, unless `dismissible` is false */
 export function Dialog({
@@ -12,6 +31,7 @@ export function Dialog({
   children,
   actions,
   presentation = 'auto',
+  side = 'right',
   dismissible = true,
   testID,
 }: DialogProps) {
@@ -20,11 +40,55 @@ export function Dialog({
   const { modal } = components;
   const { width } = useWindowDimensions();
   const sheet = presentation === 'sheet' || (presentation === 'auto' && width < breakpoints.sm);
+  const drawer = presentation === 'drawer';
+  const drawerWidth = Math.min(400, width - space['3xl']);
   const close = () => {
     if (dismissible) {
       onClose();
     }
   };
+
+  const header = (
+    <Text accessibilityRole="header" style={[textStyleFor(theme, 'title'), { color: colors.text }]}>
+      {title}
+    </Text>
+  );
+  const body = typeof children === 'string' ? <Text style={[textStyleFor(theme, 'body'), { color: colors.textMuted }]}>{children}</Text> : children;
+
+  if (drawer) {
+    return (
+      <Modal visible={open} transparent animationType="fade" onRequestClose={close} statusBarTranslucent>
+        <View style={[styles.fill, { flexDirection: side === 'right' ? 'row-reverse' : 'row' }]}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Close" disabled={!dismissible} onPress={close} style={[StyleSheet.absoluteFill, { backgroundColor: colors.overlay }]} />
+          <View style={{ width: drawerWidth }}>
+            <SlideIn from={side === 'right' ? drawerWidth : -drawerWidth}>
+              <View
+                testID={testID}
+                accessibilityViewIsModal
+                onAccessibilityEscape={close}
+                style={{
+                  flex: 1,
+                  gap: space.md,
+                  padding: modal.padding,
+                  // ponytail: fixed room for the status bar and home indicator; read safe-area insets for exact spacing
+                  paddingTop: modal.padding + space['2xl'],
+                  paddingBottom: modal.padding + space.lg,
+                  [side === 'right' ? 'borderTopLeftRadius' : 'borderTopRightRadius']: modal.radius,
+                  [side === 'right' ? 'borderBottomLeftRadius' : 'borderBottomRightRadius']: modal.radius,
+                  backgroundColor: colors.surfaceRaised,
+                  boxShadow: `${shadows.lg}, 0px 0px 0px 1px ${dialogColors(colors).edge}`,
+                }}
+              >
+                {header}
+                {body}
+                {actions !== undefined ? <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end', gap: space.sm, marginTop: 'auto' }}>{actions}</View> : null}
+              </View>
+            </SlideIn>
+          </View>
+        </View>
+      </Modal>
+    );
+  }
 
   return (
     <Modal visible={open} transparent animationType="fade" onRequestClose={close} statusBarTranslucent>
@@ -66,14 +130,8 @@ export function Dialog({
                 }}
               />
             ) : null}
-            <Text accessibilityRole="header" style={[textStyleFor(theme, 'title'), { color: colors.text }]}>
-              {title}
-            </Text>
-            {typeof children === 'string' ? (
-              <Text style={[textStyleFor(theme, 'body'), { color: colors.textMuted }]}>{children}</Text>
-            ) : (
-              children
-            )}
+            {header}
+            {body}
             {actions !== undefined ? (
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end', gap: space.sm, marginTop: space.sm }}>
                 {actions}
@@ -89,6 +147,11 @@ export function Dialog({
 /** A panel that slides up from the bottom of the screen */
 export function BottomSheet(props: BottomSheetProps) {
   return <Dialog {...props} presentation="sheet" />;
+}
+
+/** A full-height panel that slides in from the side, for filters, details or navigation */
+export function Drawer(props: DrawerProps) {
+  return <Dialog {...props} presentation="drawer" />;
 }
 
 const styles = StyleSheet.create({ fill: { flex: 1 } });

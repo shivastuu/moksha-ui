@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Floating](#floating) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -571,6 +571,41 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **Sparkline** uses the same smoothing as d3's `curveMonotoneX`, so the curve never shows a high or low that isn't in the data (tests check every segment). It draws itself in, with a soft fill underneath and a dot on the latest value. On native the same curve is drawn from short line pieces, with no SVG dependency.
 - **Receipt** looks like a torn ticket: a status that's always spoken in words, the amount rolling in, a dashed tear line with notches, and the details below. The notches are filled with the page background (`--ds-receipt-notch` on the web), so place it on the page background.
 
+### Floating
+
+<table>
+<tr>
+<td><img src="docs/images/menu.png" alt="A card actions menu opened from a round more button: Freeze card, Set limits, a disabled View PIN, and Block card in red" /></td>
+<td><img src="docs/images/popover.png" alt="A Fee details popover under its button: No fee on UPI payments, a note about card markups and ATM withdrawals, and a Got it button" /></td>
+</tr>
+<tr>
+<td><img src="docs/images/tooltip.png" alt="A dark Copy card number tooltip above a copy icon button" /></td>
+<td><img src="docs/images/drawer.png" alt="A Filters drawer slid in from the right over a blurred page, with category chips and Clear and Show results buttons at the bottom" /></td>
+</tr>
+</table>
+
+```tsx
+const anchor = useRef(null);
+
+<span ref={anchor}>
+  <IconButton icon={<MoreIcon />} accessibilityLabel="Card actions" onPress={() => setOpen(!open)} />
+</span>
+<Menu anchor={anchor} open={open} onClose={() => setOpen(false)} accessibilityLabel="Card actions" items={[{ label: 'Freeze card', onSelect: freeze }, { label: 'Block card', tone: 'danger', onSelect: block }]} />
+
+<Popover anchor={feeAnchor} open={fees} onClose={closeFees} accessibilityLabel="Fee details">…</Popover>
+
+<Tooltip label="Copy card number">
+  <IconButton icon={<CopyIcon />} accessibilityLabel="Copy card number" onPress={copy} />
+</Tooltip>
+
+<Drawer open={filters} onClose={closeFilters} title="Filters" side="right" actions={<Button onPress={apply}>Show results</Button>}>…</Drawer>
+```
+
+- **Popover** and **Menu** open in the browser's top layer, so a parent with `overflow: hidden` can't clip them, and they follow the trigger as you scroll. One placement rule (tested on its own) is shared with native: they open on the preferred side if there's room, otherwise flip, and always stay on screen. Pressing the trigger toggles them instead of closing and reopening. On native they open in a transparent Modal measured against the trigger.
+- **Menu** follows the WAI-ARIA menu pattern: focus starts on the first item, the arrow keys, Home and End move and skip disabled items, Escape closes and returns focus to the trigger, and choosing an item does the same. Destructive items are shown in red.
+- **Tooltip** appears after a short hover, or straight away on keyboard focus. It's visual only: screen readers skip it, so its text must also be the control's name. On native a long press shows it, and the button's normal press still works.
+- **Drawer** is a side panel built on the same `<dialog>` as Dialog, so it gets the same focus trap, Escape to close, blurred backdrop and focus return. It springs in from the `side` you choose. On iOS, VoiceOver's escape gesture closes popovers, menus and drawers.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -735,9 +770,9 @@ Every one ships for web and React Native, uses only theme tokens, and is tested 
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
 - **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [x] Slider · [x] NumberStepper · [ ] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [x] SlideToConfirm · [ ] FileUpload · [x] CopyField
-- **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [ ] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [ ] Drawer
+- **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [ ] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [x] Drawer
 - **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [x] Receipt · [x] Sparkline · [ ] CardStack
-- **Feedback and overlays:** [ ] Tooltip · [ ] Popover · [ ] Menu · [x] SuccessCheck · [x] ResendTimer
+- **Feedback and overlays:** [x] Tooltip · [x] Popover · [x] Menu · [x] SuccessCheck · [x] ResendTimer
 
 ## License
 

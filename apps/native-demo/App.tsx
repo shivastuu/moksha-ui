@@ -1,6 +1,6 @@
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, useColorScheme, type HostInstance } from 'react-native';
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
@@ -20,8 +20,10 @@ import {
   Button,
   DetailRow,
   Dialog,
+  Drawer,
   ListGroup,
   ListItem,
+  Menu,
   NumberStepper,
   PromoBanner,
   Receipt,
@@ -45,6 +47,7 @@ import {
   Switch,
   Tabs,
   TextArea,
+  Tooltip,
   TextField,
   Timeline,
   ThemeProvider,
@@ -208,6 +211,40 @@ function Money() {
   );
 }
 
+function Floating() {
+  const anchor = useRef<HostInstance>(null);
+  const [menu, setMenu] = useState(false);
+  const [drawer, setDrawer] = useState(false);
+  return (
+    <Section title="Floating">
+      <View ref={anchor}>
+        <Tooltip label="Card actions">
+          <Button variant="secondary" onPress={() => setMenu(true)}>
+            Card actions
+          </Button>
+        </Tooltip>
+      </View>
+      <Menu
+        anchor={anchor}
+        open={menu}
+        onClose={() => setMenu(false)}
+        accessibilityLabel="Card actions"
+        items={[
+          { label: 'Freeze card', onSelect: tap },
+          { label: 'Set limits', onSelect: tap },
+          { label: 'Block card', tone: 'danger', onSelect: tap },
+        ]}
+      />
+      <Button variant="secondary" onPress={() => setDrawer(true)}>
+        Filters
+      </Button>
+      <Drawer open={drawer} onClose={() => setDrawer(false)} title="Filters" actions={<Button onPress={() => setDrawer(false)}>Show results</Button>}>
+        Pick categories and a date range.
+      </Drawer>
+    </Section>
+  );
+}
+
 function Overlays() {
   const snackbar = useSnackbar();
   const [dialog, setDialog] = useState(false);
@@ -359,6 +396,8 @@ export default function App() {
             <Navigation />
 
             <Money />
+
+            <Floating />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>
