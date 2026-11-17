@@ -31,7 +31,7 @@ The same component API and design tokens, with native rendering on each platform
 
 - [Quick start](#quick-start)
 - [Theme builder](#theme-builder)
-- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Floating](#floating) · [Motion](#motion)
+- [Components](#components): [Buttons](#buttons) · [Inputs](#inputs) · [AutoForm](#autoform) · [Surface and glass](#surface-and-glass) · [Overlays](#overlays) · [Bank card](#bank-card) · [Rolling amount](#rolling-amount) · [Primitives](#primitives) · [Lists and tabs](#lists-and-tabs) · [Data display](#data-display) · [Flows](#flows) · [Entry](#entry) · [Navigation](#navigation) · [Money](#money) · [Floating](#floating) · [App shell](#app-shell) · [Motion](#motion)
 - [Design tokens](#design-tokens)
 - [How it works](#how-it-works)
 - [Accessibility](#accessibility)
@@ -606,6 +606,30 @@ const anchor = useRef(null);
 - **Tooltip** appears after a short hover, or straight away on keyboard focus. It's visual only: screen readers skip it, so its text must also be the control's name. On native a long press shows it, and the button's normal press still works.
 - **Drawer** is a side panel built on the same `<dialog>` as Dialog, so it gets the same focus trap, Escape to close, blurred backdrop and focus return. It springs in from the `side` you choose. On iOS, VoiceOver's escape gesture closes popovers, menus and drawers.
 
+### App shell
+
+<table>
+<tr>
+<td><img src="docs/images/card-stack.png" alt="A wallet card stack: a silver Moksha Metal card in front, with a dark Travel card and a blue Moksha card peeking out above it, dimmed" /></td>
+<td><img src="docs/images/select.png" alt="Dark mode selects: Bank with a Choose a bank placeholder and a hint, Account type set to Savings, and State with an error" /></td>
+</tr>
+<tr>
+<td colspan="2"><img src="docs/images/sidebar.png" alt="An app sidebar: Moksha at the top, Home and Activity, a Money section with Accounts, Cards and Requests (raised pill, count 3), a Settings section with Security, and the signed-in user at the bottom" /></td>
+</tr>
+</table>
+
+```tsx
+<Select label="Bank" placeholder="Choose a bank" options={banks} value={bank} onValueChange={setBank} />
+
+<CardStack cards={[{ key: 'metal', label: 'Moksha Metal •• 2290', card: <BankCard finish="metal" … /> }, …]} />
+
+<Sidebar value={page} onValueChange={setPage} sections={[{ title: 'Money', items: [{ value: 'requests', label: 'Requests', count: 3, icon: (color) => <ArrowIcon color={color} /> }] }]} />
+```
+
+- **Select** is the browser's own `<select>` styled like a field, so phones show their native picker and forms and the keyboard just work. A placeholder can't be chosen again. On native it opens a bottom sheet of options, using Dialog's sheet.
+- **CardStack** stacks cards like a wallet: each card behind is lifted 16px, shrunk 5% and darkened 12%, inside its own rounded corners. Tapping a card's visible edge springs it to the front. Cards behind are buttons ("Show Moksha Metal •• 2290") for keyboard and screen-reader users, and the new front card is announced.
+- **Sidebar** groups navigation under section titles, with a raised pill that springs to the current page like Tabs and TabBar. Counts are part of the name ("Requests, 3 new"), and icons are drawn in the color they're given, the same as in TabBar.
+
 ### Motion
 
 Motion is built in. Every component already moves: buttons press down, fields shake when an error appears, OTP digits pop in. To animate your own content, use `Motion` and `Stagger`:
@@ -769,9 +793,9 @@ npm run native       # Expo dev server; open it in Expo Go
 Every one ships for web and React Native, uses only theme tokens, and is tested on both platforms.
 
 - **Primitives:** [x] Text · [x] Stack · [x] Divider · [x] Spinner · [x] Skeleton · [x] Badge · [x] Tag · [x] Chip · [x] Avatar · [x] AvatarGroup · [x] ProgressBar · [x] ProgressRing · [x] Link
-- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [x] Slider · [x] NumberStepper · [ ] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [x] SlideToConfirm · [ ] FileUpload · [x] CopyField
-- **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [ ] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [x] Drawer
-- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [x] Receipt · [x] Sparkline · [ ] CardStack
+- **Selection and input:** [x] Switch · [x] Checkbox · [x] RadioGroup · [x] SegmentedControl · [x] Slider · [x] NumberStepper · [x] Select · [ ] DatePicker · [x] TextArea · [x] PinPad · [x] SlideToConfirm · [ ] FileUpload · [x] CopyField
+- **Navigation:** [x] Tabs · [x] AppBar · [x] TabBar · [x] Sidebar · [x] Breadcrumbs · [x] Pagination · [x] StepIndicator · [x] Drawer
+- **Lists and display:** [x] ListItem · [x] ListGroup · [x] Accordion · [x] StatCard · [x] DetailRow · [x] Timeline · [x] EmptyState · [x] TransactionRow · [x] Receipt · [x] Sparkline · [x] CardStack
 - **Feedback and overlays:** [x] Tooltip · [x] Popover · [x] Menu · [x] SuccessCheck · [x] ResendTimer
 
 ## License

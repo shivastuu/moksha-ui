@@ -18,6 +18,7 @@ import {
   BottomSheet,
   Breadcrumbs,
   Button,
+  CardStack,
   DetailRow,
   Dialog,
   Drawer,
@@ -34,6 +35,8 @@ import {
   PhoneField,
   PinPad,
   SearchField,
+  Select,
+  Sidebar,
   SlideToConfirm,
   Slider,
   SnackbarProvider,
@@ -245,6 +248,25 @@ function Floating() {
   );
 }
 
+function Shell() {
+  return (
+    <Section title="App shell">
+      <View style={[styles.form, { flex: 1 }]}>
+        <Select label="Bank" placeholder="Choose a bank" options={[{ value: 'hdfc', label: 'HDFC Bank' }, { value: 'icici', label: 'ICICI Bank' }, { value: 'sbi', label: 'State Bank of India' }]} />
+        <CardStack
+          cards={[
+            { key: 'brand', label: 'Moksha •• 4821', card: <BankCard last4="4821" holder="Shivastu Shrivastava" expiry="08/29" interactive={false} /> },
+            { key: 'metal', label: 'Moksha Metal •• 2290', card: <BankCard last4="2290" holder="Shivastu Shrivastava" expiry="11/30" finish="metal" label="Moksha Metal" interactive={false} /> },
+          ]}
+        />
+        <View style={{ height: 300 }}>
+          <Sidebar sections={[{ items: [{ value: 'home', label: 'Home' }, { value: 'cards', label: 'Cards' }] }, { title: 'Money', items: [{ value: 'requests', label: 'Requests', count: 3 }] }]} />
+        </View>
+      </View>
+    </Section>
+  );
+}
+
 function Overlays() {
   const snackbar = useSnackbar();
   const [dialog, setDialog] = useState(false);
@@ -398,6 +420,8 @@ export default function App() {
             <Money />
 
             <Floating />
+
+            <Shell />
 
             <Section title="Try it">
               <Button fullWidth loading={paying} onPress={pay}>
