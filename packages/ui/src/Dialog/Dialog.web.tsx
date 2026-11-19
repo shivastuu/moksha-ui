@@ -24,6 +24,9 @@ export function Dialog({
   useEffect(() => {
     const dialog = ref.current;
     if (open && !dialog?.open) {
+      // The page stops scrolling while a dialog is open; this pads it by the scrollbar it loses, so nothing behind jumps
+      const root = document.documentElement;
+      root.style.setProperty('--ds-scrollbar-gap', `${window.innerWidth - root.clientWidth}px`);
       dialog?.showModal();
     } else if (!open && dialog?.open) {
       dialog.close();

@@ -14,7 +14,7 @@ export const dialogCss = `
 @keyframes ds-sheet-in{from{transform:translateY(100%)}}
 .ds-dialog[open]{animation:ds-scale-in var(--ds-spring-smooth-duration) var(--ds-spring-smooth)}
 .ds-dialog[open]::backdrop{animation:ds-fade var(--ds-duration-normal) var(--ds-easing-enter)}
-html:has(.ds-dialog[open]){overflow:hidden}
+html:has(.ds-dialog[open]){overflow:hidden;padding-inline-end:var(--ds-scrollbar-gap, 0px)}
 .ds-dialog__panel{display:grid;gap:var(--ds-space-md);padding:var(--ds-modal-padding)}
 .ds-dialog__handle{display:none;justify-self:center;width:var(--ds-modal-handle-width);height:var(--ds-modal-handle-height);margin-top:calc(var(--ds-space-sm) - var(--ds-modal-padding));border-radius:var(--ds-radius-full);background:var(--ds-color-border)}
 .ds-dialog__title{margin:0;letter-spacing:-0.01em;font-size:var(--ds-font-size-xl);line-height:var(--ds-line-height-xl);font-weight:var(--ds-font-weight-semibold)}

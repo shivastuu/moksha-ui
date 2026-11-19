@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { Drawer, Menu, Popover, Tooltip } from './index';
 import { nextEnabled } from './Menu/Menu.shared';
+import { componentCss } from './theme/css';
 import { placeFloating } from './utils/floating';
 
 const showPopover = vi.fn();
@@ -168,5 +169,16 @@ describe('Drawer (web)', () => {
     );
     const drawer = screen.getByRole('dialog', { name: 'Filters' });
     expect(drawer.className).toBe('ds-dialog ds-dialog--drawer ds-dialog--drawer-left');
+  });
+
+  it('pads the locked page by the scrollbar it hides, so the page behind does not jump', () => {
+    Object.defineProperty(document.documentElement, 'clientWidth', { configurable: true, value: window.innerWidth - 15 });
+    render(
+      <Drawer open title="Filters" onClose={() => {}}>
+        Pick categories
+      </Drawer>
+    );
+    expect(document.documentElement.style.getPropertyValue('--ds-scrollbar-gap')).toBe('15px');
+    expect(componentCss).toContain('html:has(.ds-dialog[open]){overflow:hidden;padding-inline-end:var(--ds-scrollbar-gap, 0px)}');
   });
 });
