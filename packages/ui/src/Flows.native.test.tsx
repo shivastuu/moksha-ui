@@ -37,9 +37,15 @@ describe('flows (native)', () => {
     expect(screen.getByText('shivastu@moksha').props.selectable).toBe(true);
   });
 
-  it('StepIndicator is one progress bar that says which step you are on', async () => {
-    await render(<StepIndicator steps={['PAN', 'Aadhaar', 'Selfie', 'Done']} current={1} accessibilityLabel="KYC progress" />);
+  it('StepIndicator is one progress bar that says which step you are on, and fills the line on the native driver', async () => {
+    jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(false);
+    const spring = jest.spyOn(Animated, 'spring');
+    const { rerender } = await render(<StepIndicator steps={['PAN', 'Aadhaar', 'Selfie', 'Done']} current={1} accessibilityLabel="KYC progress" />);
     expect(screen.getByRole('progressbar', { name: 'KYC progress' }).props.accessibilityValue).toEqual({ text: 'Step 2 of 4: Aadhaar' });
+    await settle();
+    await rerender(<StepIndicator steps={['PAN', 'Aadhaar', 'Selfie', 'Done']} current={2} accessibilityLabel="KYC progress" />);
+    await settle();
+    expect(spring).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, useNativeDriver: true }));
   });
 
   it('Timeline reads each step with its status, and pulses the current one unless motion is reduced', async () => {

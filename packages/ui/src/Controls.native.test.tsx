@@ -69,7 +69,7 @@ describe('controls (native)', () => {
     expect(spring).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 2, ...foundations.motion.spring.smooth }));
   });
 
-  it('Tabs place the underline on the first layout, then slide it with the smooth spring', async () => {
+  it('Tabs place the underline on the first layout, then slide it with the smooth spring on the native driver', async () => {
     const spring = jest.spyOn(Animated, 'spring');
     await render(
       <Tabs
@@ -90,7 +90,7 @@ describe('controls (native)', () => {
     await fireEvent.press(upi!);
     expect(upi!.props.accessibilityState).toMatchObject({ selected: true });
     expect(screen.getByText('UPI only')).toBeTruthy();
-    expect(spring).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ toValue: 56, ...foundations.motion.spring.smooth }));
-    expect(spring).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ toValue: 32 }));
+    expect(spring).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ toValue: 56, ...foundations.motion.spring.smooth, useNativeDriver: true }));
+    expect(spring).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ toValue: 32, useNativeDriver: true }));
   });
 });

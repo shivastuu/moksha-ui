@@ -19,14 +19,15 @@ function Line({ filled }: { filled: boolean }) {
       progress.setValue(filled ? 1 : 0);
       return;
     }
-    const spring = Animated.spring(progress, { toValue: filled ? 1 : 0, ...motion.spring.smooth, useNativeDriver: false });
+    const spring = Animated.spring(progress, { toValue: filled ? 1 : 0, ...motion.spring.smooth, useNativeDriver: true });
     spring.start();
     return () => spring.stop();
   }, [filled, reduced, progress, motion]);
 
   return (
     <View style={{ position: 'absolute', top: stepDot / 2 - 1, left: '-50%', right: '50%', marginLeft: stepDot / 2 + 6, marginRight: stepDot / 2 + 6, height: 2, borderRadius: radius.full, backgroundColor: colors.border, overflow: 'hidden' }}>
-      <Animated.View style={{ height: 2, width: progress.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }), backgroundColor: controlColors(colors).indicator }} />
+      {/* Scaled from the left on the native driver; the rounded track clips the fill's ends */}
+      <Animated.View style={{ height: 2, backgroundColor: controlColors(colors).indicator, transformOrigin: 'left', transform: [{ scaleX: progress }] }} />
     </View>
   );
 }

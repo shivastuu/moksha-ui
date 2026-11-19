@@ -19,6 +19,9 @@ export function Tabs({ items, value, defaultValue, onValueChange, accessibilityL
   const width = useRef(new Animated.Value(0)).current;
   const placed = useRef(false);
   const target = layouts[index];
+  // The bar is drawn at the first tab's width and scaled to the others. Width can't run on the native driver; the
+  // stretch changes the 3px bar's rounded ends by a fraction of a pixel
+  const base = layouts[0]?.width || 1;
 
   useEffect(() => {
     if (!target) {
@@ -31,10 +34,10 @@ export function Tabs({ items, value, defaultValue, onValueChange, accessibilityL
       width.setValue(target.width);
       return;
     }
-    // Width can't run on the native driver, and scaleX would stretch the rounded ends
+    // On the native driver, so a busy JS thread rendering the new panel can't stutter the slide
     const slide = Animated.parallel([
-      Animated.spring(left, { toValue: target.x, ...motion.spring.smooth, useNativeDriver: false }),
-      Animated.spring(width, { toValue: target.width, ...motion.spring.smooth, useNativeDriver: false }),
+      Animated.spring(left, { toValue: target.x, ...motion.spring.smooth, useNativeDriver: true }),
+      Animated.spring(width, { toValue: target.width, ...motion.spring.smooth, useNativeDriver: true }),
     ]);
     slide.start();
     return () => slide.stop();
@@ -72,7 +75,17 @@ export function Tabs({ items, value, defaultValue, onValueChange, accessibilityL
         {target ? (
           <Animated.View
             pointerEvents="none"
-            style={{ position: 'absolute', bottom: 0, left, width, height: components.tabs.indicator, borderRadius: radius.full, backgroundColor: controlColors(colors).indicator }}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: base,
+              height: components.tabs.indicator,
+              borderRadius: radius.full,
+              backgroundColor: controlColors(colors).indicator,
+              transformOrigin: 'left',
+              transform: [{ translateX: left }, { scaleX: Animated.divide(width, base) }],
+            }}
           />
         ) : null}
       </ScrollView>
