@@ -54,7 +54,7 @@ describe('ProgressBar (web)', () => {
     expect(fill()).toBe('translateX(0%)');
   });
 
-  it('sweeps without a value, and has no value for screen readers', () => {
+  it('breathes without a value, and has no value for screen readers', () => {
     render(<ProgressBar label="Uploading" />);
     const bar = screen.getByRole('progressbar', { name: 'Uploading' });
     expect(bar.dataset.indeterminate).toBe('true');

@@ -387,7 +387,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **Text** uses the theme's type styles; tones are adjusted to pass AA, so green and amber text stay readable. **Stack** lays children out with theme spacing; **Divider** can carry a label like "or continue with".
 - **Badge** pops each time its count changes and has a hairline and a glossy top edge. **Tag** is a bordered status pill; **Chip** is a bordered filter that springs a check mark in when selected.
 - **Avatar** shows a photo, or initials on a gradient picked from the name, so the same person always gets the same colors. **AvatarGroup** overlaps them with clean rings and reads the names once.
-- **ProgressBar** springs its gradient fill to the value, or sweeps when the amount of work is unknown. **ProgressRing** is a circular gauge, drawn without SVG on React Native.
+- **ProgressBar** springs its gradient fill to the value. When the amount of work is unknown, the whole fill breathes like every other loader; with reduced motion it holds dimmed, so it never looks finished. **ProgressRing** is a circular gauge, drawn without SVG on React Native.
 - **Spinner** and **Skeleton** cover loading, and both breathe: the skeleton fades in and out, and the spinner's arc grows and shrinks as it turns (see Motion). With reduced motion the skeleton holds still. **Link** fades its underline in on hover and marks external links for screen readers.
 
 ### Lists and tabs

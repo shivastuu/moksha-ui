@@ -2,7 +2,7 @@
 
 import { progressFraction, type ProgressBarProps } from './ProgressBar.shared';
 
-/** A bar whose fill springs to its value, or sweeps while the amount of work is unknown */
+/** A bar whose fill springs to its value, or breathes while the amount of work is unknown */
 export function ProgressBar({ value, max = 100, label, tone = 'primary', size = 'md', testID }: ProgressBarProps) {
   const fraction = progressFraction(value, max);
   return (

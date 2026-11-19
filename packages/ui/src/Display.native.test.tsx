@@ -31,6 +31,22 @@ describe('display (native)', () => {
     expect(spring).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: -0.25, ...foundations.motion.spring.smooth }));
   });
 
+  it('ProgressBar breathes while the amount is unknown, and holds dimmed with Reduce Motion', async () => {
+    const reduce = jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(false);
+    const loop = jest.spyOn(Animated, 'loop');
+    const { unmount } = await render(<ProgressBar label="Uploading" testID="p" />);
+    await settle();
+    expect(screen.getByTestId('p').props.accessibilityValue).toBeUndefined();
+    expect(loop).toHaveBeenCalled();
+    await unmount();
+    loop.mockClear();
+    reduce.mockResolvedValue(true);
+    await render(<ProgressBar label="Uploading" testID="p" />);
+    await settle();
+    expect(loop).not.toHaveBeenCalled();
+    expect(screen.getByTestId('p').children[0]).toHaveStyle({ opacity: foundations.motion.breathe.low });
+  });
+
   it('ProgressRing springs to its share of the circle', async () => {
     jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(false);
     const spring = jest.spyOn(Animated, 'spring');

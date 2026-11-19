@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react-native';
-import { AccessibilityInfo, View } from 'react-native';
+import { AccessibilityInfo, Animated, View } from 'react-native';
 import { components, foundations, themes } from '@moksha-ui/tokens';
 import { fireEvent } from '@testing-library/react-native';
 import { Badge, Chip, Divider, Skeleton, Spinner, Stack, Tag, Text } from './index';
@@ -44,8 +44,9 @@ describe('primitives (native)', () => {
     expect(screen.getByLabelText('Loading offers').props.accessibilityRole).toBe('progressbar');
   });
 
-  it('Skeleton draws hidden blocks, and no sweep with Reduce Motion', async () => {
+  it('Skeleton draws hidden blocks, and holds still with Reduce Motion', async () => {
     jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(true);
+    const loop = jest.spyOn(Animated, 'loop');
     await render(<Skeleton lines={2} testID="sk" />);
     await settle();
     // Hidden from screen readers on purpose, so it can only be found with hidden elements included
@@ -53,6 +54,7 @@ describe('primitives (native)', () => {
     const skeleton = screen.getByTestId('sk', { includeHiddenElements: true });
     expect(skeleton.props.importantForAccessibility).toBe('no-hide-descendants');
     expect(skeleton.children).toHaveLength(2);
+    expect(loop).not.toHaveBeenCalled();
   });
 
   it('Badge caps the count, reads it out, and hides at zero', async () => {
