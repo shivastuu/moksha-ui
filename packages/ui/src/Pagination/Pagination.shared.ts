@@ -11,6 +11,9 @@ export interface PaginationProps {
 
 export type PageItem = number | 'start-ellipsis' | 'end-ellipsis';
 
+/** Width two arrows and 7 slots of 36px with 4px gaps need. Narrower, the list drops to 5 slots (1 … 5 … 12) */
+export const compactBelow = 9 * 36 + 8 * 4;
+
 const range = (start: number, end: number) => Array.from({ length: Math.max(0, end - start + 1) }, (_, index) => start + index);
 
 /**

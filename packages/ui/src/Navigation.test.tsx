@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AppBar, Breadcrumbs, IconButton, Pagination, TabBar } from './index';
 import { visibleCrumbs } from './Breadcrumbs/Breadcrumbs.shared';
@@ -12,6 +12,33 @@ describe('Pagination', () => {
     expect(pageItems(5, 10)).toEqual([1, 'start-ellipsis', 4, 5, 6, 'end-ellipsis', 10]);
     expect(pageItems(10, 10)).toEqual([1, 'start-ellipsis', 6, 7, 8, 9, 10]);
     expect([pageItems(3, 5), pageItems(1, 1), pageItems(1, 2), pageItems(4, 7)]).toEqual([[1, 2, 3, 4, 5], [1], [1, 2], [1, 2, 3, 4, 5, 6, 7]]);
+  });
+
+  it('drops to 5 slots with one neighbour fewer when there is no room', () => {
+    expect([pageItems(5, 12, 0), pageItems(1, 12, 0), pageItems(12, 12, 0)]).toEqual([
+      [1, 'start-ellipsis', 5, 'end-ellipsis', 12],
+      [1, 2, 3, 'end-ellipsis', 12],
+      [1, 'start-ellipsis', 10, 11, 12],
+    ]);
+  });
+
+  it('switches to the compact list when its own width is under 356px (web)', () => {
+    let report: (width: number) => void = () => {};
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(callback: ResizeObserverCallback) {
+          report = (width) => callback([{ contentRect: { width } } as ResizeObserverEntry], this as unknown as ResizeObserver);
+        }
+        observe() {}
+        disconnect() {}
+      }
+    );
+    render(<Pagination pageCount={12} defaultPage={5} />);
+    expect(screen.getAllByRole('button', { name: /^Page / })).toHaveLength(5);
+    act(() => report(300));
+    expect(screen.getAllByRole('button', { name: /^Page / }).map((button) => button.textContent)).toEqual(['1', '5', '12']);
+    vi.unstubAllGlobals();
   });
 
   it('always shows 7 slots past 7 pages, so the buttons never jump', () => {

@@ -5,7 +5,9 @@ export function StatCard({ label, value, change, trend = 'flat', upIsGood = true
   return (
     <div className="ds-stat-card" data-testid={testID}>
       <span className="ds-stat-card__label">{label}</span>
-      <span className="ds-stat-card__value">{value}</span>
+      <span className="ds-stat-card__fit">
+        <span className="ds-stat-card__value">{value}</span>
+      </span>
       {(change || caption) && (
         <span className="ds-stat-card__footer">
           {change && (

@@ -14,7 +14,7 @@ export const CardSettings: Story = {
     const [payees, setPayees] = useState([true, false, true]);
     const all = payees.every(Boolean) ? true : payees.some(Boolean) ? 'mixed' : false;
     return (
-      <div style={{ display: 'grid', gap: 24, gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 360px))', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gap: 24, gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 360px))', alignItems: 'start' }}>
         <Surface variant="raised" padding="lg" radius="xl">
           <Stack gap="lg">
             <Text variant="title">Card controls</Text>

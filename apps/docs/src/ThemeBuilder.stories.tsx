@@ -91,7 +91,7 @@ function ThemeBuilder() {
       </div>
 
       {scale && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', borderRadius: 12, overflow: 'hidden' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(64px, 1fr))', borderRadius: 12, overflow: 'hidden' }}>
           {Object.entries(scale).map(([step, hex]) => (
             <div key={step} style={{ background: hex, padding: '28px 6px 8px', fontSize: 11, color: readableTextOn(hex) }}>
               <div style={{ fontWeight: 600 }}>{step}</div>
@@ -101,7 +101,7 @@ function ThemeBuilder() {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 16 }}>
         <Preview theme={theme} scheme="light" />
         <Preview theme={theme} scheme="dark" />
       </div>

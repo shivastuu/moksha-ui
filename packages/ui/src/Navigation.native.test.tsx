@@ -19,6 +19,13 @@ describe('navigation (native)', () => {
     expect(onPageChange).toHaveBeenCalledWith(6);
   });
 
+  it('Pagination drops to 5 slots on a narrow screen', async () => {
+    await render(<Pagination pageCount={12} defaultPage={5} testID="pages" />);
+    expect(screen.getAllByRole('button', { name: /^Page / })).toHaveLength(5);
+    await fireEvent(screen.getByTestId('pages'), 'layout', { nativeEvent: { layout: { x: 0, y: 0, width: 300, height: 36 } } });
+    expect(screen.getAllByRole('button', { name: /^Page / })).toHaveLength(3);
+  });
+
   it('Breadcrumbs link up the path, name the current page, and expand the middle', async () => {
     const onPress = jest.fn();
     const items = [{ label: 'Home', onPress }, { label: 'Accounts' }, { label: 'Savings' }, { label: 'Statements' }, { label: 'October 2026' }];

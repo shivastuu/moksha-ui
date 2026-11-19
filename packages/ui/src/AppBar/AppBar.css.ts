@@ -1,5 +1,6 @@
-// Both sides reserve room for two icon buttons, so the title stays centered with or without a back button
-const side = 'minmax(calc(2 * var(--ds-icon-button-md) + var(--ds-space-xs)), 1fr)';
+// Each side reserves only what it holds and the two grow equally, so a title with room stays exactly centered,
+// and on a phone the title gets the space instead of being cut short
+const side = 'minmax(max-content, 1fr)';
 
 export const appBarCss = `
 .ds-appbar{display:grid;grid-template-columns:${side} minmax(0,auto) ${side};align-items:center;gap:var(--ds-space-sm);box-sizing:border-box;min-height:56px;padding:var(--ds-space-xs) var(--ds-space-sm);background:var(--ds-color-background);box-shadow:inset 0 -1px 0 var(--ds-surface-edge);font-family:var(--ds-font-sans)}

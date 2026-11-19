@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Animated, Text, View } from 'react-native';
 import { buttonDepth } from '../Button/Button.shared';
 import { ChevronIcon } from '../Icon/ChevronIcon.native';
@@ -6,7 +7,7 @@ import { Press } from '../motion/Press.native';
 import { useTheme } from '../theme/context';
 import { fontFor } from '../theme/textStyle';
 import { useControllableState } from '../utils/useControllableState';
-import { pageItems, type PaginationProps } from './Pagination.shared';
+import { compactBelow, pageItems, type PaginationProps } from './Pagination.shared';
 
 function PageButton({ page, current, onPress }: { page: number; current: boolean; onPress: () => void }) {
   const theme = useTheme();
@@ -46,6 +47,9 @@ export function Pagination({ page, defaultPage = 1, onPageChange, pageCount, acc
   const theme = useTheme();
   const { colors, space, opacity } = theme;
   const [current, setCurrent] = useControllableState(page, defaultPage, onPageChange);
+  const [width, setWidth] = useState(0);
+  // On a narrow screen, show one neighbour fewer on each side rather than run off the edge
+  const compact = width > 0 && width < compactBelow;
   if (pageCount < 1) {
     return null;
   }
@@ -65,9 +69,9 @@ export function Pagination({ page, defaultPage = 1, onPageChange, pageCount, acc
     </Press>
   );
   return (
-    <View testID={testID} accessibilityLabel={accessibilityLabel} style={{ flexDirection: 'row', alignItems: 'center', gap: space.xs }}>
+    <View testID={testID} accessibilityLabel={accessibilityLabel} onLayout={(event) => setWidth(event.nativeEvent.layout.width)} style={{ flexDirection: 'row', alignItems: 'center', gap: space.xs }}>
       {arrow('left', current <= 1, current - 1)}
-      {pageItems(current, pageCount).map((item) =>
+      {pageItems(current, pageCount, compact ? 0 : 1).map((item) =>
         typeof item === 'number' ? (
           <PageButton key={item} page={item} current={item === current} onPress={() => go(item)} />
         ) : (

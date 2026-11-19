@@ -15,6 +15,9 @@ describe('data display (native)', () => {
     await render(<StatCard label="Saved this month" value="₹ 12,000" change="8%" trend="up" caption="vs last month" />);
     expect(screen.getByLabelText('Saved this month, ₹ 12,000, Up 8% vs last month')).toBeTruthy();
     expect(screen.getByText('↑ 8%', { includeHiddenElements: true })).toHaveStyle({ color: softTones(themes.light.colors).success.ink });
+    // A long figure shrinks to fit a narrow card rather than wrapping
+    const figure = screen.getByText('₹ 12,000', { includeHiddenElements: true });
+    expect([figure.props.numberOfLines, figure.props.adjustsFontSizeToFit]).toEqual([1, true]);
   });
 
   it('EmptyState runs its action and announces its title as a header', async () => {

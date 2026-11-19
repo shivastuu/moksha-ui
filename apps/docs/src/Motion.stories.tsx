@@ -52,7 +52,7 @@ export const StaggeredList: Story = {
   render: () => (
     <Replay>
       {(run) => (
-        <div key={run} style={{ display: 'grid', gap: 8, width: 320 }}>
+        <div key={run} style={{ display: 'grid', gap: 8, width: '100%', maxWidth: 320 }}>
           <Stagger>
             {payments.map(([name, amount]) => (
               <Surface key={name} variant="raised" padding="md" radius="md">

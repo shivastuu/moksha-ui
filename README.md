@@ -450,7 +450,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 
 - **TransactionRow** formats the amount itself: Indian grouping, a real minus sign, and spaces that never break "₹" from the number. Money in is green, kept at AA on both the page and the card; money out stays in the text color, because red debits read like errors. Pending and failed payments get a tag, and failed amounts are struck through. Screen readers hear one sentence: "Paid ₹486.00 to Swiggy, 1:24 pm".
 - **DetailRow** is a label and value for receipts and account details. Long values like reference numbers wrap instead of overflowing, and in a ListGroup each divider starts under the label.
-- **StatCard** shows a figure and its change. Set `upIsGood={false}` for spending and a rise turns red. The arrow is drawn, and the direction ("Up 12.4%") is what screen readers hear.
+- **StatCard** shows a figure and its change. A long figure shrinks to fit a narrow card (never below 18px) instead of spilling out. Set `upIsGood={false}` for spending and a rise turns red. The arrow is drawn, and the direction ("Up 12.4%") is what screen readers hear.
 - **EmptyState** puts an icon in a soft brand-colored circle with rings that fade outward, then a title, a hint and one next step.
 
 ### Flows
@@ -540,7 +540,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 
 - **AppBar** keeps the title centered whether or not there's a back button. On the web the title is a real heading.
 - **Breadcrumbs** fold a long middle behind "…". Pressing it shows the full path and moves focus to the first item it revealed, so keyboard users don't lose their place. The last item is marked as the current page.
-- **Pagination** always shows 7 slots once there are more than 7 pages, so the buttons don't shift as you page. The current page has the primary Button's top-lit fill and glow, and pops in.
+- **Pagination** always shows 7 slots once there are more than 7 pages, so the buttons don't shift as you page. On a screen too narrow for that, it drops to 5 (`1 … 5 … 12`) instead of running off the edge. The current page has the primary Button's top-lit fill and glow, and pops in.
 - **TabBar** floats on frosted glass (the same blur as Surface). A raised pill springs to the active section and its icon lifts slightly. Icons are drawn in whatever color you're given, because React Native has no `currentColor`. A badge reads as part of the tab's name: "Scan & pay, 2 new".
 
 ### Money

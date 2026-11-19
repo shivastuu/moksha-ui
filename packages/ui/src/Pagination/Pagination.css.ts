@@ -1,4 +1,5 @@
 export const paginationCss = `
+.ds-pagination{min-width:0}
 .ds-pagination__list{display:flex;align-items:center;gap:var(--ds-space-xs);margin:0;padding:0;list-style:none;font-family:var(--ds-font-sans)}
 .ds-pagination__item{position:relative;display:grid;place-items:center;box-sizing:border-box;min-width:36px;height:36px;padding:0 var(--ds-space-sm);border:0;border-radius:var(--ds-radius-full);background:transparent;color:var(--ds-color-text);font:inherit;font-size:var(--ds-font-size-sm);font-weight:var(--ds-font-weight-medium);font-variant-numeric:tabular-nums;cursor:pointer;isolation:isolate;transition:color var(--ds-duration-fast) var(--ds-easing-standard),transform var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
 .ds-pagination__item[aria-current]{background:var(--ds-button-primary-fill);color:var(--ds-color-text-on-primary);box-shadow:var(--ds-button-primary-shadow);animation:ds-pop var(--ds-spring-bouncy-duration) var(--ds-spring-bouncy)}

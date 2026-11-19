@@ -32,7 +32,7 @@ export const LoadingStates: Story = {
     const [loading, setLoading] = useState(true);
     return (
       <Stack gap="lg" align="start">
-        <div style={{ width: 340 }}>
+        <div style={{ width: '100%', maxWidth: 340 }}>
           <Surface variant="raised" padding="lg" radius="xl">
             {loading ? (
               <Stack direction="row" gap="md" align="center">
@@ -75,7 +75,7 @@ export const BadgesAndDividers: Story = {
     );
     return (
       <Stack gap="xl" align="start">
-        <Stack direction="row" gap="xl" align="center">
+        <Stack direction="row" gap="xl" align="center" wrap>
           <div style={{ position: 'relative', display: 'inline-flex' }}>
             <IconButton icon={bell} accessibilityLabel="Notifications" variant="soft" />
             <span style={{ position: 'absolute', top: -4, right: -6 }}>
@@ -91,7 +91,7 @@ export const BadgesAndDividers: Story = {
             New notification
           </Button>
         </Stack>
-        <div style={{ width: 340, display: 'grid', gap: 16 }}>
+        <div style={{ width: '100%', maxWidth: 340, display: 'grid', gap: 16 }}>
           <Divider />
           <Divider label="or continue with" />
         </div>
@@ -133,14 +133,14 @@ export const PeopleAndProgress: Story = {
     const [spent, setSpent] = useState(42);
     return (
       <Stack gap="xl" align="start">
-        <Stack direction="row" gap="lg" align="center">
+        <Stack direction="row" gap="lg" align="center" wrap>
           <Avatar name="Shivastu Shrivastava" size="xl" status="online" />
           <Avatar name="Neha Gupta" size="lg" />
           <Avatar name="Ravi Kumar" />
           <Avatar name="Meera Nair" size="sm" status="busy" />
           <AvatarGroup people={team.map((name) => ({ name }))} />
         </Stack>
-        <div style={{ width: 360 }}>
+        <div style={{ width: '100%', maxWidth: 360 }}>
           <Surface variant="raised" padding="lg" radius="xl">
             <Stack gap="md">
               <Stack direction="row" justify="between" align="center">
@@ -154,7 +154,7 @@ export const PeopleAndProgress: Story = {
             </Stack>
           </Surface>
         </div>
-        <Stack direction="row" gap="xl" align="center">
+        <Stack direction="row" gap="xl" align="center" wrap>
           <ProgressRing value={spent} label="Budget used">
             <Text variant="label">{spent}%</Text>
           </ProgressRing>

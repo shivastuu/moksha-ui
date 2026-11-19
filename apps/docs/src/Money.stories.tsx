@@ -44,7 +44,7 @@ export const SlideToPay: Story = {
 
 export const Trends: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', maxWidth: 480 }}>
+    <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', maxWidth: 480 }}>
       {[
         { label: 'Spent this week', value: '₹ 8,420', change: '18%', trend: 'up' as const, upIsGood: false, data: [920, 1100, 860, 1340, 1210, 1480, 1510] },
         { label: 'Savings', value: '₹ 1,24,300', change: '6.2%', trend: 'up' as const, upIsGood: true, data: [110, 112, 111, 115, 118, 117, 124] },

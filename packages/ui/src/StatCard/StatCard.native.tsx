@@ -21,7 +21,10 @@ export function StatCard(props: StatCardProps) {
       style={{ gap: space.xs, padding: space.lg, borderRadius: radius.xl, backgroundColor: colors.surfaceRaised, boxShadow: `${shadows.sm}, 0px 0px 0px 1px ${surfaceColors(colors).edge}` }}
     >
       <Text style={[small, fontFor(theme, 'medium')]}>{label}</Text>
-      <Text style={[textStyleFor(theme, 'heading'), { color: colors.text, letterSpacing: -0.02 * heading.fontSize, fontVariant: ['tabular-nums'] }]}>{value}</Text>
+      {/* A long figure shrinks to fit the card instead of wrapping or running out of it */}
+      <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.6} style={[textStyleFor(theme, 'heading'), { color: colors.text, letterSpacing: -0.02 * heading.fontSize, fontVariant: ['tabular-nums'] }]}>
+        {value}
+      </Text>
       {change || caption ? (
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: space.sm, marginTop: space.xs }}>
           {change ? (
