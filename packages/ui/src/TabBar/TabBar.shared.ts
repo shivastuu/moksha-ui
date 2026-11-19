@@ -18,3 +18,9 @@ export interface TabBarProps {
   accessibilityLabel?: string;
   testID?: string;
 }
+
+/**
+ * Item sizes. One label line sits centered in the item; a label that needs a second line (narrow phones, large or
+ * spaced text) grows the item downward, so the icons stay level instead of the name being cut off
+ */
+export const tabItem = { height: 52, icon: 24, gap: 2 };

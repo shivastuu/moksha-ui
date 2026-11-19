@@ -541,7 +541,7 @@ snackbar.show({ message: 'Payee deleted', action: { label: 'Undo', onPress: rest
 - **AppBar** keeps the title centered whether or not there's a back button. On the web the title is a real heading.
 - **Breadcrumbs** fold a long middle behind "…". Pressing it shows the full path and moves focus to the first item it revealed, so keyboard users don't lose their place. The last item is marked as the current page.
 - **Pagination** always shows 7 slots once there are more than 7 pages, so the buttons don't shift as you page. On a screen too narrow for that, it drops to 5 (`1 … 5 … 12`) instead of running off the edge. The current page has the primary Button's top-lit fill and glow, and pops in.
-- **TabBar** floats on frosted glass (the same blur as Surface). A raised pill springs to the active section and its icon lifts slightly. Icons are drawn in whatever color you're given, because React Native has no `currentColor`. A badge reads as part of the tab's name: "Scan & pay, 2 new".
+- **TabBar** floats on frosted glass (the same blur as Surface). A raised pill springs to the active section and its icon lifts slightly. Icons are drawn in whatever color you're given, because React Native has no `currentColor`. A badge reads as part of the tab's name: "Scan & pay, 2 new". Names are never cut off: on a narrow phone, or with large or spaced text, a label wraps to a second line and the bar grows downward, with every icon staying level.
 
 ### Money
 

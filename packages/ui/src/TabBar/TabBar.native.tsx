@@ -9,7 +9,7 @@ import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { textTones } from '../utils/tones';
 import { useControllableState } from '../utils/useControllableState';
-import type { TabBarProps } from './TabBar.shared';
+import { tabItem, type TabBarProps } from './TabBar.shared';
 
 /** A floating glass bar of icons for an app's main sections. A raised pill springs to the one you're on */
 export function TabBar({ items, value, defaultValue, onValueChange, accessibilityLabel = 'Main', testID }: TabBarProps) {
@@ -17,6 +17,7 @@ export function TabBar({ items, value, defaultValue, onValueChange, accessibilit
   const { colors, motion, radius, shadows } = theme;
   const [selected, setSelected] = useControllableState(value, defaultValue ?? items[0]?.value ?? '', onValueChange);
   const index = items.findIndex((item) => item.value === selected);
+  const caption = textStyleFor(theme, 'caption');
   const reduced = useReducedMotion();
   const [width, setWidth] = useState(0);
   const segment = items.length ? width / items.length : 0;
@@ -62,9 +63,9 @@ export function TabBar({ items, value, defaultValue, onValueChange, accessibilit
               accessibilityLabel={item.badge ? `${item.label}, ${item.badge} new` : item.label}
               accessibilityState={{ selected: active }}
               onPress={() => setSelected(item.value)}
-              style={{ height: 52, alignItems: 'center', justifyContent: 'center', gap: 2, borderRadius: radius.full }}
+              style={{ flexGrow: 1, minHeight: tabItem.height, paddingVertical: (tabItem.height - tabItem.icon - tabItem.gap - caption.lineHeight) / 2, alignItems: 'center', gap: tabItem.gap, borderRadius: radius.full }}
             >
-              <View>
+              <View style={{ height: tabItem.icon, justifyContent: 'center' }}>
                 {item.icon(color)}
                 {item.badge ? (
                   <View style={{ position: 'absolute', top: -7, left: 17 }}>
@@ -72,7 +73,7 @@ export function TabBar({ items, value, defaultValue, onValueChange, accessibilit
                   </View>
                 ) : null}
               </View>
-              <Text numberOfLines={1} style={[textStyleFor(theme, 'caption'), fontFor(theme, 'medium'), { color }]}>
+              <Text style={[caption, fontFor(theme, 'medium'), { color, textAlign: 'center' }]}>
                 {item.label}
               </Text>
             </Press>

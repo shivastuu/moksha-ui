@@ -63,5 +63,7 @@ describe('navigation (native)', () => {
     await fireEvent.press(screen.getByRole('tab', { name: 'Pay, 2 new' }));
     expect(screen.getByRole('tab', { name: 'Pay, 2 new' }).props.accessibilityState).toMatchObject({ selected: true });
     expect(spring).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, ...foundations.motion.spring.smooth }));
+    // Large text wraps the label and grows the bar, it never cuts the name off
+    expect(screen.getByText('Home').props.numberOfLines).toBeUndefined();
   });
 });
