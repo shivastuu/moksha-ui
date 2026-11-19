@@ -26,6 +26,10 @@ describe('interaction feel', () => {
     expect(componentCss).not.toContain('ds-shimmer');
   });
 
+  it('taps cleanly on phones: no tap flash or double-tap zoom on any control', () => {
+    expect(componentCss).toMatch(/:where\(button,a,input,[^)]*\):is\(\[class\^="ds-"\],\[class\*=" ds-"\]\)\{-webkit-tap-highlight-color:transparent;touch-action:manipulation\}/);
+  });
+
   it('keeps focus visible in forced colors, which drops shadows and recolors borders', () => {
     const rules = [...componentCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => [selector!.trim(), body!] as const);
     const haloWithoutRing = rules.filter(([, body]) => body.includes('var(--ds-field-halo)') && !body.includes('outline:'));

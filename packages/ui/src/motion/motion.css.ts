@@ -6,7 +6,11 @@ export const breathe = (keyframes = 'ds-breathe') => `${keyframes} calc(var(--ds
  * strengths; `ds-press--object` also gives under the finger on the snappy spring (buttons, chips, keys, days), while
  * rows only highlight. Hover only where there is a real pointer, so a tap on a phone leaves nothing behind
  */
-const pressCss = `
+// Every control taps cleanly on phones: no grey flash over our own press feel, and no double-tap zoom when keys are
+// tapped quickly (PIN pad, steppers, calendar). Pinch zoom still works. :where keeps it overridable
+const tapCss = `:where(button,a,input,label,summary,[role=button],[role=tab],[role=switch],[role=radio],[role=checkbox],[role=option],[role=menuitem],[role=slider]):is([class^="ds-"],[class*=" ds-"]){-webkit-tap-highlight-color:transparent;touch-action:manipulation}`;
+
+const pressCss = `${tapCss}
 .ds-press{position:relative;isolation:isolate;transition:transform var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
 .ds-press::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity var(--ds-duration-fast) var(--ds-easing-standard)}
 @media (hover:hover){.ds-press:hover:not(:disabled):not([aria-disabled=true])::before{opacity:var(--ds-opacity-hover)}}
