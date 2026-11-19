@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react-native';
-import { AccessibilityInfo, Animated, View } from 'react-native';
+import { AccessibilityInfo, Animated, View, type ViewProps } from 'react-native';
 import { components, foundations, themes } from '@moksha-ui/tokens';
 import { fireEvent } from '@testing-library/react-native';
-import { Badge, Chip, Divider, Skeleton, Spinner, Stack, Tag, Text } from './index';
+import { Badge, Chip, Divider, Skeleton, Spinner, Stack, Surface, Tag, Text, ThemeProvider } from './index';
 import { chipColors } from './Chip/Chip.shared';
 import { controlColors } from './utils/controls';
 import { softTones, solidTones, textTones } from './utils/tones';
@@ -22,6 +22,24 @@ describe('primitives (native)', () => {
     const text = screen.getByTestId('t');
     expect(text).toHaveStyle({ fontSize: style.fontSize, color: textTones(themes.light.colors).warning, letterSpacing: -0.02 * style.fontSize });
     expect(text.props.numberOfLines).toBe(1);
+  });
+
+  it('glass blurs, and turns solid with Reduce Transparency, like the web', async () => {
+    const Blur = (props: ViewProps) => <View {...props} testID="blur" />;
+    const glass = (
+      <ThemeProvider blurView={Blur}>
+        <Surface variant="glass" />
+      </ThemeProvider>
+    );
+    const reduce = jest.spyOn(AccessibilityInfo, 'isReduceTransparencyEnabled').mockResolvedValue(false);
+    const { unmount } = await render(glass);
+    await settle();
+    expect(screen.getByTestId('blur')).toBeTruthy();
+    await unmount();
+    reduce.mockResolvedValue(true);
+    await render(glass);
+    await settle();
+    expect(screen.queryByTestId('blur')).toBeNull();
   });
 
   it('Stack lays out with theme spacing', async () => {

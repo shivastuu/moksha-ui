@@ -773,7 +773,7 @@ packages/ui/src/
 - Colors that would fail are fixed at the source: `ensureContrast` nudges a color's lightness, keeping its hue, until it passes. Colored text tones, badge fills, tag text and avatar gradients all go through it.
 - Inputs use their label as the accessible name. Helper and error text are linked (`aria-describedby` on web, `accessibilityHint` on native), and on the web errors also set `aria-invalid`.
 - Buttons announce busy and disabled states; keyboard focus shows a visible ring.
-- Motion respects reduced motion on every platform (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), and glass respects `prefers-reduced-transparency`.
+- Motion respects reduced motion on every platform (`prefers-reduced-motion` on the web, Reduce Motion on iOS and Android), and glass turns solid when transparency is reduced (`prefers-reduced-transparency` on the web, Reduce Transparency on iOS).
 - Windows High Contrast (`forced-colors`) keeps every focus ring and every state visible. The browser drops shadows and repaints backgrounds there, so switches, radios, tabs, segments, progress, badges, the success check and the card edge switch to system colors such as `Highlight`.
 
 ## Development
