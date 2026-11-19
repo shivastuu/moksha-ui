@@ -51,7 +51,7 @@ function Key({ value, onPress }: { value: Exclude<PinKey, ''>; onPress: () => vo
         boxShadow: remove ? undefined : `0px 0px 0px 1px ${surfaceColors(colors).edge}`,
       }}
     >
-      <Text style={{ color: remove ? colors.textMuted : colors.text, fontSize: remove ? 22 : 28, fontVariant: ['tabular-nums'], ...fontFor(theme, 'regular') }}>{remove ? '⌫' : value}</Text>
+      <Text maxFontSizeMultiplier={1} style={{ color: remove ? colors.textMuted : colors.text, fontSize: remove ? 22 : 28, fontVariant: ['tabular-nums'], ...fontFor(theme, 'regular') }}>{remove ? '⌫' : value}</Text>
     </Press>
   );
 }

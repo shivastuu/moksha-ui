@@ -80,6 +80,8 @@ describe('primitives (native)', () => {
     expect(screen.getByText('99+')).toHaveStyle({ color: solidTones(themes.light.colors).success.ink });
     expect(screen.getByTestId('b')).toHaveStyle({ height: components.badge.size, backgroundColor: solidTones(themes.light.colors).success.background });
     expect(screen.getByLabelText('99+')).toBeTruthy();
+    // Sized to its pill, so larger system text doesn't push the count out of it
+    expect(screen.getByText('99+').props.maxFontSizeMultiplier).toBe(1);
     await rerender(<Badge count={0} testID="b" />);
     expect(screen.queryByTestId('b')).toBeNull();
   });

@@ -63,6 +63,7 @@ function OtpCell({ digit, masked, active, error, testID }: OtpCellProps) {
     >
       {active && !digit ? <Caret color={accent} height={otp.cellSize * 0.38} testID={testID ? `${testID}-caret` : undefined} /> : null}
       <Animated.Text
+        maxFontSizeMultiplier={1}
         style={{
           color: colors.text,
           fontSize: otp.fontSize,

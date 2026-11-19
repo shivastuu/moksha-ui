@@ -27,7 +27,7 @@ export function Menu({ anchor, open, onClose, accessibilityLabel, items, side, a
                 onClose();
                 item.onSelect();
               }}
-              style={{ flexDirection: 'row', alignItems: 'center', gap: space.sm, height: 44, paddingHorizontal: space.md, borderRadius: radius.md, opacity: item.disabled ? opacity.disabled : 1 }}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 44, paddingVertical: space.sm, paddingHorizontal: space.md, borderRadius: radius.md, opacity: item.disabled ? opacity.disabled : 1 }}
             >
               {item.icon ? <View style={{ width: 18, alignItems: 'center' }}>{item.icon}</View> : null}
               <Text style={[textStyleFor(theme, 'bodySmall'), fontFor(theme, 'medium'), { color }]}>{item.label}</Text>

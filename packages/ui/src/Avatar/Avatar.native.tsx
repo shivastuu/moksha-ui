@@ -37,7 +37,7 @@ function AvatarBase({ name, src, size = 'md', status, testID, hidden, ring }: Av
           style={{ width: dimension, height: dimension, borderRadius: dimension / 2 }}
         />
       ) : (
-        <Text style={{ color: look.ink, fontSize: dimension * 0.38, ...fontFor(theme, 'semibold') }}>{initials(name)}</Text>
+        <Text maxFontSizeMultiplier={1} style={{ color: look.ink, fontSize: dimension * 0.38, ...fontFor(theme, 'semibold') }}>{initials(name)}</Text>
       )}
       {status ? (
         <View
@@ -89,7 +89,7 @@ export function AvatarGroup({ people, max = 4, size = 'md', testID }: AvatarGrou
             boxShadow: `0px 0px 0px 2px ${colors.background}`,
           }}
         >
-          <Text style={{ color: colors.textMuted, fontSize: dimension * 0.36, ...fontFor(theme, 'semibold') }}>+{rest}</Text>
+          <Text maxFontSizeMultiplier={1} style={{ color: colors.textMuted, fontSize: dimension * 0.36, ...fontFor(theme, 'semibold') }}>+{rest}</Text>
         </View>
       ) : null}
     </View>

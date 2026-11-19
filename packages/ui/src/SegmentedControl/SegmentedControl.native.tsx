@@ -37,7 +37,7 @@ export function SegmentedControl({ options, value, defaultValue, onValueChange, 
       accessibilityRole="radiogroup"
       accessibilityLabel={accessibilityLabel}
       onLayout={(event) => setWidth(event.nativeEvent.layout.width)}
-      style={{ flexDirection: 'row', height: components.segmented.height, padding: inset, borderRadius: radius.full, backgroundColor: controlColors(colors).segmentTrack }}
+      style={{ flexDirection: 'row', minHeight: components.segmented.height, padding: inset, borderRadius: radius.full, backgroundColor: controlColors(colors).segmentTrack }}
     >
       {index >= 0 && segment > 0 ? (
         <Animated.View

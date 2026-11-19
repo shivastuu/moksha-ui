@@ -33,7 +33,7 @@ function Round({ glyph, label, disabled, onPress }: { glyph: string; label: stri
         opacity: disabled ? opacity.disabled : 1,
       }}
     >
-      <Text style={{ color: colors.text, fontSize: 18, lineHeight: 20, ...fontFor(theme, 'medium') }}>{glyph}</Text>
+      <Text maxFontSizeMultiplier={1} style={{ color: colors.text, fontSize: 18, lineHeight: 20, ...fontFor(theme, 'medium') }}>{glyph}</Text>
     </Press>
   );
 }

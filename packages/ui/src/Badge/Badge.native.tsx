@@ -34,7 +34,7 @@ export function Badge(props: BadgeProps) {
         transform: [{ scale }],
       }}
     >
-      {dot ? null : <Text style={{ color: ink, fontSize: size * 0.55, ...fontFor(theme, 'semibold'), fontVariant: ['tabular-nums'] }}>{text}</Text>}
+      {dot ? null : <Text maxFontSizeMultiplier={1} style={{ color: ink, fontSize: size * 0.55, ...fontFor(theme, 'semibold'), fontVariant: ['tabular-nums'] }}>{text}</Text>}
     </Animated.View>
   );
 }

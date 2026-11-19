@@ -67,7 +67,7 @@ export function Tabs({ items, value, defaultValue, onValueChange, accessibilityL
                 return next;
               })
             }
-            style={{ height: components.tabs.height, justifyContent: 'center' }}
+            style={{ minHeight: components.tabs.height, justifyContent: 'center' }}
           >
             <Text style={{ color: position === index ? colors.text : colors.textMuted, fontSize: typography.fontSize.md, ...fontFor(theme, 'medium') }}>{item.label}</Text>
           </Pressable>
