@@ -35,7 +35,7 @@ export function ListItem({ title, description, leading, trailing, onPress, disab
           <Text style={[textStyleFor(theme, 'body'), fontFor(theme, 'medium'), { color: colors.text }]}>{title}</Text>
           {description ? <Text style={[textStyleFor(theme, 'bodySmall'), { color: colors.textMuted }]}>{description}</Text> : null}
         </View>
-        {value ? <Text style={[textStyleFor(theme, 'body'), { color: colors.textMuted, fontVariant: ['tabular-nums'] }]}>{trailing}</Text> : trailing}
+        {value ? <Text style={[textStyleFor(theme, 'body'), { flexShrink: 1, maxWidth: '50%', color: colors.textMuted, textAlign: 'right', fontVariant: ['tabular-nums'] }]}>{trailing}</Text> : trailing}
         {onPress ? <ChevronIcon /> : null}
       </View>
     </>

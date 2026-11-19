@@ -63,7 +63,7 @@ export function SegmentedControl({ options, value, defaultValue, onValueChange, 
           onPress={() => setSelected(option.value)}
           style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={{ color: position === index ? colors.text : colors.textMuted, fontSize: typography.fontSize.sm, ...fontFor(theme, 'medium') }}>{option.label}</Text>
+          <Text numberOfLines={1} style={{ color: position === index ? colors.text : colors.textMuted, fontSize: typography.fontSize.sm, ...fontFor(theme, 'medium') }}>{option.label}</Text>
         </Pressable>
       ))}
     </View>

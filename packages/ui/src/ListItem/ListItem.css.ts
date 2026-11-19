@@ -10,7 +10,7 @@ button.ds-list-item:disabled{opacity:var(--ds-opacity-disabled);cursor:not-allow
 .ds-list-item__text{display:grid;flex:1;gap:2px;min-width:0}
 .ds-list-item__title{font-size:var(--ds-font-size-md);line-height:var(--ds-line-height-md);font-weight:var(--ds-font-weight-medium)}
 .ds-list-item__description{font-size:var(--ds-font-size-sm);line-height:var(--ds-line-height-sm);color:var(--ds-color-text-muted)}
-.ds-list-item__value{flex-shrink:0;font-size:var(--ds-font-size-md);line-height:var(--ds-line-height-md);color:var(--ds-color-text-muted);font-variant-numeric:tabular-nums}
+.ds-list-item__value{flex:0 1 auto;max-width:50%;text-align:end;overflow-wrap:break-word;font-size:var(--ds-font-size-md);line-height:var(--ds-line-height-md);color:var(--ds-color-text-muted);font-variant-numeric:tabular-nums}
 .ds-list-item__trailing{display:flex;flex-shrink:0}
 .ds-list-item__chevron{flex-shrink:0;font-size:16px;color:var(--ds-color-text-muted);transition:transform var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
 button.ds-list-item:hover:not(:disabled) .ds-list-item__chevron{transform:translateX(2px)}

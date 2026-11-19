@@ -62,6 +62,8 @@ describe('controls (native)', () => {
       />
     );
     await settle();
+    // Fixed-height pill: a long label ends in an ellipsis instead of spilling out
+    expect(screen.getByText('Year').props.numberOfLines).toBe(1);
     await fireEvent.press(screen.getByRole('radio', { name: 'Year' }));
     expect(screen.getByRole('radio', { name: 'Year' }).props.accessibilityState).toMatchObject({ checked: true });
     expect(spring).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 2, ...foundations.motion.spring.smooth }));

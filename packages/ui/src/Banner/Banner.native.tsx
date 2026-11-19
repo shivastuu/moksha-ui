@@ -56,9 +56,10 @@ export function Banner({ tone = 'info', title, children, action, onDismiss, test
             fill={colors.surfaceInverse}
             accessibilityRole="button"
             onPress={action.onPress}
-            style={{ minHeight: button.sizes.sm.height, justifyContent: 'center', paddingHorizontal: button.sizes.sm.paddingX, borderRadius: radius.full }}
+            outerStyle={{ maxWidth: '100%' }}
+            style={{ minHeight: button.sizes.sm.height, justifyContent: 'center', paddingHorizontal: button.sizes.sm.paddingX, paddingVertical: space.xs, borderRadius: radius.full }}
           >
-            <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: colors.textInverse }]}>{action.label}</Text>
+            <Text style={[textStyleFor(theme, 'label'), fontFor(theme, 'semibold'), { color: colors.textInverse, textAlign: 'center' }]}>{action.label}</Text>
           </Press>
         ) : null}
       </View>

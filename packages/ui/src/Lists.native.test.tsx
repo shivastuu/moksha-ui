@@ -13,7 +13,8 @@ describe('lists (native)', () => {
     const onPress = jest.fn();
     const { rerender } = await render(<ListItem title="Card limit" trailing="₹ 50,000" />);
     expect(screen.queryByRole('button')).toBeNull();
-    expect(screen.getByText('₹ 50,000')).toBeTruthy();
+    // A long value shrinks and wraps in up to half the row instead of covering the title
+    expect(StyleSheet.flatten(screen.getByText('₹ 50,000').props.style)).toMatchObject({ flexShrink: 1, maxWidth: '50%' });
     await rerender(<ListItem title="Language" description="Used in the app and SMS" trailing="English" onPress={onPress} />);
     const row = screen.getByRole('button', { name: 'Language, English' });
     expect(row.props.accessibilityHint).toBe('Used in the app and SMS');
