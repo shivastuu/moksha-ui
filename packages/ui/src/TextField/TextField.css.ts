@@ -19,7 +19,7 @@ ${sizes}
 .ds-field__control--glass{background:var(--ds-color-glass-surface);border-color:var(--ds-color-glass-border);-webkit-backdrop-filter:blur(var(--ds-glass-blur-sm)) saturate(var(--ds-glass-saturation));backdrop-filter:blur(var(--ds-glass-blur-sm)) saturate(var(--ds-glass-saturation))}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.ds-field__control--glass{${glassFallback}}}
 @media (prefers-reduced-transparency:reduce){.ds-field__control--glass{${glassFallback}}}
-.ds-field__control:focus-within{border-color:var(--ds-color-primary);box-shadow:0 0 0 var(--ds-field-halo-width) var(--ds-field-halo)}
+.ds-field__control:focus-within{border-color:var(--ds-color-primary);box-shadow:0 0 0 var(--ds-field-halo-width) var(--ds-field-halo);outline:var(--ds-focus-ring-width) solid transparent}
 .ds-field--invalid .ds-field__control{border-color:var(--ds-color-danger)}
 .ds-field--invalid .ds-field__control:focus-within{box-shadow:0 0 0 var(--ds-field-halo-width) var(--ds-field-halo-danger)}
 .ds-field--disabled .ds-field__control{opacity:var(--ds-opacity-disabled);box-shadow:none;cursor:not-allowed}

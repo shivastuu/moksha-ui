@@ -5,4 +5,5 @@ export const segmentedCss = `
 .ds-segmented__option[aria-checked=true]{color:var(--ds-color-text)}
 .ds-segmented__option:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 @media (prefers-reduced-motion:reduce){.ds-segmented__indicator,.ds-segmented__option{transition:none}}
+@media (forced-colors:active){.ds-segmented__indicator{outline:2px solid Highlight;outline-offset:-2px}}
 `;

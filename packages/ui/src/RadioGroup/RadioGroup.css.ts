@@ -14,4 +14,5 @@ export const radioGroupCss = `
 .ds-radio[data-checked] .ds-radio__dot::after{transform:scale(1)}
 .ds-radio:has(.ds-radio__input:focus-visible){outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}
 @media (prefers-reduced-motion:reduce){.ds-radio,.ds-radio__dot,.ds-radio__dot::after{transition:none}}
+@media (forced-colors:active){.ds-radio[data-checked]{border-color:Highlight}.ds-radio__dot::after{background:Highlight}}
 `;

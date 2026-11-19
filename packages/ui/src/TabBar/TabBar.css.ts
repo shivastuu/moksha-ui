@@ -10,4 +10,5 @@ export const tabBarCss = `
 .ds-tabbar__badge{position:absolute;top:-7px;left:calc(100% - 5px)}
 .ds-tabbar__label{max-width:100%;overflow:hidden;font-size:var(--ds-font-size-xs);line-height:var(--ds-line-height-xs);font-weight:var(--ds-font-weight-medium);white-space:nowrap;text-overflow:ellipsis}
 @media (prefers-reduced-motion:reduce){.ds-tabbar__indicator,.ds-tabbar__item,.ds-tabbar__icon{transition:none}}
+@media (forced-colors:active){.ds-tabbar__indicator{outline:2px solid Highlight;outline-offset:-2px}}
 `;

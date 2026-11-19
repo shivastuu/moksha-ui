@@ -2,7 +2,7 @@ import { sliderThumb } from './Slider.shared';
 
 const track = `height:6px;border-radius:var(--ds-radius-full);background:linear-gradient(90deg,var(--ds-control-indicator) var(--ds-slider-fill),var(--ds-control-switch-off) var(--ds-slider-fill))`;
 const thumb = `box-sizing:border-box;width:${sliderThumb}px;height:${sliderThumb}px;border:0;border-radius:var(--ds-radius-full);background:var(--ds-control-thumb);box-shadow:var(--ds-shadow-md),0 0 0 1px var(--ds-surface-edge);transition:transform var(--ds-spring-snappy-duration) var(--ds-spring-snappy),box-shadow var(--ds-spring-snappy-duration) var(--ds-spring-snappy)`;
-const focus = `box-shadow:var(--ds-shadow-md),0 0 0 1px var(--ds-surface-edge),0 0 0 var(--ds-field-halo-width) var(--ds-field-halo)`;
+const focus = `box-shadow:var(--ds-shadow-md),0 0 0 1px var(--ds-surface-edge),0 0 0 var(--ds-field-halo-width) var(--ds-field-halo);outline:var(--ds-focus-ring-width) solid transparent`;
 
 // A native range input, restyled: Chrome/Safari and Firefox name the track and thumb differently
 export const sliderCss = `

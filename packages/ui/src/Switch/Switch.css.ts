@@ -20,4 +20,5 @@ export const switchCss = `${rowCss}
 .ds-switch:not(:disabled):active .ds-switch__thumb{width:calc(var(--ds-switch-thumb) + 6px)}
 .ds-switch[aria-checked=true]:not(:disabled):active .ds-switch__thumb{transform:translateX(calc(${travel} - 6px))}
 @media (prefers-reduced-motion:reduce){.ds-switch,.ds-switch__thumb{transition:none}}
+@media (forced-colors:active){.ds-switch{outline:1px solid ButtonText;outline-offset:-1px}.ds-switch[aria-checked=true]{background:Highlight}.ds-switch__thumb{background:ButtonText}.ds-switch[aria-checked=true] .ds-switch__thumb{background:HighlightText}}
 `;

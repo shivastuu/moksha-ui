@@ -10,4 +10,5 @@ ${tones}
 /* Unknown amount of work: the whole fill breathes, like every loader. With reduced motion it holds dimmed, so it never reads as done */
 .ds-progress[data-indeterminate] .ds-progress__fill{transform:none;transition:none;animation:${breathe()}}
 @media (prefers-reduced-motion:reduce){.ds-progress__fill{transition:none}.ds-progress[data-indeterminate] .ds-progress__fill{animation:none;opacity:var(--ds-breathe-low)}}
+@media (forced-colors:active){.ds-progress{outline:1px solid CanvasText;outline-offset:-1px}.ds-progress__fill{background:Highlight}}
 `;

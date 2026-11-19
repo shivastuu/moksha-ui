@@ -11,4 +11,5 @@ export const successCss = `
 @keyframes ds-success-ring{from{opacity:0.45;transform:scale(1)}to{opacity:0;transform:scale(1.7)}}
 @keyframes ds-success-draw{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.ds-success__disc,.ds-success__ring{animation:none}.ds-success__check{animation:none;stroke-dashoffset:0}}
+@media (forced-colors:active){.ds-success__disc{outline:2px solid CanvasText;outline-offset:-2px}.ds-success__check{color:CanvasText}}
 `;

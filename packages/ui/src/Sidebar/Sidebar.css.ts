@@ -15,4 +15,5 @@ export const sidebarCss = `
 .ds-sidebar__label{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .ds-sidebar__count{min-width:20px;padding:0 6px;border-radius:var(--ds-radius-full);background:var(--ds-control-segment-track);color:var(--ds-color-text);font-size:var(--ds-font-size-xs);line-height:20px;font-variant-numeric:tabular-nums;text-align:center}
 @media (prefers-reduced-motion:reduce){.ds-sidebar__indicator,.ds-sidebar__item{transition:none}}
+@media (forced-colors:active){.ds-sidebar__indicator{outline:2px solid Highlight;outline-offset:-2px}}
 `;

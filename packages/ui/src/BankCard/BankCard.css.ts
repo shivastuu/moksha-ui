@@ -45,4 +45,5 @@ ${finishes}
 .ds-bank-card[data-frozen] .ds-bank-card__face{filter:saturate(0.35)}
 .ds-bank-card[data-frozen] .ds-bank-card__frost{opacity:1}
 @media (prefers-reduced-motion:reduce){.ds-bank-card__body{transform:rotateY(var(--ds-card-flip, 0deg));transition:none}}
+@media (forced-colors:active){.ds-bank-card__face{outline:1px solid CanvasText;outline-offset:-1px}}
 `;

@@ -15,4 +15,5 @@ ${sizes}
 .ds-avatar-group>.ds-avatar+.ds-avatar{margin-left:-0.28em}
 .ds-avatar-group--sm{font-size:var(--ds-avatar-sm)}.ds-avatar-group--md{font-size:var(--ds-avatar-md)}.ds-avatar-group--lg{font-size:var(--ds-avatar-lg)}.ds-avatar-group--xl{font-size:var(--ds-avatar-xl)}
 .ds-avatar--more{background:var(--ds-color-surface);color:var(--ds-color-text-muted)}
+@media (forced-colors:active){.ds-avatar__status{background:CanvasText}}
 `;

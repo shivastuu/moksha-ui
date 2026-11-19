@@ -11,4 +11,5 @@ export const tabsCss = `
 .ds-tabs__panel{animation:ds-fade var(--ds-duration-normal) var(--ds-easing-enter)}
 .ds-tabs__panel:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset);border-radius:var(--ds-radius-sm)}
 @media (prefers-reduced-motion:reduce){.ds-tabs__tab,.ds-tabs__indicator{transition:none}.ds-tabs__panel{animation:none}}
+@media (forced-colors:active){.ds-tabs__indicator{background:Highlight}}
 `;

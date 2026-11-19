@@ -25,4 +25,19 @@ describe('interaction feel', () => {
     expect(componentCss).toMatch(/\.ds-skeleton\{[^}]*animation:ds-breathe calc\(var\(--ds-breathe-period\) \/ 2\) var\(--ds-breathe-easing\) infinite alternate/);
     expect(componentCss).not.toContain('ds-shimmer');
   });
+
+  it('keeps focus visible in forced colors, which drops shadows and recolors borders', () => {
+    const rules = [...componentCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => [selector!.trim(), body!] as const);
+    const haloWithoutRing = rules.filter(([, body]) => body.includes('var(--ds-field-halo)') && !body.includes('outline:'));
+    const ringRemoved = rules.filter(([selector, body]) => selector.includes(':focus-visible') && /outline:(none|0)\b/.test(body));
+    expect(haloWithoutRing.map(([selector]) => selector)).toEqual([]);
+    expect(ringRemoved.map(([selector]) => selector)).toEqual([]);
+  });
+
+  it('keeps state indicators, the success check and the card edge drawn in forced colors, which repaints backgrounds as the page', () => {
+    const forced = [...componentCss.matchAll(/@media \(forced-colors:active\)\{(.*)\}/g)].map(([, body]) => body).join('');
+    for (const selector of ['.ds-switch[aria-checked=true]{', '.ds-radio__dot::after{', '.ds-segmented__indicator{', '.ds-sidebar__indicator{', '.ds-tabbar__indicator{', '.ds-tabs__indicator{', '.ds-progress__fill{', '.ds-badge--dot{', '.ds-avatar__status{', '.ds-success__check{', '.ds-bank-card__face{']) {
+      expect(forced).toContain(selector);
+    }
+  });
 });
