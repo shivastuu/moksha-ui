@@ -10,6 +10,7 @@ The same component API and design tokens, with native rendering on each platform
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
 ![WCAG AA](https://img.shields.io/badge/contrast-WCAG%20AA-2EA44F)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue)
+[![npm](https://img.shields.io/npm/v/@moksha-ui/core?logo=npm&color=CB3837)](https://www.npmjs.com/package/@moksha-ui/core)
 
 </div>
 
@@ -43,8 +44,6 @@ The same component API and design tokens, with native rendering on each platform
 ```sh
 npm install @moksha-ui/core
 ```
-
-> The packages are not on npm yet. Until the first release, clone this repo and run `npm install && npm run build`.
 
 Needs React 19. On native, React Native 0.87 or newer with the New Architecture (gradients use `backgroundImage`, unprefixed from 0.87; shadows use `boxShadow`).
 
