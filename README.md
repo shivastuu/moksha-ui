@@ -46,6 +46,8 @@ npm install @moksha-ui/core
 
 > The packages are not on npm yet. Until the first release, clone this repo and run `npm install && npm run build`.
 
+Needs React 19. On native, React Native 0.87 or newer with the New Architecture (gradients use `backgroundImage`, unprefixed from 0.87; shadows use `boxShadow`).
+
 **Web** (Vite, Next.js, any React 19 app). Load the Inter font, then wrap your app:
 
 ```tsx

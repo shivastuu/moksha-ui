@@ -15,7 +15,7 @@
 npm install @moksha-ui/core
 ```
 
-Needs React 19. On native, React Native 0.78 or newer.
+Needs React 19. On native, React Native 0.87 or newer with the New Architecture: gradients use `backgroundImage`, which drops its `experimental_` prefix in 0.87, and shadows use `boxShadow`.
 
 ## Web
 
