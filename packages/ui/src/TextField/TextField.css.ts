@@ -13,7 +13,7 @@ export const fieldCss = `
 .ds-field{display:flex;flex-direction:column;min-width:0;font-family:var(--ds-font-sans);color:var(--ds-color-text)}
 .ds-field__label{margin-bottom:var(--ds-field-label-gap);font-size:var(--ds-field-label-font-size);line-height:var(--ds-field-label-line-height);font-weight:var(--ds-field-label-font-weight)}
 .ds-field__control{display:flex;align-items:center;gap:var(--ds-field-gap);box-sizing:border-box;border:var(--ds-field-border-width) solid var(--ds-color-border);border-radius:var(--ds-field-radius);background:var(--ds-color-background);box-shadow:var(--ds-shadow-sm);transition:border-color var(--ds-spring-snappy-duration) var(--ds-spring-snappy),box-shadow var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
-.ds-field__control:hover:not(:focus-within){border-color:var(--ds-field-border-hover)}
+@media (hover:hover){.ds-field__control:hover:not(:focus-within){border-color:var(--ds-field-border-hover)}}
 ${sizes}
 .ds-field__control--filled{background:var(--ds-color-surface);border-color:transparent}
 .ds-field__control--glass{background:var(--ds-color-glass-surface);border-color:var(--ds-color-glass-border);-webkit-backdrop-filter:blur(var(--ds-glass-blur-sm)) saturate(var(--ds-glass-saturation));backdrop-filter:blur(var(--ds-glass-blur-sm)) saturate(var(--ds-glass-saturation))}

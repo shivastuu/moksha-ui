@@ -3,7 +3,7 @@ export const chipCss = `
 .ds-chip--sm{height:32px;padding:0 var(--ds-space-md);font-size:var(--ds-font-size-xs)}
 .ds-chip--md{height:36px;padding:0 calc(var(--ds-space-md) + 2px);font-size:var(--ds-font-size-sm)}
 /* Only unselected chips darken on hover, so a selected chip keeps its brand border under the pointer */
-.ds-chip[aria-pressed=false]:not(:disabled):hover{border-color:var(--ds-field-border-hover)}
+@media (hover:hover){.ds-chip[aria-pressed=false]:not(:disabled):hover{border-color:var(--ds-field-border-hover)}}
 .ds-chip[aria-pressed=true]{background:var(--ds-control-selected-fill);border-color:var(--ds-chip-selected-border);color:var(--ds-color-primary)}
 .ds-chip:not(:disabled):active{transform:scale(var(--ds-motion-scale-pressed))}
 .ds-chip:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset)}

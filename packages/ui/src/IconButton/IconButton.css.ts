@@ -13,9 +13,10 @@ ${sizes}
 .ds-icon-button:disabled{opacity:var(--ds-opacity-disabled);cursor:not-allowed}
 .ds-icon-button--solid{background:var(--ds-button-primary-fill);box-shadow:var(--ds-button-primary-shadow);color:var(--ds-color-text-on-primary)}
 .ds-icon-button--solid::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--ds-color-primary-pressed);opacity:0;transition:opacity var(--ds-spring-snappy-duration) var(--ds-spring-snappy)}
-.ds-icon-button--solid:not(:disabled):hover::before,.ds-icon-button--solid:not(:disabled):active::before{opacity:1}
+.ds-icon-button--solid:not(:disabled):active::before{opacity:1}
+@media (hover:hover){.ds-icon-button--solid:not(:disabled):hover::before{opacity:1}}
 .ds-icon-button--soft{background:var(--ds-button-tint);color:var(--ds-color-primary)}
-.ds-icon-button--soft:not(:disabled):hover{background:var(--ds-button-secondary-hover)}
+@media (hover:hover){.ds-icon-button--soft:not(:disabled):hover{background:var(--ds-button-secondary-hover)}}
 .ds-icon-button--glass{background:var(--ds-color-glass-surface);border-color:var(--ds-color-glass-border);color:var(--ds-color-text);-webkit-backdrop-filter:blur(var(--ds-glass-blur-sm)) saturate(var(--ds-glass-saturation));backdrop-filter:blur(var(--ds-glass-blur-sm)) saturate(var(--ds-glass-saturation))}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.ds-icon-button--glass{${glassFallback}}}
 @media (prefers-reduced-transparency:reduce){.ds-icon-button--glass{${glassFallback}}}

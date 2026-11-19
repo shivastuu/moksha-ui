@@ -26,6 +26,16 @@ describe('interaction feel', () => {
     expect(componentCss).not.toContain('ds-shimmer');
   });
 
+  it('hovers only with a real pointer, so a tapped control on a phone does not stay lit', () => {
+    // The bank card is the one exception: its light follows a finger as well as a mouse
+    const unguarded = componentCss
+      .replace(/@media \(hover:hover\)\{(?:[^{}]*\{[^{}]*\})*\}/g, '')
+      .match(/[^{}]*:hover[^{}]*(?=\{)/g)
+      ?.map((selector) => selector.trim())
+      .filter((selector) => !selector.startsWith('.ds-bank-card'));
+    expect(unguarded ?? []).toEqual([]);
+  });
+
   it('dims every disabled control by the theme amount, never a raw number', () => {
     const offenders = [...componentCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
       .filter(([, selector, body]) => /:disabled|aria-disabled|data-disabled|--disabled/.test(selector!) && /opacity:\s*0?\.\d/.test(body!))

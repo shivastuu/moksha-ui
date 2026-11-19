@@ -7,7 +7,7 @@ export const sidebarCss = `
 .ds-sidebar__title{margin:0 0 var(--ds-space-xs);padding:0 var(--ds-space-md);font-size:var(--ds-font-size-xs);line-height:var(--ds-line-height-xs);font-weight:var(--ds-font-weight-semibold);letter-spacing:0.04em;text-transform:uppercase;color:var(--ds-color-text-muted)}
 .ds-sidebar__list{display:grid;gap:2px;margin:0;padding:0;list-style:none}
 .ds-sidebar__item{position:relative;display:flex;align-items:center;gap:var(--ds-space-md);box-sizing:border-box;width:100%;height:${sidebarRow}px;padding:0 var(--ds-space-md);border:0;border-radius:var(--ds-radius-md);background:transparent;color:var(--ds-color-text-muted);font:inherit;font-size:var(--ds-font-size-sm);font-weight:var(--ds-font-weight-medium);text-align:start;cursor:pointer;isolation:isolate;transition:color var(--ds-duration-fast) var(--ds-easing-standard)}
-.ds-sidebar__item:not([aria-current]):hover{color:var(--ds-color-text)}
+@media (hover:hover){.ds-sidebar__item:not([aria-current]):hover{color:var(--ds-color-text)}}
 .ds-sidebar__item[aria-current]{color:var(--ds-color-text)}
 .ds-sidebar__item:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:calc(var(--ds-focus-ring-width) * -1)}
 .ds-sidebar__icon{display:grid;place-items:center;width:20px;font-size:20px}

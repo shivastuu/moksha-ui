@@ -4,7 +4,7 @@ export const radioGroupCss = `
 .ds-radio-group{display:grid;gap:var(--ds-space-sm);min-width:0;margin:0;padding:0;border:0;font-family:var(--ds-font-sans)}
 .ds-radio-group__legend{margin-bottom:var(--ds-space-sm);padding:0;font-size:var(--ds-field-label-font-size);line-height:var(--ds-field-label-line-height);font-weight:var(--ds-field-label-font-weight);color:var(--ds-color-text)}
 .ds-radio{position:relative;display:flex;align-items:flex-start;gap:var(--ds-space-md);padding:var(--ds-space-md) var(--ds-space-lg);border:var(--ds-border-width-thin) solid var(--ds-color-border);border-radius:var(--ds-radius-lg);background:var(--ds-color-background);box-shadow:var(--ds-shadow-sm);cursor:pointer;transition:${spring('border-color')},${spring('background-color')}}
-.ds-radio:not([data-checked]):not([data-disabled]):hover{border-color:var(--ds-field-border-hover)}
+@media (hover:hover){.ds-radio:not([data-checked]):not([data-disabled]):hover{border-color:var(--ds-field-border-hover)}}
 .ds-radio[data-checked]{border-color:var(--ds-color-primary);background:var(--ds-control-selected-fill)}
 .ds-radio[data-disabled]{opacity:var(--ds-opacity-disabled);cursor:not-allowed}
 .ds-radio__input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:inherit}

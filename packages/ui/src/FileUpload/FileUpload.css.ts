@@ -8,7 +8,7 @@ export const fileUploadCss = `
 .ds-upload__zone[data-dragging] .ds-upload__icon{transform:translateY(-3px)}
 .ds-upload__prompt{margin:0;font-size:var(--ds-font-size-md);line-height:var(--ds-line-height-md);color:var(--ds-color-text)}
 .ds-upload__browse{padding:0;border:0;background:none;color:var(--ds-text-tone-primary);font:inherit;font-weight:var(--ds-font-weight-semibold);text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:0.22em;text-decoration-color:transparent;cursor:pointer;transition:text-decoration-color var(--ds-duration-fast) var(--ds-easing-standard)}
-.ds-upload__browse:hover:not(:disabled){text-decoration-color:currentColor}
+@media (hover:hover){.ds-upload__browse:hover:not(:disabled){text-decoration-color:currentColor}}
 .ds-upload__browse:focus-visible{outline:var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);outline-offset:var(--ds-focus-ring-offset);border-radius:var(--ds-radius-sm)}
 .ds-upload__hint{margin:0;font-size:var(--ds-font-size-sm);line-height:var(--ds-line-height-sm);color:var(--ds-color-text-muted)}
 .ds-upload__errors{display:grid;gap:2px;margin:0;padding:0;list-style:none;font-size:var(--ds-font-size-sm);line-height:var(--ds-line-height-sm);color:var(--ds-text-tone-danger)}
