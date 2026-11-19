@@ -2,6 +2,9 @@ import type { ReactNode } from 'react';
 import type { Anchor } from '../Popover/Popover.shared';
 import type { FloatingAlign, FloatingSide } from '../utils/floating';
 
+/** Row height on web and native: a comfortable 44px touch target, growing with larger text */
+export const menuRow = 44;
+
 export interface MenuItem {
   label: string;
   onSelect: () => void;

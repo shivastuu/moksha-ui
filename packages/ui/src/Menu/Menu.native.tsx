@@ -5,7 +5,7 @@ import { surfaceColors } from '../Surface/Surface.shared';
 import { useTheme } from '../theme/context';
 import { fontFor, textStyleFor } from '../theme/textStyle';
 import { textTones } from '../utils/tones';
-import type { MenuProps } from './Menu.shared';
+import { menuRow, type MenuProps } from './Menu.shared';
 
 /** A list of actions that opens from a trigger */
 export function Menu({ anchor, open, onClose, accessibilityLabel, items, side, align = 'end', testID }: MenuProps) {
@@ -27,7 +27,7 @@ export function Menu({ anchor, open, onClose, accessibilityLabel, items, side, a
                 onClose();
                 item.onSelect();
               }}
-              style={{ flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 44, paddingVertical: space.sm, paddingHorizontal: space.md, borderRadius: radius.md, opacity: item.disabled ? opacity.disabled : 1 }}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: menuRow, paddingVertical: space.sm, paddingHorizontal: space.md, borderRadius: radius.md, opacity: item.disabled ? opacity.disabled : 1 }}
             >
               {item.icon ? <View style={{ width: 18, alignItems: 'center' }}>{item.icon}</View> : null}
               <Text style={[textStyleFor(theme, 'bodySmall'), fontFor(theme, 'medium'), { color }]}>{item.label}</Text>
