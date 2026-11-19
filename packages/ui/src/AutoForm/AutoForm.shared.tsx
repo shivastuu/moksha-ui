@@ -8,7 +8,7 @@ import type { OtpFieldProps } from '../OtpField/OtpField.shared';
 import type { FieldHandle, TextFieldProps } from '../TextField/TextField.shared';
 
 /** Props AutoForm sets on every field itself */
-type Wired = 'value' | 'defaultValue' | 'onChangeText' | 'error' | 'ref' | 'onSubmitEditing';
+type Wired = 'value' | 'defaultValue' | 'onChangeText' | 'error' | 'ref' | 'onSubmitEditing' | 'returnKeyType';
 
 interface Rules {
   /** Key of this field in the submitted values */
@@ -224,6 +224,7 @@ export function createAutoForm(ui: PlatformComponents) {
                 onBlur?.();
               }}
               onSubmitEditing={() => (next ? handles.current[next.name]?.focus() : submit())}
+              returnKeyType={next ? 'next' : 'go'}
               error={serverErrors[name] ?? (submitted || visited[name] ? errors[name] : undefined)}
             />
           );

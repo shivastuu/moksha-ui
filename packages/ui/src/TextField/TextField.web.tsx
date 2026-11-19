@@ -56,6 +56,7 @@ export function TextField({
   onFocus,
   onBlur,
   onSubmitEditing,
+  returnKeyType,
   autoFocus,
   testID,
   ref,
@@ -151,7 +152,7 @@ export function TextField({
           type={inputType(inputMode, secureTextEntry)}
           inputMode={inputMode}
           autoComplete={autoComplete}
-          enterKeyHint={inputMode === 'search' ? 'search' : undefined}
+          enterKeyHint={returnKeyType ?? (inputMode === 'search' ? 'search' : undefined)}
           aria-invalid={error ? true : undefined}
           aria-describedby={message ? messageId : undefined}
           data-testid={testID}

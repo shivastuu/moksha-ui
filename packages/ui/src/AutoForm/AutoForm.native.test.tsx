@@ -12,6 +12,7 @@ describe('AutoForm (native)', () => {
   it('shows errors on submit, then submits the raw values once they pass', async () => {
     const onSubmit = jest.fn();
     await render(<AutoForm fields={fields} onSubmit={onSubmit} submitLabel="Pay" />);
+    expect(screen.getByLabelText('Mobile number').props).toMatchObject({ returnKeyType: 'next', submitBehavior: 'submit' });
     await fireEvent.changeText(screen.getByLabelText('Amount'), '75000');
     await fireEvent.press(screen.getByRole('button', { name: 'Pay' }));
 

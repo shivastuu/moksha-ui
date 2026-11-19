@@ -203,6 +203,7 @@ The formatters and validators are exported too: `formatAmount`, `parseAmount`, `
 | `prefix` / `suffix` | text or any element | |
 | `inputMode` | `'text' \| 'numeric' \| 'decimal' \| 'tel' \| 'email' \| 'search' \| 'url'` | `'text'` |
 | `autoComplete` | `'one-time-code'`, `'tel'`, `'email'`, … | |
+| `returnKeyType` | `'next' \| 'done' \| 'go' \| 'search' \| 'send'`: what the keyboard's return key says | `'search'` for search fields |
 | `format` / `parse` | raw value ↔ what the field shows | |
 | `maxLength`, `secureTextEntry`, `clearable`, `allowPaste`, `required`, `disabled`, `readOnly` | | |
 | `testID` | on the input; the input box gets `${testID}-control` | |
@@ -250,7 +251,7 @@ const fields = defineFields([
 - **Built-in checks:** required, Indian mobile numbers, amount `min` and `max`, account numbers (9 to 18 digits), OTP length and email. `matches` compares two fields, and `validate(value, values)` adds your own rule.
 - **Errors appear after a field loses focus or on submit**, never while someone is still typing, and they clear as soon as the value is fixed. Submitting with errors focuses the first one.
 - **Server errors:** return `{ fieldName: message }` from `onSubmit` to show them on those fields.
-- **Enter, or the keyboard's return key,** moves to the next field; on the last field it submits. A form cannot be submitted twice while `onSubmit` is running.
+- **Enter, or the keyboard's return key,** moves to the next field; on the last field it submits. The key says "Next" until the last field, which says "Go", and on native the keyboard stays up as focus moves. A form cannot be submitted twice while `onSubmit` is running.
 - The field list is plain data, so it can come from your server as JSON. `validateForm(fields, values)` runs the same checks anywhere, including on the server.
 - Every field also takes a `ref` with `focus()`.
 

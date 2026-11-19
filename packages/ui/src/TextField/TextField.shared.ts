@@ -70,6 +70,8 @@ export interface TextFieldProps {
   onBlur?: () => void;
   /** Called when the user presses Enter / the keyboard's submit key */
   onSubmitEditing?: () => void;
+  /** What the keyboard's return key says: `next` to move on, `go` or `done` to finish. Search fields default to `search` */
+  returnKeyType?: 'next' | 'done' | 'go' | 'search' | 'send';
   autoFocus?: boolean;
   /** Id for tests, set on the input (`data-testid` on web, `testID` on native). The input box gets `${testID}-control` */
   testID?: string;

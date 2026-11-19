@@ -65,6 +65,8 @@ describe('AutoForm (web)', () => {
       ['Payee name', 'Mobile number', 'Account number', 'Confirm account number', 'Amount'].map(field)
     );
     expect(screen.getByRole('button', { name: 'Add payee' })).toBeTruthy();
+    // The keyboard's return key says Next until the last field, which says Go
+    expect(screen.getAllByRole('textbox').map((input) => input.getAttribute('enterkeyhint'))).toEqual(['next', 'next', 'next', 'next', 'go']);
   });
 
   it('shows an error after blur, not while typing the first time, and clears it once fixed', () => {

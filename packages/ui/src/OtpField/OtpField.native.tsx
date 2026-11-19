@@ -132,8 +132,9 @@ export function OtpField({
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             inputMode="numeric"
-            textContentType="oneTimeCode"
-            autoComplete={Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'}
+            // A masked field is a PIN, a secret: no offer to paste a texted code into it
+            textContentType={masked ? 'none' : 'oneTimeCode'}
+            autoComplete={masked ? 'off' : Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'}
             secureTextEntry={masked}
             editable={!disabled}
             autoFocus={autoFocus}

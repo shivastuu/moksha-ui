@@ -38,6 +38,7 @@ export function TextField({
   onFocus,
   onBlur,
   onSubmitEditing,
+  returnKeyType,
   autoFocus,
   testID,
   ref,
@@ -101,7 +102,9 @@ export function TextField({
         autoComplete={nativeAutoComplete(autoComplete)}
         secureTextEntry={secureTextEntry}
         contextMenuHidden={!allowPaste}
-        returnKeyType={inputMode === 'search' ? 'search' : undefined}
+        returnKeyType={returnKeyType ?? (inputMode === 'search' ? 'search' : undefined)}
+        // "Next" keeps the keyboard up while focus moves on, so it doesn't drop and rise between fields
+        submitBehavior={returnKeyType === 'next' ? 'submit' : undefined}
         onSubmitEditing={onSubmitEditing}
         onFocus={() => {
           setFocused(true);

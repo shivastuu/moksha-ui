@@ -63,7 +63,7 @@ export function OtpField({
           onBlur={() => setFocused(false)}
           type={masked ? 'password' : 'text'}
           inputMode="numeric"
-          autoComplete="one-time-code"
+          autoComplete={masked ? 'off' : 'one-time-code'}
           disabled={disabled}
           autoFocus={autoFocus}
           aria-invalid={error ? true : undefined}

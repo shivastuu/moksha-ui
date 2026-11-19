@@ -125,7 +125,7 @@ describe('OtpField (native)', () => {
   it('masks a PIN and highlights the next cell while focused', async () => {
     await render(<OtpField label="Enter PIN" length={4} masked defaultValue="12" testID="pin" />);
     expect(screen.getByTestId('pin-cell-0')).toHaveTextContent('•');
-    expect(screen.getByTestId('pin').props.secureTextEntry).toBe(true);
+    expect(screen.getByTestId('pin').props).toMatchObject({ secureTextEntry: true, textContentType: 'none', autoComplete: 'off' });
     await fireEvent(screen.getByTestId('pin'), 'focus');
     expect(screen.getByTestId('pin-cell-2')).toHaveStyle({ borderColor: themes.light.colors.primary });
   });

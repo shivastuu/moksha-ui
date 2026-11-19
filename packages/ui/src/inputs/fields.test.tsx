@@ -122,6 +122,8 @@ describe('OtpField (web)', () => {
     render(<OtpField label="Enter PIN" length={4} masked error="Wrong PIN" defaultValue="12" />);
     const input = screen.getByLabelText('Enter PIN') as HTMLInputElement;
     expect(input.type).toBe('password');
+    // A PIN is a secret, not a texted code: no offer to fill it from SMS
+    expect(input.getAttribute('autocomplete')).toBe('off');
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect([...document.querySelectorAll('.ds-otp__cell')].map((cell) => cell.textContent)).toEqual(['•', '•', '', '']);
     expect(screen.getByText('Wrong PIN')).toBeTruthy();

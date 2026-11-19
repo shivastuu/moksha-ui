@@ -5,7 +5,7 @@ import { AutoForm, Motion, Surface, defineFields, type AutoFormField } from '@mo
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const addPayee = defineFields([
-  { name: 'name', type: 'text', label: 'Payee name', required: true, autoComplete: 'name' },
+  { name: 'name', type: 'text', label: 'Payee name', required: true },
   { name: 'mobile', type: 'phone', label: 'Mobile number', required: true },
   { name: 'account', type: 'account', label: 'Account number', required: true },
   {
