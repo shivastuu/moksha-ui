@@ -88,7 +88,7 @@ export function Calendar({ selected, start, today, min, max, weekStartsOn, onPic
                     borderRadius: size / 2,
                     backgroundImage: chosen ? depth.primaryFill : undefined,
                     boxShadow: chosen ? depth.primaryShadow : undefined,
-                    opacity: enabled ? 1 : 0.35,
+                    opacity: enabled ? 1 : opacity.disabled,
                   }}
                 >
                   <Text

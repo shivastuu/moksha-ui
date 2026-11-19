@@ -23,6 +23,6 @@ export const datePickerCss = `
 .ds-calendar__day[aria-current=date]{color:var(--ds-text-tone-primary);font-weight:var(--ds-font-weight-semibold)}
 .ds-calendar__day[aria-current=date]::after{content:'';position:absolute;bottom:5px;width:4px;height:4px;border-radius:var(--ds-radius-full);background:currentColor}
 .ds-calendar__day[data-selected]{background:var(--ds-button-primary-fill);box-shadow:var(--ds-button-primary-shadow);color:var(--ds-color-text-on-primary);font-weight:var(--ds-font-weight-semibold);animation:ds-pop var(--ds-spring-bouncy-duration) var(--ds-spring-bouncy)}
-.ds-calendar__day[aria-disabled]{opacity:0.35;cursor:not-allowed;text-decoration:line-through}
+.ds-calendar__day[aria-disabled]{opacity:var(--ds-opacity-disabled);cursor:not-allowed;text-decoration:line-through}
 @media (prefers-reduced-motion:reduce){.ds-calendar__body{animation:none!important}.ds-calendar__day[data-selected]{animation:none}}
 `;

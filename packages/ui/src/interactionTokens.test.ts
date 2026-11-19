@@ -26,6 +26,13 @@ describe('interaction feel', () => {
     expect(componentCss).not.toContain('ds-shimmer');
   });
 
+  it('dims every disabled control by the theme amount, never a raw number', () => {
+    const offenders = [...componentCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+      .filter(([, selector, body]) => /:disabled|aria-disabled|data-disabled|--disabled/.test(selector!) && /opacity:\s*0?\.\d/.test(body!))
+      .map(([, selector]) => selector!.trim());
+    expect(offenders).toEqual([]);
+  });
+
   it('taps cleanly on phones: no tap flash or double-tap zoom on any control', () => {
     expect(componentCss).toMatch(/:where\(button,a,input,[^)]*\):is\(\[class\^="ds-"\],\[class\*=" ds-"\]\)\{-webkit-tap-highlight-color:transparent;touch-action:manipulation\}/);
   });
