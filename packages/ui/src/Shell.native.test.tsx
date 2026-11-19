@@ -23,12 +23,16 @@ describe('shell (native)', () => {
     const onValueChange = jest.fn();
     await render(
       <Sidebar
+        testID="nav"
         onValueChange={onValueChange}
         sections={[{ title: 'Money', items: [{ value: 'accounts', label: 'Accounts', icon: (color) => <View testID={`icon-${color}`} /> }, { value: 'requests', label: 'Requests', count: 3 }] }]}
       />
     );
     expect(screen.getByRole('header', { name: 'Money' })).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Accounts' }).props.accessibilityState).toMatchObject({ selected: true });
+    // A row grown by larger system text: the pill takes its measured height
+    await fireEvent(screen.getByRole('button', { name: 'Accounts' }), 'layout', { nativeEvent: { layout: { x: 0, y: 24, width: 236, height: 64 } } });
+    expect(screen.getByTestId('nav-pill')).toHaveStyle({ height: 64 });
     await fireEvent.press(screen.getByRole('button', { name: 'Requests, 3 new' }));
     expect(onValueChange).toHaveBeenCalledWith('requests');
   });

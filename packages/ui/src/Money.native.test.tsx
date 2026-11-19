@@ -1,6 +1,8 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { AccessibilityInfo } from 'react-native';
+import { foundations } from '@moksha-ui/tokens';
 import { Receipt, SlideToConfirm, Slider, Sparkline } from './index';
+import { slide } from './SlideToConfirm/SlideToConfirm.shared';
 
 const settle = () => act(async () => {});
 
@@ -20,6 +22,8 @@ describe('money (native)', () => {
   it('SlideToConfirm pays on a screen reader double tap, and resets if payment fails', async () => {
     const onConfirm = jest.fn().mockResolvedValueOnce(undefined);
     const { rerender } = await render(<SlideToConfirm label="Slide to pay ₹486" onConfirm={onConfirm} />);
+    // Larger system text grows the label only up to the knob's height
+    expect(screen.getByText('Slide to pay ₹486').props.maxFontSizeMultiplier).toBe(slide.knob / foundations.typography.textStyles.body.lineHeight);
     await fireEvent(screen.getByRole('button', { name: 'Slide to pay ₹486' }), 'accessibilityTap');
     await settle();
     expect(screen.getByRole('button', { name: 'Done' })).toBeTruthy();

@@ -88,6 +88,8 @@ export function SlideToConfirm({ label, onConfirm, pendingLabel = 'Processing', 
     >
       <Animated.Text
         numberOfLines={1}
+        // Grows with larger system text up to the knob's height, so it never spills out of the track
+        maxFontSizeMultiplier={slide.knob / textStyleFor(theme, 'body').lineHeight}
         style={[
           textStyleFor(theme, 'body'),
           fontFor(theme, 'semibold'),

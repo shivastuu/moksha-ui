@@ -17,11 +17,12 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
   const first = sections[0]?.items[0]?.value ?? '';
   const [selected, setSelected] = useControllableState(value, defaultValue ?? first, onValueChange);
   const reduced = useReducedMotion();
-  // Rows sit in one flat column, so each onLayout y is measured from the same top
-  const [tops, setTops] = useState<Record<string, number>>({});
+  // Rows sit in one flat column, so each onLayout y is measured from the same top. Heights are measured too: rows grow
+  // with larger system text, and the pill takes the height of the row it's on
+  const [rows, setRows] = useState<Record<string, { y: number; height: number }>>({});
   const top = useRef(new Animated.Value(0)).current;
   const placed = useRef(false);
-  const target = tops[selected];
+  const target = rows[selected];
 
   useEffect(() => {
     if (target === undefined) {
@@ -29,13 +30,13 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
     }
     if (reduced !== false || !placed.current) {
       placed.current = true;
-      top.setValue(target);
+      top.setValue(target.y);
       return;
     }
-    const spring = Animated.spring(top, { toValue: target, ...motion.spring.smooth, useNativeDriver: true });
+    const spring = Animated.spring(top, { toValue: target.y, ...motion.spring.smooth, useNativeDriver: true });
     spring.start();
     return () => spring.stop();
-  }, [target, reduced, top, motion]);
+  }, [target?.y, reduced, top, motion]);
 
   return (
     <View testID={testID} accessibilityLabel={accessibilityLabel} style={{ width: 260, flex: 1, gap: space.lg, paddingVertical: space.lg, paddingHorizontal: space.md, backgroundColor: colors.surface, borderRightWidth: 1, borderRightColor: surfaceColors(colors).edge }}>
@@ -43,11 +44,12 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
       <View style={{ flex: 1 }}>
         {target !== undefined ? (
           <Animated.View
+            testID={testID ? `${testID}-pill` : undefined}
             style={{
               position: 'absolute',
               left: 0,
               right: 0,
-              height: sidebarRow,
+              height: target.height,
               borderRadius: radius.md,
               backgroundColor: colors.surfaceRaised,
               boxShadow: `${shadows.sm}, 0px 0px 0px 1px ${surfaceColors(colors).edge}`,
@@ -77,10 +79,10 @@ export function Sidebar({ sections, value, defaultValue, onValueChange, header, 
                 accessibilityState={{ selected: active }}
                 onPress={() => setSelected(item.value)}
                 onLayout={(event) => {
-                  const y = event.nativeEvent.layout.y;
-                  setTops((previous) => (previous[item.value] === y ? previous : { ...previous, [item.value]: y }));
+                  const { y, height } = event.nativeEvent.layout;
+                  setRows((previous) => (previous[item.value]?.y === y && previous[item.value]?.height === height ? previous : { ...previous, [item.value]: { y, height } }));
                 }}
-                style={{ flexDirection: 'row', alignItems: 'center', gap: space.md, height: sidebarRow, marginBottom: 2, paddingHorizontal: space.md, borderRadius: radius.md }}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: space.md, minHeight: sidebarRow, marginBottom: 2, paddingVertical: space.xs, paddingHorizontal: space.md, borderRadius: radius.md }}
               >
                 {item.icon ? <View style={{ width: 20, alignItems: 'center' }}>{item.icon(color)}</View> : null}
                 <Text numberOfLines={1} style={[textStyleFor(theme, 'bodySmall'), fontFor(theme, 'medium'), { flex: 1, color: active ? colors.text : colors.textMuted }]}>
